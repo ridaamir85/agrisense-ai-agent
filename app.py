@@ -133,6 +133,7 @@ st.markdown("""
 async def run_agent_async(agent, prompt: str) -> str:
     from google.adk.runners import Runner
     from google.adk.sessions.in_memory_session_service import InMemorySessionService
+    from google.genai import types
     
     session_service = InMemorySessionService()
     runner = Runner(
@@ -142,11 +143,22 @@ async def run_agent_async(agent, prompt: str) -> str:
     )
     try:
         final_text = ""
+        # Create session first before running
+        await session_service.create_session(
+            app_name="agrisense",
+            user_id="farmer",
+            session_id="session_agrisense"
+        )
+        # Create proper Content object for new_message
+        message = types.Content(
+            role="user",
+            parts=[types.Part(text=prompt)]
+        )
         # run_async executes the agent turn
         async for event in runner.run_async(
             user_id="farmer",
             session_id="session_agrisense",
-            new_message=prompt
+            new_message=message
         ):
             if event.is_final_response() and event.content and event.content.parts:
                 final_text = ''.join(p.text or '' for p in event.content.parts)
