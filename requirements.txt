@@ -1,0 +1,6 @@
+google-adk
+streamlit
+fastmcp
+python-dotenv
+httpx
+google-genai
