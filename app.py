@@ -493,6 +493,174 @@ TRANSLATIONS = {
         "advisory_status": "✍️ পরামর্শ এজেন্ট চূড়ান্ত রিপোর্ট তৈরি করছে...",
         "advisory_done": "সম্পূর্ণ পরামর্শ রিপোর্ট তৈরি!",
     },
+    "Russian": {
+        "settings": "Настройки и учетные данные",
+        "gemini_key": "Ключ API Gemini",
+        "weather_key": "Ключ API OpenWeather (Необязательно)",
+        "language_selection": "Выбор языка",
+        "preferred_language": "Предпочитаемый язык",
+        "security_notice": "🔒 Уведомление о безопасности",
+        "security_text": "Личные данные не хранятся.",
+        "advisory_inputs": "🌾 Данные консультации",
+        "location": "Местоположение фермы",
+        "location_placeholder": "напр. Москва, Россия",
+        "crop_type": "Тип культуры",
+        "crop_placeholder": "напр. Пшеница, Кукуруза, Томат",
+        "problem": "Опишите симптомы или вопрос",
+        "problem_placeholder": "напр. Листья желтеют",
+        "analyze_btn": "🚀 Анализировать и создать отчеты",
+        "workflow": "📈 Рабочий процесс агента",
+        "weather_header": "⛅ Отчет агента погоды",
+        "crop_header": "🩺 Диагноз агента растений",
+        "market_header": "📊 Анализ рыночных цен",
+        "hitl_weather": "💡 Проверьте отчет о погоде и подтвердите.",
+        "hitl_crop": "💡 Проверьте диагноз и подтвердите.",
+        "hitl_market": "💡 Проверьте рыночную стратегию и подтвердите.",
+        "confirm_btn": "✅ Подтвердить и продолжить",
+        "restart_btn": "❌ Перезапустить",
+        "compile_btn": "📝 Составить итоговый отчет",
+        "completed": "🎉 Полный отчет AgriSense",
+        "final_report": "📋 Полный консультационный отчет",
+        "download_btn": "📥 Скачать отчет",
+        "analyze_another": "🔄 Анализировать другую культуру / место",
+        "warning_key": "Пожалуйста, введите ключ API Gemini.",
+        "warning_fields": "Пожалуйста, заполните все три поля.",
+        "subtitle": "Глобальная многоагентная система агрономических консультаций на базе Google ADK",
+        "weather_status": "⛅ Агент погоды анализирует прогноз на 7 дней...",
+        "weather_done": "Анализ агента погоды завершен!",
+        "crop_status": "🩺 Агент растений диагностирует симптомы...",
+        "crop_done": "Диагностика завершена!",
+        "market_status": "📊 Агент цен анализирует рынок...",
+        "market_done": "Анализ цен завершен!",
+        "advisory_status": "✍️ Консультационный агент составляет отчет...",
+        "advisory_done": "Полный отчет готов!",
+    },
+    "Indonesian": {
+        "settings": "Pengaturan dan Kredensial",
+        "gemini_key": "Kunci API Gemini",
+        "weather_key": "Kunci API OpenWeather (Opsional)",
+        "language_selection": "Pilihan Bahasa",
+        "preferred_language": "Bahasa yang Disukai",
+        "security_notice": "🔒 Pemberitahuan Keamanan dan Privasi",
+        "security_text": "Tidak ada data pribadi yang disimpan.",
+        "advisory_inputs": "🌾 Input Konsultasi",
+        "location": "Lokasi Pertanian",
+        "location_placeholder": "mis. Jakarta, Indonesia",
+        "crop_type": "Jenis Tanaman",
+        "crop_placeholder": "mis. Padi, Jagung, Tomat",
+        "problem": "Jelaskan Gejala atau Pertanyaan",
+        "problem_placeholder": "mis. Daun menguning",
+        "analyze_btn": "🚀 Analisis dan Buat Laporan",
+        "workflow": "📈 Alur Kerja Agen",
+        "weather_header": "⛅ Laporan Agen Cuaca",
+        "crop_header": "🩺 Diagnosis Dokter Tanaman",
+        "market_header": "📊 Analisis Harga Pasar",
+        "hitl_weather": "💡 Tinjau laporan cuaca dan konfirmasi.",
+        "hitl_crop": "💡 Tinjau diagnosis tanaman dan konfirmasi.",
+        "hitl_market": "💡 Tinjau strategi pasar dan konfirmasi.",
+        "confirm_btn": "✅ Konfirmasi dan Lanjutkan",
+        "restart_btn": "❌ Mulai Ulang",
+        "compile_btn": "📝 Kompilasi Laporan Akhir",
+        "completed": "🎉 Laporan AgriSense Selesai",
+        "final_report": "📋 Laporan Konsultasi Lengkap",
+        "download_btn": "📥 Unduh Laporan",
+        "analyze_another": "🔄 Analisis Tanaman / Lokasi Lain",
+        "warning_key": "Silakan masukkan kunci API Gemini Anda.",
+        "warning_fields": "Silakan isi ketiga bidang.",
+        "subtitle": "Sistem Konsultasi Pertanian Multi-Agen Global yang didukung Google ADK",
+        "weather_status": "⛅ Agen Cuaca menganalisis prakiraan 7 hari...",
+        "weather_done": "Analisis Agen Cuaca selesai!",
+        "crop_status": "🩺 Dokter Tanaman mendiagnosis gejala...",
+        "crop_done": "Diagnosis Dokter Tanaman selesai!",
+        "market_status": "📊 Agen Harga menganalisis pasar...",
+        "market_done": "Analisis harga selesai!",
+        "advisory_status": "✍️ Agen Konsultasi menyusun laporan akhir...",
+        "advisory_done": "Laporan lengkap telah disusun!",
+    },
+    "Turkish": {
+        "settings": "Ayarlar ve Kimlik Bilgileri",
+        "gemini_key": "Gemini API Anahtarı",
+        "weather_key": "OpenWeather API Anahtarı (İsteğe Bağlı)",
+        "language_selection": "Dil Seçimi",
+        "preferred_language": "Tercih Edilen Dil",
+        "security_notice": "🔒 Güvenlik ve Gizlilik Bildirimi",
+        "security_text": "Kişisel veri saklanmaz. Tüm oturum tavsiyeleri bellekte kalır.",
+        "advisory_inputs": "🌾 Danışma Girdileri",
+        "location": "Çiftlik Konumu",
+        "location_placeholder": "örn. Ankara, Türkiye",
+        "crop_type": "Ürün Türü",
+        "crop_placeholder": "örn. Buğday, Mısır, Domates",
+        "problem": "Belirtileri veya Soruyu Açıklayın",
+        "problem_placeholder": "örn. Yapraklar sararıyor",
+        "analyze_btn": "🚀 Analiz Et ve Raporları Oluştur",
+        "workflow": "📈 Ajan İş Akışı",
+        "weather_header": "⛅ Hava Durumu Ajanı Raporu",
+        "crop_header": "🩺 Ürün Doktoru Tanısı",
+        "market_header": "📊 Pazar Fiyatı Analizi",
+        "hitl_weather": "💡 Hava durumu raporunu inceleyin ve onaylayın.",
+        "hitl_crop": "💡 Ürün tanısını inceleyin ve onaylayın.",
+        "hitl_market": "💡 Pazar stratejisini inceleyin ve onaylayın.",
+        "confirm_btn": "✅ Onayla ve Devam Et",
+        "restart_btn": "❌ Yeniden Başlat",
+        "compile_btn": "📝 Son Raporu Derle",
+        "completed": "🎉 AgriSense Tamamlanan Rapor",
+        "final_report": "📋 Tam Danışma Raporu",
+        "download_btn": "📥 Raporu İndir",
+        "analyze_another": "🔄 Başka Ürün / Konum Analiz Et",
+        "warning_key": "Lütfen Gemini API anahtarınızı girin.",
+        "warning_fields": "Lütfen üç alanı da doldurun.",
+        "subtitle": "Google ADK destekli Küresel Çok Ajanlı Tarım Danışma Sistemi",
+        "weather_status": "⛅ Hava Durumu Ajanı 7 günlük tahmin analiz ediyor...",
+        "weather_done": "Hava Durumu Ajanı analizi tamamlandı!",
+        "crop_status": "🩺 Ürün Doktoru belirtileri teşhis ediyor...",
+        "crop_done": "Ürün Doktoru teşhisi tamamlandı!",
+        "market_status": "📊 Fiyat Ajanı piyasayı analiz ediyor...",
+        "market_done": "Fiyat analizi tamamlandı!",
+        "advisory_status": "✍️ Danışma Ajanı son raporu derliyor...",
+        "advisory_done": "Tam danışma raporu hazır!",
+    },
+    "Japanese": {
+        "settings": "設定と認証情報",
+        "gemini_key": "Gemini APIキー",
+        "weather_key": "OpenWeather APIキー（任意）",
+        "language_selection": "言語選択",
+        "preferred_language": "優先言語",
+        "security_notice": "🔒 セキュリティとプライバシー通知",
+        "security_text": "個人データは保存されません。",
+        "advisory_inputs": "🌾 相談入力",
+        "location": "農場の場所",
+        "location_placeholder": "例：東京、日本",
+        "crop_type": "作物の種類",
+        "crop_placeholder": "例：米、小麦、トマト",
+        "problem": "症状や質問を説明してください",
+        "problem_placeholder": "例：葉が黄色くなっています",
+        "analyze_btn": "🚀 分析してレポートを生成",
+        "workflow": "📈 エージェントワークフロー",
+        "weather_header": "⛅ 気象エージェントレポート",
+        "crop_header": "🩺 作物ドクター診断",
+        "market_header": "📊 市場価格分析",
+        "hitl_weather": "💡 気象レポートを確認して承認してください。",
+        "hitl_crop": "💡 作物診断を確認して承認してください。",
+        "hitl_market": "💡 市場戦略を確認して承認してください。",
+        "confirm_btn": "✅ 確認して続ける",
+        "restart_btn": "❌ やり直す",
+        "compile_btn": "📝 最終レポートを作成",
+        "completed": "🎉 AgriSense 完了レポート",
+        "final_report": "📋 完全なアドバイザリーレポート",
+        "download_btn": "📥 レポートをダウンロード",
+        "analyze_another": "🔄 別の作物・場所を分析する",
+        "warning_key": "Gemini APIキーを入力してください。",
+        "warning_fields": "3つのフィールドをすべて入力してください。",
+        "subtitle": "Google ADKを活用したグローバル多エージェント農業アドバイザリーシステム",
+        "weather_status": "⛅ 気象エージェントが7日間の予報を分析中...",
+        "weather_done": "気象エージェントの分析完了！",
+        "crop_status": "🩺 作物ドクターが症状を診断中...",
+        "crop_done": "作物ドクターの診断完了！",
+        "market_status": "📊 価格エージェントが市場を分析中...",
+        "market_done": "価格分析完了！",
+        "advisory_status": "✍️ アドバイザリーエージェントが最終レポートを作成中...",
+        "advisory_done": "完全なレポートが完成しました！",
+    },
     "Vietnamese": {
         "settings": "Cài đặt và Thông tin xác thực",
         "gemini_key": "Khóa API Gemini",
@@ -551,6 +719,10 @@ LANGUAGE_OPTIONS = {
     "中文 (Mandarin)": "Mandarin",
     "বাংলা (Bengali)": "Bengali",
     "Tiếng Việt (Vietnamese)": "Vietnamese",
+    "Türkçe (Turkish)": "Turkish",
+    "Русский (Russian)": "Russian",
+    "Bahasa Indonesia": "Indonesian",
+    "日本語 (Japanese)": "Japanese",
 }
 
 # Language name for prompts
@@ -567,6 +739,10 @@ LANGUAGE_NAMES = {
     "Mandarin": "Chinese (Mandarin)",
     "Bengali": "Bengali",
     "Vietnamese": "Vietnamese",
+    "Turkish": "Turkish",
+    "Russian": "Russian",
+    "Indonesian": "Indonesian",
+    "Japanese": "Japanese",
 }
 
 # CSS Styles
@@ -606,7 +782,7 @@ async def run_agent_async(agent, prompt: str) -> str:
         final_text = ""
         await session_service.create_session(
             app_name="agrisense", user_id="farmer", session_id="session_agrisense"
-        )
+        )   
         message = types.Content(role="user", parts=[types.Part(text=prompt)])
         async for event in runner.run_async(
             user_id="farmer", session_id="session_agrisense", new_message=message
@@ -724,7 +900,8 @@ if st.session_state.step >= 1:
             prompt = (
                 f"Analyze the weather forecast for '{location}' for crop '{crop_type}'. "
                 f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
-                f"Use bullet points and emojis. Be concise and farmer-friendly."
+                f"Use bullet points and emojis. Be concise and farmer-friendly. "
+                f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
             )
             st.session_state.weather_report = run_agent_sync(agent, prompt)
             status.update(label=T["weather_done"], state="complete")
@@ -756,7 +933,8 @@ if st.session_state.step >= 2:
             prompt = (
                 f"Diagnose crop '{crop_type}' in '{location}' with symptoms: {problem}. "
                 f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
-                f"Use bullet points and emojis. Top 3 causes and 3 actions only."
+                f"Use bullet points and emojis. Top 3 causes and 3 actions only. "
+                f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
             )
             st.session_state.crop_doctor_report = run_agent_sync(agent, prompt)
             status.update(label=T["crop_done"], state="complete")
@@ -788,7 +966,8 @@ if st.session_state.step >= 3:
             prompt = (
                 f"Analyze market prices for '{crop_type}' near '{location}'. "
                 f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
-                f"Use bullet points. Current price, best time to sell, top 3 tips only."
+                f"Use bullet points. Current price, best time to sell, top 3 tips only. "
+                f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
             )
             st.session_state.market_price_report = run_agent_sync(agent, prompt)
             status.update(label=T["market_done"], state="complete")
