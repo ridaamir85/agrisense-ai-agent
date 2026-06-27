@@ -64,13 +64,13 @@ TRANSLATIONS = {
         "warning_key": "Please enter your Gemini API Key in the sidebar.",
         "warning_fields": "Please fill all three fields: Location, Crop Type, and Symptoms.",
         "subtitle": "A Global Multi-Agent Farming Advisory System powered by Google ADK",
-        "weather_status": "⛅ Weather Agent is analyzing 7-day forecast...",
+        "weather_status": "Weather Agent is analyzing 7-day forecast...",
         "weather_done": "Weather Agent analysis complete!",
-        "crop_status": "🩺 Crop Doctor Agent is diagnosing symptoms...",
+        "crop_status": "Crop Doctor Agent is diagnosing symptoms...",
         "crop_done": "Crop Doctor Agent diagnosis complete!",
-        "market_status": "📊 Market Price Agent is analyzing prices...",
+        "market_status": "Market Price Agent is analyzing prices...",
         "market_done": "Market Price Agent trend analysis complete!",
-        "advisory_status": "✍️ Advisory Agent is compiling final report...",
+        "advisory_status": "Advisory Agent is compiling final report...",
         "advisory_done": "Complete Advisory Report compiled!",
     },
     "Urdu": {
@@ -106,13 +106,13 @@ TRANSLATIONS = {
         "warning_key": "براہ کرم سائڈبار میں Gemini API کلید درج کریں۔",
         "warning_fields": "براہ کرم تینوں خانے پُر کریں: مقام، فصل، اور علامات۔",
         "subtitle": "گوگل ADK سے چلنے والا عالمی زرعی مشاورتی نظام",
-        "weather_status": "⛅ موسم ایجنٹ 7 دن کی پیشگوئی کا تجزیہ کر رہا ہے...",
+        "weather_status": "موسم ایجنٹ 7 دن کی پیشگوئی کا تجزیہ کر رہا ہے...",
         "weather_done": "موسم ایجنٹ کا تجزیہ مکمل!",
-        "crop_status": "🩺 فصل ڈاکٹر علامات کی تشخیص کر رہا ہے...",
+        "crop_status": "فصل ڈاکٹر علامات کی تشخیص کر رہا ہے...",
         "crop_done": "فصل ڈاکٹر کی تشخیص مکمل!",
-        "market_status": "📊 مارکیٹ قیمت ایجنٹ قیمتوں کا تجزیہ کر رہا ہے...",
+        "market_status": "مارکیٹ قیمت ایجنٹ قیمتوں کا تجزیہ کر رہا ہے...",
         "market_done": "مارکیٹ قیمت کا تجزیہ مکمل!",
-        "advisory_status": "✍️ مشاورتی ایجنٹ حتمی رپورٹ مرتب کر رہا ہے...",
+        "advisory_status": "مشاورتی ایجنট حتمی رپورٹ مرتب کر رہا ہے...",
         "advisory_done": "مکمل مشاورتی رپورٹ تیار!",
     },
     "Hindi": {
@@ -148,13 +148,13 @@ TRANSLATIONS = {
         "warning_key": "कृपया साइडबार में Gemini API कुंजी दर्ज करें।",
         "warning_fields": "कृपया तीनों फ़ील्ड भरें: स्थान, फसल, और लक्षण।",
         "subtitle": "Google ADK द्वारा संचालित वैश्विक कृषि सलाह प्रणाली",
-        "weather_status": "⛅ मौसम एजेंट 7-दिन पूर्वानुमान का विश्लेषण कर रहा है...",
+        "weather_status": "मौसम एजेंट 7-दिन पूर्वानुमान का विश्लेषण कर रहा है...",
         "weather_done": "मौसम एजेंट विश्लेषण पूर्ण!",
-        "crop_status": "🩺 फसल डॉक्टर लक्षणों का निदान कर रहा है...",
+        "crop_status": "फसल डॉक्टर लक्षणों का निदान कर रहा है...",
         "crop_done": "फसल डॉक्टर निदान पूर्ण!",
-        "market_status": "📊 बाजार मूल्य एजेंट कीमतों का विश्लेषण कर रहा है...",
+        "market_status": "बाजार मूल्य एजेंट कीमतों का विश्लेषण कर रहा है...",
         "market_done": "बाजार मूल्य विश्लेषण पूर्ण!",
-        "advisory_status": "✍️ सलाह एजेंट अंतिम रिपोर्ट तैयार कर रहा है...",
+        "advisory_status": "सलाह एजेंट अंतिम रिपोर्ट तैयार कर रहा है...",
         "advisory_done": "पूर्ण सलाह रिपोर्ट तैयार!",
     },
     "Punjabi": {
@@ -190,13 +190,13 @@ TRANSLATIONS = {
         "warning_key": "ਕਿਰਪਾ ਕਰਕੇ Gemini API ਕੁੰਜੀ ਦਰਜ ਕਰੋ।",
         "warning_fields": "ਕਿਰਪਾ ਕਰਕੇ ਸਾਰੇ ਤਿੰਨ ਖੇਤਰ ਭਰੋ।",
         "subtitle": "Google ADK ਦੁਆਰਾ ਸੰਚਾਲਿਤ ਵਿਸ਼ਵ ਖੇਤੀਬਾੜੀ ਸਲਾਹ ਪ੍ਰਣਾਲੀ",
-        "weather_status": "⛅ ਮੌਸਮ ਏਜੰਟ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰ ਰਿਹਾ ਹੈ...",
+        "weather_status": "ਮੌਸਮ ਏਜੰਟ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰ ਰਿਹਾ ਹੈ...",
         "weather_done": "ਮੌਸਮ ਏਜੰਟ ਵਿਸ਼ਲੇਸ਼ਣ ਮੁਕੰਮਲ!",
-        "crop_status": "🩺 ਫਸਲ ਡਾਕਟਰ ਨਿਦਾਨ ਕਰ ਰਿਹਾ ਹੈ...",
+        "crop_status": "ਫਸਲ ਡਾਕਟਰ ਨਿਦਾਨ ਕਰ ਰਿਹਾ ਹੈ...",
         "crop_done": "ਫਸਲ ਡਾਕਟਰ ਨਿਦਾਨ ਮੁਕੰਮਲ!",
-        "market_status": "📊 ਮਾਰਕੀਟ ਏਜੰਟ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰ ਰਿਹਾ ਹੈ...",
+        "market_status": "ਮਾਰਕੀਟ ਏਜੰਟ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰ ਰਿਹਾ ਹੈ...",
         "market_done": "ਮਾਰਕੀਟ ਵਿਸ਼ਲੇਸ਼ਣ ਮੁਕੰਮਲ!",
-        "advisory_status": "✍️ ਸਲਾਹ ਏਜੰਟ ਰਿਪੋਰਟ ਤਿਆਰ ਕਰ ਰਿਹਾ ਹੈ...",
+        "advisory_status": "ਸਲਾਹ ਏਜੰਟ ਰਿਪੋਰਟ ਤਿਆਰ ਕਰ ਰਿਹਾ ਹੈ...",
         "advisory_done": "ਮੁਕੰਮਲ ਸਲਾਹ ਰਿਪੋਰਟ ਤਿਆਰ!",
     },
     "Spanish": {
@@ -232,13 +232,13 @@ TRANSLATIONS = {
         "warning_key": "Por favor ingrese su clave API de Gemini.",
         "warning_fields": "Por favor complete los tres campos.",
         "subtitle": "Sistema Global de Asesoría Agrícola Multi-Agente impulsado por Google ADK",
-        "weather_status": "⛅ Agente Meteorológico analizando pronóstico de 7 días...",
+        "weather_status": "Agente Meteorológico analizando pronóstico de 7 días...",
         "weather_done": "¡Análisis del Agente Meteorológico completo!",
-        "crop_status": "🩺 Doctor de Cultivos diagnosticando síntomas...",
+        "crop_status": "Doctor de Cultivos diagnosticando síntomas...",
         "crop_done": "¡Diagnóstico del Doctor de Cultivos completo!",
-        "market_status": "📊 Agente de Precios analizando mercado...",
+        "market_status": "Agente de Precios analizando mercado...",
         "market_done": "¡Análisis de precios completo!",
-        "advisory_status": "✍️ Agente Asesor compilando informe final...",
+        "advisory_status": "Agente Asesor compilando informe final...",
         "advisory_done": "¡Informe completo compilado!",
     },
     "French": {
@@ -274,13 +274,13 @@ TRANSLATIONS = {
         "warning_key": "Veuillez entrer votre clé API Gemini.",
         "warning_fields": "Veuillez remplir les trois champs.",
         "subtitle": "Système Mondial de Conseil Agricole Multi-Agent propulsé par Google ADK",
-        "weather_status": "⛅ Agent Météo analysant les prévisions sur 7 jours...",
+        "weather_status": "Agent Météo analysant les prévisions sur 7 jours...",
         "weather_done": "Analyse de l'Agent Météo terminée!",
-        "crop_status": "🩺 Médecin des Cultures diagnostiquant...",
+        "crop_status": "Médecin des Cultures diagnostiquant...",
         "crop_done": "Diagnostic du Médecin des Cultures terminé!",
-        "market_status": "📊 Agent de Prix analysant le marché...",
+        "market_status": "Agent de Prix analysant le marché...",
         "market_done": "Analyse des prix terminée!",
-        "advisory_status": "✍️ Agent Conseiller compilant le rapport final...",
+        "advisory_status": "Agent Conseiller compilant le rapport final...",
         "advisory_done": "Rapport complet compilé!",
     },
     "Swahili": {
@@ -316,13 +316,13 @@ TRANSLATIONS = {
         "warning_key": "Tafadhali ingiza ufunguo wako wa API ya Gemini.",
         "warning_fields": "Tafadhali jaza sehemu zote tatu.",
         "subtitle": "Mfumo wa Ushauri wa Kilimo Duniani wenye Mawakala Wengi unaotumia Google ADK",
-        "weather_status": "⛅ Wakala wa Hali ya Hewa anachambua utabiri wa siku 7...",
+        "weather_status": "Wakala wa Hali ya Hewa anachambua utabiri wa siku 7...",
         "weather_done": "Uchambuzi wa Wakala wa Hali ya Hewa umekamilika!",
-        "crop_status": "🩺 Daktari wa Mazao anagundua dalili...",
+        "crop_status": "Daktari wa Mazao anagundua dalili...",
         "crop_done": "Utambuzi wa Daktari wa Mazao umekamilika!",
-        "market_status": "📊 Wakala wa Bei anachambua soko...",
+        "market_status": "Wakala wa Bei anachambua soko...",
         "market_done": "Uchambuzi wa bei umekamilika!",
-        "advisory_status": "✍️ Wakala wa Ushauri anakusanya ripoti ya mwisho...",
+        "advisory_status": "Wakala wa Ushauri anakusanya ripoti ya mwisho...",
         "advisory_done": "Ripoti kamili imekusanywa!",
     },
     "Arabic": {
@@ -358,13 +358,13 @@ TRANSLATIONS = {
         "warning_key": "الرجاء إدخال مفتاح API جيميني.",
         "warning_fields": "الرجاء ملء الحقول الثلاثة.",
         "subtitle": "نظام استشارة زراعية عالمي متعدد الوكلاء مدعوم بـ Google ADK",
-        "weather_status": "⛅ وكيل الطقس يحلل توقعات 7 أيام...",
+        "weather_status": "وكيل الطقس يحلل توقعات 7 أيام...",
         "weather_done": "اكتمل تحليل وكيل الطقس!",
-        "crop_status": "🩺 طبيب المحاصيل يشخص الأعراض...",
+        "crop_status": "طبيب المحاصيل يشخص الأعراض...",
         "crop_done": "اكتمل تشخيص طبيب المحاصيل!",
-        "market_status": "📊 وكيل الأسعار يحلل السوق...",
+        "market_status": "وكيل الأسعار يحلل السوق...",
         "market_done": "اكتمل تحليل الأسعار!",
-        "advisory_status": "✍️ وكيل الاستشارة يجمع التقرير النهائي...",
+        "advisory_status": "وكيل الاستشارة يجمع التقرير النهائي...",
         "advisory_done": "اكتمل تجميع التقرير الكامل!",
     },
     "Portuguese": {
@@ -400,13 +400,13 @@ TRANSLATIONS = {
         "warning_key": "Por favor insira sua chave API do Gemini.",
         "warning_fields": "Por favor preencha os três campos.",
         "subtitle": "Sistema Global de Consultoria Agrícola Multi-Agente com Google ADK",
-        "weather_status": "⛅ Agente Meteorológico analisando previsão de 7 dias...",
+        "weather_status": "Agente Meteorológico analisando previsão de 7 dias...",
         "weather_done": "Análise do Agente Meteorológico concluída!",
-        "crop_status": "🩺 Médico de Culturas diagnosticando sintomas...",
+        "crop_status": "Médico de Culturas diagnosticando sintomas...",
         "crop_done": "Diagnóstico do Médico de Culturas concluído!",
-        "market_status": "📊 Agente de Preços analisando mercado...",
+        "market_status": "Agente de Preços analisando mercado...",
         "market_done": "Análise de preços concluída!",
-        "advisory_status": "✍️ Agente Consultor compilando relatório final...",
+        "advisory_status": "Agente Consultor compilando relatório final...",
         "advisory_done": "Relatório completo compilado!",
     },
     "Mandarin": {
@@ -442,13 +442,13 @@ TRANSLATIONS = {
         "warning_key": "请在侧边栏输入您的 Gemini API 密钥。",
         "warning_fields": "请填写所有三个字段。",
         "subtitle": "由 Google ADK 驱动的全球多代理农业咨询系统",
-        "weather_status": "⛅ 天气代理正在分析7天预报...",
+        "weather_status": "天气代理正在分析7天预报...",
         "weather_done": "天气代理分析完成！",
-        "crop_status": "🩺 作物医生正在诊断症状...",
+        "crop_status": "作物医生正在诊断症状...",
         "crop_done": "作物医生诊断完成！",
-        "market_status": "📊 价格代理正在分析市场...",
+        "market_status": "价格代理正在分析 market...",
         "market_done": "价格分析完成！",
-        "advisory_status": "✍️ 咨询代理正在编制最终报告...",
+        "advisory_status": "咨询代理正在编制最终报告...",
         "advisory_done": "完整报告已编制！",
     },
     "Bengali": {
@@ -484,13 +484,13 @@ TRANSLATIONS = {
         "warning_key": "অনুগ্রহ করে Gemini API কী প্রবেশ করুন।",
         "warning_fields": "অনুগ্রহ করে তিনটি ক্ষেত্র পূরণ করুন।",
         "subtitle": "Google ADK দ্বারা চালিত গ্লোবাল মাল্টি-এজেন্ট কৃষি পরামর্শ সিস্টেম",
-        "weather_status": "⛅ আবহাওয়া এজেন্ট ৭-দিনের পূর্বাভাস বিশ্লেষণ করছে...",
+        "weather_status": "আবহাওয়া এজেন্ট ৭-দিনের পূর্বাভাস বিশ্লেষণ করছে...",
         "weather_done": "আবহাওয়া এজেন্ট বিশ্লেষণ সম্পূর্ণ!",
-        "crop_status": "🩺 ফসল ডাক্তার লক্ষণ নির্ণয় করছে...",
+        "crop_status": "ফসল ডাক্তার লক্ষণ নির্ণয় করছে...",
         "crop_done": "ফসল ডাক্তার রোগ নির্ণয় সম্পূর্ণ!",
-        "market_status": "📊 মূল্য এজেন্ট বাজার বিশ্লেষণ করছে...",
+        "market_status": "মূল্য এজেন্ট বাজার বিশ্লেষণ করছে...",
         "market_done": "মূল্য বিশ্লেষণ সম্পূর্ণ!",
-        "advisory_status": "✍️ পরামর্শ এজেন্ট চূড়ান্ত রিপোর্ট তৈরি করছে...",
+        "advisory_status": "পরামর্শ এজেন্ট চূড়ান্ত রিপোর্ট তৈরি করছে...",
         "advisory_done": "সম্পূর্ণ পরামর্শ রিপোর্ট তৈরি!",
     },
     "Russian": {
@@ -526,13 +526,13 @@ TRANSLATIONS = {
         "warning_key": "Пожалуйста, введите ключ API Gemini.",
         "warning_fields": "Пожалуйста, заполните все три поля.",
         "subtitle": "Глобальная многоагентная система агрономических консультаций на базе Google ADK",
-        "weather_status": "⛅ Агент погоды анализирует прогноз на 7 дней...",
+        "weather_status": "Агент погоды анализирует прогноз на 7 дней...",
         "weather_done": "Анализ агента погоды завершен!",
-        "crop_status": "🩺 Агент растений диагностирует симптомы...",
+        "crop_status": "Агент растений диагностирует симптомы...",
         "crop_done": "Диагностика завершена!",
-        "market_status": "📊 Агент цен анализирует рынок...",
+        "market_status": "Агент цен анализирует рынок...",
         "market_done": "Анализ цен завершен!",
-        "advisory_status": "✍️ Консультационный агент составляет отчет...",
+        "advisory_status": "Консультационный агент составляет отчет...",
         "advisory_done": "Полный отчет готов!",
     },
     "Indonesian": {
@@ -568,13 +568,13 @@ TRANSLATIONS = {
         "warning_key": "Silakan masukkan kunci API Gemini Anda.",
         "warning_fields": "Silakan isi ketiga bidang.",
         "subtitle": "Sistem Konsultasi Pertanian Multi-Agen Global yang didukung Google ADK",
-        "weather_status": "⛅ Agen Cuaca menganalisis prakiraan 7 hari...",
+        "weather_status": "Agen Cuaca menganalisis prakiraan 7 hari...",
         "weather_done": "Analisis Agen Cuaca selesai!",
-        "crop_status": "🩺 Dokter Tanaman mendiagnosis gejala...",
+        "crop_status": "Dokter Tanaman mendiagnosis gejala...",
         "crop_done": "Diagnosis Dokter Tanaman selesai!",
-        "market_status": "📊 Agen Harga menganalisis pasar...",
+        "market_status": "Agen Harga menganalisis pasar...",
         "market_done": "Analisis harga selesai!",
-        "advisory_status": "✍️ Agen Konsultasi menyusun laporan akhir...",
+        "advisory_status": "Agen Konsultasi menyusun laporan akhir...",
         "advisory_done": "Laporan lengkap telah disusun!",
     },
     "Turkish": {
@@ -610,13 +610,13 @@ TRANSLATIONS = {
         "warning_key": "Lütfen Gemini API anahtarınızı girin.",
         "warning_fields": "Lütfen üç alanı da doldurun.",
         "subtitle": "Google ADK destekli Küresel Çok Ajanlı Tarım Danışma Sistemi",
-        "weather_status": "⛅ Hava Durumu Ajanı 7 günlük tahmin analiz ediyor...",
+        "weather_status": "Hava Durumu Ajanı 7 günlük tahmin analiz ediyor...",
         "weather_done": "Hava Durumu Ajanı analizi tamamlandı!",
-        "crop_status": "🩺 Ürün Doktoru belirtileri teşhis ediyor...",
+        "crop_status": "Ürün Doktoru belirtileri teşhis ediyor...",
         "crop_done": "Ürün Doktoru teşhisi tamamlandı!",
-        "market_status": "📊 Fiyat Ajanı piyasayı analiz ediyor...",
+        "market_status": "Fiyat Ajanı piyasayı analiz ediyor...",
         "market_done": "Fiyat analizi tamamlandı!",
-        "advisory_status": "✍️ Danışma Ajanı son raporu derliyor...",
+        "advisory_status": "Danışma Ajanı son raporu derliyor...",
         "advisory_done": "Tam danışma raporu hazır!",
     },
     "Japanese": {
@@ -652,13 +652,13 @@ TRANSLATIONS = {
         "warning_key": "Gemini APIキーを入力してください。",
         "warning_fields": "3つのフィールドをすべて入力してください。",
         "subtitle": "Google ADKを活用したグローバル多エージェント農業アドバイザリーシステム",
-        "weather_status": "⛅ 気象エージェントが7日間の予報を分析中...",
+        "weather_status": "気象エージェントが7日間の予報を分析中...",
         "weather_done": "気象エージェントの分析完了！",
-        "crop_status": "🩺 作物ドクターが症状を診断中...",
+        "crop_status": "作物ドクターが症状を診断中...",
         "crop_done": "作物ドクターの診断完了！",
-        "market_status": "📊 価格エージェントが市場を分析中...",
+        "market_status": "価格エージェントが市場を分析中...",
         "market_done": "価格分析完了！",
-        "advisory_status": "✍️ アドバイザリーエージェントが最終レポートを作成中...",
+        "advisory_status": "アドバイザリーエージェントが最終レポートを作成中...",
         "advisory_done": "完全なレポートが完成しました！",
     },
     "Vietnamese": {
@@ -694,13 +694,13 @@ TRANSLATIONS = {
         "warning_key": "Vui lòng nhập khóa API Gemini của bạn.",
         "warning_fields": "Vui lòng điền vào cả ba trường.",
         "subtitle": "Hệ thống Tư vấn Nông nghiệp Đa tác nhân Toàn cầu được hỗ trợ bởi Google ADK",
-        "weather_status": "⛅ Tác nhân Thời tiết đang phân tích dự báo 7 ngày...",
+        "weather_status": "Tác nhân Thời tiết đang phân tích dự báo 7 ngày...",
         "weather_done": "Phân tích Tác nhân Thời tiết hoàn tất!",
-        "crop_status": "🩺 Bác sĩ Cây trồng đang chẩn đoán triệu chứng...",
-        "crop_done": "Chẩn đoán Bác sĩ Cây trồng hoàn tất!",
-        "market_status": "📊 Tác nhân Giá đang phân tích thị trường...",
+        "crop_status": "Tác nhân Cây trồng đang chẩn đoán triệu chứng...",
+        "crop_done": "Chẩn đoán Tác nhân Cây trồng hoàn tất!",
+        "market_status": "Tác nhân Giá đang phân tích thị trường...",
         "market_done": "Phân tích giá hoàn tất!",
-        "advisory_status": "✍️ Tác nhân Tư vấn đang biên soạn báo cáo cuối cùng...",
+        "advisory_status": "Tác nhân Tư vấn đang biên soạn báo cáo cuối cùng...",
         "advisory_done": "Báo cáo hoàn chỉnh đã được biên soạn!",
     },
 }
@@ -749,27 +749,577 @@ LANGUAGE_NAMES = {
 st.markdown("""
     <head>
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     </head>
     <style>
-        * { font-family: 'Outfit', sans-serif !important; }
-        .stApp { background-color: #f7f9f6; }
+        /* ── Base ─────────────────────────────────────────────── */
+        * { font-family: 'Inter', 'Outfit', sans-serif !important; }
+
+        .stApp {
+            background: linear-gradient(160deg, #f0f7f1 0%, #e8f5e9 40%, #f5f9f5 100%) !important;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ──────────────────────────────────────────── */
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #0d2b10 0%, #163a1a 60%, #1e4a22 100%) !important;
+            border-right: 1px solid rgba(255,255,255,0.06) !important;
+        }
+        [data-testid="stSidebar"] * {
+            color: #c8e6c9 !important;
+        }
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] div,
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+        [data-testid="stSidebar"] .stSelectbox label,
+        [data-testid="stSidebar"] .stTextInput label,
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3 {
+            color: #c8e6c9 !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.02em;
+        }
+        [data-testid="stSidebar"] .stTextInput input,
+        [data-testid="stSidebar"] .stSelectbox select,
+        [data-testid="stSidebar"] input,
+        [data-testid="stSidebar"] select,
+        [data-testid="stSidebar"] input[type="text"],
+        [data-testid="stSidebar"] input[type="password"] {
+            background: #ffffff !important;
+            border: 1px solid rgba(255,255,255,0.3) !important;
+            color: #1b5e20 !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+        }
+        [data-testid="stSidebar"] hr {
+            border-color: rgba(255,255,255,0.1) !important;
+            margin: 1rem 0 !important;
+        }
+        /* Sidebar user strip */
+        .sidebar-user-strip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.06);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.10);
+            margin-bottom: 1rem;
+        }
+        .sidebar-avatar {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(76,175,80,0.35);
+        }
+        .sidebar-username {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: #e8f5e9 !important;
+            letter-spacing: 0.01em;
+        }
+        .sidebar-status {
+            font-size: 0.70rem;
+            color: #81c784 !important;
+            margin-top: 1px;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .online-dot {
+            width: 7px; height: 7px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-online 2.2s ease infinite;
+        }
+        @keyframes pulse-online {
+            0%,100% { opacity:1; transform:scale(1); }
+            50%      { opacity:0.5; transform:scale(1.3); }
+        }
+        /* Logout button */
+        [data-testid="stSidebar"] [data-testid="stButton"][id*="logout"] > button,
+        .logout-btn-wrapper .stButton > button {
+            background: rgba(211, 47, 47, 0.18) !important;
+            color: #ef9a9a !important;
+            border: 1px solid rgba(211, 47, 47, 0.40) !important;
+            border-radius: 8px !important;
+            font-size: 0.78rem !important;
+            font-weight: 600 !important;
+            padding: 0.30rem 0.8rem !important;
+            width: auto !important;
+            transition: background 0.2s ease, border-color 0.2s ease !important;
+            letter-spacing: 0.03em;
+        }
+        .logout-btn-wrapper .stButton > button:hover {
+            background: rgba(211, 47, 47, 0.30) !important;
+            border-color: rgba(211, 47, 47, 0.65) !important;
+            color: #ffcdd2 !important;
+        }
+
+        /* ── Hero Header ──────────────────────────────────────── */
         .main-header {
-            background: linear-gradient(135deg, #1e3f20 0%, #2e5d32 100%);
-            color: white; padding: 2.5rem; border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(30, 63, 32, 0.15);
-            margin-bottom: 2rem; text-align: center;
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            padding: 3rem 2.5rem 2.5rem;
+            text-align: center;
+            /* Wheat-field gradient as base – overlaid by SVG pattern */
+            background:
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+                linear-gradient(145deg, #0a2e0c 0%, #1b5e20 35%, #2e7d32 65%, #1a4a1e 100%);
+            box-shadow:
+                0 20px 60px rgba(11, 46, 14, 0.35),
+                0 4px 15px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.08);
         }
-        .main-header h1 { color: #dcedc8 !important; font-weight: 700; font-size: 2.8rem; }
-        .main-header p { font-size: 1.1rem; color: #f1f8e9; opacity: 0.9; }
+        /* Decorative shimmer bar at top */
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #81c784, #a5d6a7, #66bb6a, transparent);
+            border-radius: 20px 20px 0 0;
+        }
+        /* Soft radial glow at centre */
+        .main-header::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 480px; height: 240px;
+            background: radial-gradient(ellipse, rgba(129,199,132,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .main-header h1 {
+            position: relative; z-index: 1;
+            color: #e8f5e9 !important;
+            font-weight: 800 !important;
+            font-size: 2.9rem !important;
+            letter-spacing: -0.5px !important;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.4) !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .main-header p {
+            position: relative; z-index: 1;
+            font-size: 1.05rem !important;
+            color: #c8e6c9 !important;
+            opacity: 0.92;
+            font-weight: 400;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        .header-badge {
+            position: relative; z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 50px;
+            padding: 0.28rem 0.85rem;
+            font-size: 0.75rem;
+            color: #a5d6a7 !important;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 0.85rem;
+            backdrop-filter: blur(4px);
+        }
+
+        /* ── Section headings ─────────────────────────────────── */
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1b5e20;
+            letter-spacing: -0.2px;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid rgba(46,125,50,0.12);
+        }
+        .section-heading .sh-icon {
+            width: 34px; height: 34px;
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 3px 10px rgba(76,175,80,0.30);
+        }
+
+        /* ── Input card wrapper ───────────────────────────────── */
+        .input-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+            border: 1px solid rgba(200, 230, 201, 0.60);
+            margin-bottom: 1.2rem;
+            transition: box-shadow 0.25s ease;
+        }
+        .input-card:hover {
+            box-shadow: 0 8px 32px rgba(46,125,50,0.10), 0 1px 4px rgba(0,0,0,0.06);
+        }
+
+        /* ── Streamlit input overrides ────────────────────────── */
+        .stTextInput > div > div > input,
+        .stTextArea > div > div > textarea {
+            border-radius: 10px !important;
+            border: 1.5px solid #e0e0e0 !important;
+            background: #fafafa !important;
+            font-size: 0.94rem !important;
+            padding: 0.6rem 0.85rem !important;
+            transition: border-color 0.22s ease, box-shadow 0.22s ease !important;
+            color: #1a2e1a !important;
+        }
+        .stTextInput > div > div > input:focus,
+        .stTextArea > div > div > textarea:focus {
+            border-color: #2e7d32 !important;
+            box-shadow: 0 0 0 3px rgba(46,125,50,0.12) !important;
+            background: #f9fff9 !important;
+            outline: none !important;
+        }
+        .stTextInput > label,
+        .stTextArea > label {
+            font-weight: 600 !important;
+            font-size: 0.85rem !important;
+            color: #2e5d32 !important;
+            letter-spacing: 0.02em !important;
+            text-transform: uppercase !important;
+        }
+
+        /* ── Analyze button ───────────────────────────────────── */
+        .stButton > button[kind="primary"],
+        div[data-testid="stButton"] > button {
+            background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            font-size: 1rem !important;
+            padding: 0.75rem 1.5rem !important;
+            letter-spacing: 0.02em !important;
+            box-shadow: 0 4px 16px rgba(46,125,50,0.30) !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+        }
+        div[data-testid="stButton"] > button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 24px rgba(46,125,50,0.40) !important;
+        }
+        div[data-testid="stButton"] > button:active {
+            transform: translateY(0) !important;
+        }
+
+        /* ── Report cards ─────────────────────────────────────── */
         .report-card {
-            background-color: white; border-radius: 12px; padding: 1.8rem;
-            border-left: 5px solid #2e5d32;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 1.5rem;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem 2.2rem;
+            border-left: 4px solid #2e7d32;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+            margin-bottom: 1.6rem;
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+            border-top: 1px solid rgba(200,230,201,0.5);
         }
-        .card-header { font-weight: 600; font-size: 1.3rem; color: #1e3f20; margin-bottom: 1rem; }
+        .report-card:hover {
+            box-shadow: 0 8px 36px rgba(46,125,50,0.12), 0 2px 6px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
+        .card-header {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #1b5e20;
+            margin-bottom: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.1px;
+        }
+
+        /* ── Dividers ─────────────────────────────────────────── */
+        hr {
+            border: none !important;
+            height: 1px !important;
+            background: linear-gradient(90deg, transparent, rgba(46,125,50,0.15), transparent) !important;
+            margin: 1.5rem 0 !important;
+        }
+
+        /* ── Info / warning / success ─────────────────────────── */
+        .stAlert {
+            border-radius: 12px !important;
+            border-left-width: 4px !important;
+        }
+
+        /* ── Download button ──────────────────────────────────── */
+        .stDownloadButton > button {
+            background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 14px rgba(21,101,192,0.30) !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+        }
+        .stDownloadButton > button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 22px rgba(21,101,192,0.38) !important;
+        }
+
+        /* ── Misc polish ──────────────────────────────────────── */
+        .stStatus {
+            border-radius: 12px !important;
+        }
+        [data-testid="stSidebarCollapseButton"] span,
+        button[title*="keyboard"],
+        [data-testid="stSidebarResizer"] {
+            display: none !important;
+        }
     </style>
 """, unsafe_allow_html=True)
+
+st.markdown("""
+<style>
+section[data-testid="stSidebar"] input,
+section[data-testid="stSidebar"] textarea,
+section[data-testid="stSidebar"] select,
+section[data-testid="stSidebar"] [data-baseweb="input"] input,
+section[data-testid="stSidebar"] [data-baseweb="select"] input,
+section[data-testid="stSidebar"] div[data-testid="stTextInput"] input {
+    color: #1b5e20 !important;
+    -webkit-text-fill-color: #1b5e20 !important;
+    opacity: 1 !important;
+}
+section[data-testid="stSidebar"] [data-baseweb="input"] span,
+section[data-testid="stSidebar"] [data-baseweb="select"] span,
+section[data-testid="stSidebar"] [role="option"],
+section[data-testid="stSidebar"] [data-baseweb="select"] [data-testid="stMarkdownContainer"] {
+    color: #1b5e20 !important;
+    -webkit-text-fill-color: #1b5e20 !important;
+}
+section[data-testid="stSidebar"] [data-baseweb="select"] [data-testid="stMarkdownContainer"] p,
+section[data-testid="stSidebar"] [data-baseweb="select"] div,
+section[data-testid="stSidebar"] [data-baseweb="select"] span:not([aria-hidden]),
+section[data-testid="stSidebar"] div[class*="ValueContainer"] *,
+section[data-testid="stSidebar"] div[class*="singleValue"],
+section[data-testid="stSidebar"] div[class*="placeholder"] {
+    color: #1b5e20 !important;
+    -webkit-text-fill-color: #1b5e20 !important;
+}
+/* Fix status box text mixing */
+[data-testid="stStatusWidget"] {
+    overflow: hidden !important;
+}
+[data-testid="stStatusWidget"] span {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+div[data-testid="stStatus"] > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+# ============================================================
+# LOGIN SYSTEM — Session State Initialization
+# ============================================================
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+if "username" not in st.session_state:
+    st.session_state.username = ""
+
+# ============================================================
+# LOGIN / SIGNUP SCREEN
+# ============================================================
+if not st.session_state.logged_in:
+    # Inject login-specific CSS
+    st.markdown("""
+        <style>
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 2rem 1rem;
+        }
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            max-width: 460px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(30, 63, 32, 0.18);
+            border-top: 5px solid #2e5d32;
+        }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .login-logo .logo-icon {
+            font-size: 3.5rem;
+            display: block;
+        }
+        .login-title {
+            text-align: center;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #1e3f20;
+            margin-bottom: 0.25rem;
+        }
+        .login-subtitle {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #6a8e6c;
+            margin-bottom: 1.8rem;
+        }
+        .login-footer {
+            text-align: center;
+            font-size: 0.82rem;
+            color: #a5b4a6;
+            margin-top: 1.5rem;
+        }
+        /* Tab styling */
+        .stTabs [data-baseweb="tab-list"] {
+            background: #f0f7f0;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            border-radius: 8px;
+            font-weight: 600;
+            color: #4a7c4e;
+        }
+        .stTabs [aria-selected="true"] {
+            background: #2e5d32 !important;
+            color: white !important;
+        }
+        /* Green buttons inside login */
+        .login-card .stButton > button {
+            background: linear-gradient(135deg, #2e5d32 0%, #4a7c4e 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 10px !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            padding: 0.65rem 1.5rem !important;
+            width: 100% !important;
+            transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+        }
+        .login-card .stButton > button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(46, 93, 50, 0.35) !important;
+        }
+        /* Pulse badge */
+        @keyframes pulse-green {
+            0%   { box-shadow: 0 0 0 0 rgba(46,93,50,0.4); }
+            70%  { box-shadow: 0 0 0 10px rgba(46,93,50,0); }
+            100% { box-shadow: 0 0 0 0 rgba(46,93,50,0); }
+        }
+        .badge-dot {
+            display: inline-block;
+            width: 10px; height: 10px;
+            background: #4caf50;
+            border-radius: 50%;
+            animation: pulse-green 2s infinite;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Centered login card
+    _, center_col, _ = st.columns([1, 2.2, 1])
+    with center_col:
+        st.markdown('<div class="login-logo"><span class="logo-icon">🌱</span></div>', unsafe_allow_html=True)
+        st.markdown('<div class="login-title">AgriSense AI</div>', unsafe_allow_html=True)
+        st.markdown('<div class="login-subtitle">Your Global Farming Intelligence Platform</div>', unsafe_allow_html=True)
+
+        login_tab, signup_tab = st.tabs(["🔑  Login", "✨  Sign Up"])
+
+        # ── LOGIN TAB ──────────────────────────────────────────
+        with login_tab:
+            st.markdown("")
+            login_user = st.text_input(
+                "Username",
+                placeholder="Enter your username",
+                key="login_username"
+            )
+            login_pass = st.text_input(
+                "Password",
+                placeholder="Enter your password",
+                type="password",
+                key="login_password"
+            )
+            st.markdown("")
+            if st.button("🚀 Login to AgriSense", key="login_btn"):
+                if login_user.strip() and login_pass.strip():
+                    st.session_state.logged_in = True
+                    st.session_state.username = login_user.strip()
+                    st.rerun()
+                else:
+                    st.error("Please enter both username and password.")
+
+        # ── SIGN UP TAB ───────────────────────────────────────
+        with signup_tab:
+            st.markdown("")
+            signup_user = st.text_input(
+                "Choose a Username",
+                placeholder="e.g. FarmerAli, GreenField99",
+                key="signup_username"
+            )
+            signup_pass = st.text_input(
+                "Choose a Password",
+                placeholder="At least 6 characters",
+                type="password",
+                key="signup_password"
+            )
+            signup_pass2 = st.text_input(
+                "Confirm Password",
+                placeholder="Repeat your password",
+                type="password",
+                key="signup_password2"
+            )
+            st.markdown("")
+            if st.button("🌾 Create Account & Enter", key="signup_btn"):
+                if not signup_user.strip():
+                    st.error("Please choose a username.")
+                elif len(signup_pass) < 6:
+                    st.error("Password must be at least 6 characters.")
+                elif signup_pass != signup_pass2:
+                    st.error("Passwords do not match.")
+                else:
+                    st.session_state.logged_in = True
+                    st.session_state.username = signup_user.strip()
+                    st.rerun()
+
+        st.markdown(
+            '<div class="login-footer">'
+            '<span class="badge-dot"></span>'
+            'Secure session &nbsp;|&nbsp; No data stored &nbsp;|&nbsp; Powered by Google ADK'
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+    # Stop here — don't render the main app
+    st.stop()
 
 # Helper function
 async def run_agent_async(agent, prompt: str) -> str:
@@ -800,15 +1350,41 @@ def run_agent_sync(agent, prompt: str) -> str:
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-        return loop.run_until_complete(run_agent_async(agent, prompt))
+        result = loop.run_until_complete(run_agent_async(agent, prompt))
+        return result
     except Exception as e:
-        return f"Error executing agent: {str(e)}"
+        st.error(f"⚠️ API Error: Please wait a moment and click 'Analyze' again. ({type(e).__name__})")
+        return None
 
 # ============================================================
 # SIDEBAR
 # ============================================================
 with st.sidebar:
-    st.image("https://img.icons8.com/color/96/sprout.png", width=64)
+    # ── Brand mark ──
+    st.markdown("""
+        <div style="display:flex;align-items:center;gap:10px;padding:0.5rem 0 1rem;">
+            <span style="font-size:2rem;">🌱</span>
+            <div>
+                <div style="font-weight:800;font-size:1.05rem;color:#c8e6c9;letter-spacing:-0.3px;">AgriSense AI</div>
+                <div style="font-size:0.68rem;color:#81c784;letter-spacing:0.08em;text-transform:uppercase;">Farming Intelligence</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # ── Slim user strip + logout ──
+    st.markdown(f"""
+        <div class="sidebar-user-strip">
+            <div class="sidebar-avatar">👤</div>
+            <div style="flex:1;min-width:0;">
+                <div class="sidebar-username">{st.session_state.username}</div>
+                <div class="sidebar-status"><span class="online-dot"></span>Active session</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    if st.button("⎋ Logout", key="logout_btn"):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+        st.rerun()
 
     # Language selection FIRST so translations apply to everything
     st.markdown("---")
@@ -840,6 +1416,7 @@ with st.sidebar:
 # ============================================================
 st.markdown(f"""
     <div class="main-header">
+        <div class="header-badge">🤖 Powered by Google ADK &nbsp;·&nbsp; Multi-Agent System</div>
         <h1>🌱 AgriSense AI</h1>
         <p>{T['subtitle']}</p>
     </div>
@@ -848,7 +1425,12 @@ st.markdown(f"""
 # ============================================================
 # ADVISORY INPUTS
 # ============================================================
-st.markdown(f"### {T['advisory_inputs']}")
+st.markdown(f"""
+    <div class="section-heading">
+        <div class="sh-icon">🌾</div>
+        <span>{T['advisory_inputs']}</span>
+    </div>
+""", unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 with col1:
     location = st.text_input(T["location"], placeholder=T["location_placeholder"])
@@ -895,7 +1477,7 @@ if st.session_state.step >= 1:
 
     # STEP 1: Weather Agent
     if not st.session_state.weather_report:
-        with st.status(T["weather_status"], expanded=True) as status:
+        with st.spinner(T["weather_status"]):
             agent = get_weather_agent()
             prompt = (
                 f"Analyze the weather forecast for '{location}' for crop '{crop_type}'. "
@@ -904,14 +1486,15 @@ if st.session_state.step >= 1:
                 f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
             )
             st.session_state.weather_report = run_agent_sync(agent, prompt)
-            status.update(label=T["weather_done"], state="complete")
+        st.success(T["weather_done"])
 
-    st.markdown(f"""
-        <div class="report-card">
-            <div class="card-header">{T['weather_header']}</div>
-            <div>{st.session_state.weather_report}</div>
-        </div>
-    """, unsafe_allow_html=True)
+    if st.session_state.weather_report:
+        st.markdown(f"""
+            <div class="report-card">
+                <div class="card-header">{T['weather_header']}</div>
+                <div>{st.session_state.weather_report}</div>
+            </div>
+        """, unsafe_allow_html=True)
 
     if st.session_state.step == 1:
         st.info(T["hitl_weather"])
@@ -928,23 +1511,24 @@ if st.session_state.step >= 1:
 # STEP 2: Crop Doctor Agent
 if st.session_state.step >= 2:
     if not st.session_state.crop_doctor_report:
-        with st.status(T["crop_status"], expanded=True) as status:
+        with st.spinner(T["crop_status"]):
             agent = get_crop_doctor_agent()
             prompt = (
-                f"Diagnose crop '{crop_type}' in '{location}' with symptoms: {problem}. "
+                f"You are a helpful crop advisor. The farmer from '{location}' is asking about '{crop_type}': {problem}. Whether this is a disease/pest symptom OR a general farming question, answer it helpfully in {lang_name}. Keep response under 150 words. Use bullet points and emojis. Be practical and farmer-friendly."
                 f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
                 f"Use bullet points and emojis. Top 3 causes and 3 actions only. "
                 f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
             )
             st.session_state.crop_doctor_report = run_agent_sync(agent, prompt)
-            status.update(label=T["crop_done"], state="complete")
+        st.success(T["crop_done"])
 
-    st.markdown(f"""
-        <div class="report-card">
-            <div class="card-header">{T['crop_header']}</div>
-            <div>{st.session_state.crop_doctor_report}</div>
-        </div>
-    """, unsafe_allow_html=True)
+    if st.session_state.crop_doctor_report:
+        st.markdown(f"""
+            <div class="report-card">
+                <div class="card-header">{T['crop_header']}</div>
+                <div>{st.session_state.crop_doctor_report}</div>
+            </div>
+        """, unsafe_allow_html=True)
 
     if st.session_state.step == 2:
         st.info(T["hitl_crop"])
@@ -961,7 +1545,7 @@ if st.session_state.step >= 2:
 # STEP 3: Market Price Agent
 if st.session_state.step >= 3:
     if not st.session_state.market_price_report:
-        with st.status(T["market_status"], expanded=True) as status:
+        with st.spinner(T["market_status"]):
             agent = get_market_price_agent()
             prompt = (
                 f"Analyze market prices for '{crop_type}' near '{location}'. "
@@ -970,14 +1554,15 @@ if st.session_state.step >= 3:
                 f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
             )
             st.session_state.market_price_report = run_agent_sync(agent, prompt)
-            status.update(label=T["market_done"], state="complete")
+        st.success(T["market_done"])
 
-    st.markdown(f"""
-        <div class="report-card">
-            <div class="card-header">{T['market_header']}</div>
-            <div>{st.session_state.market_price_report}</div>
-        </div>
-    """, unsafe_allow_html=True)
+    if st.session_state.market_price_report:
+        st.markdown(f"""
+            <div class="report-card">
+                <div class="card-header">{T['market_header']}</div>
+                <div>{st.session_state.market_price_report}</div>
+            </div>
+        """, unsafe_allow_html=True)
 
     if st.session_state.step == 3:
         st.info(T["hitl_market"])
@@ -994,7 +1579,7 @@ if st.session_state.step >= 3:
 # STEP 4: Advisory Agent - Final Report
 if st.session_state.step >= 4:
     if not st.session_state.final_report:
-        with st.status(T["advisory_status"], expanded=True) as status:
+        with st.spinner(T["advisory_status"]):
             agent = get_advisory_agent()
             combined = (
                 f"Location: {location}\nCrop: {crop_type}\nProblem: {problem}\n\n"
@@ -1009,7 +1594,7 @@ if st.session_state.step >= 4:
                 f"Keep it concise - maximum 300 words.\n\nData:\n{combined}"
             )
             st.session_state.final_report = run_agent_sync(agent, prompt)
-            status.update(label=T["advisory_done"], state="complete")
+        st.success(T["advisory_done"])
 
     st.markdown("---")
     st.success(f"🎉 {T['completed']}")
