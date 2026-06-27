@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 # Load environment variables if .env exists
 load_dotenv()
 
-# Add current workspace directory to python path for importing agents 
+# Add current workspace directory to python path for importing agents
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import agent factories
@@ -1137,189 +1137,6 @@ div[data-testid="stStatus"] > div {
 """, unsafe_allow_html=True)
 
 
-# ============================================================
-# LOGIN SYSTEM — Session State Initialization
-# ============================================================
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-if "username" not in st.session_state:
-    st.session_state.username = ""
-
-# ============================================================
-# LOGIN / SIGNUP SCREEN
-# ============================================================
-if not st.session_state.logged_in:
-    # Inject login-specific CSS
-    st.markdown("""
-        <style>
-        .login-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            padding: 2rem 1rem;
-        }
-        .login-card {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem 2.5rem;
-            max-width: 460px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(30, 63, 32, 0.18);
-            border-top: 5px solid #2e5d32;
-        }
-        .login-logo {
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-        .login-logo .logo-icon {
-            font-size: 3.5rem;
-            display: block;
-        }
-        .login-title {
-            text-align: center;
-            font-size: 1.9rem;
-            font-weight: 700;
-            color: #1e3f20;
-            margin-bottom: 0.25rem;
-        }
-        .login-subtitle {
-            text-align: center;
-            font-size: 0.95rem;
-            color: #6a8e6c;
-            margin-bottom: 1.8rem;
-        }
-        .login-footer {
-            text-align: center;
-            font-size: 0.82rem;
-            color: #a5b4a6;
-            margin-top: 1.5rem;
-        }
-        /* Tab styling */
-        .stTabs [data-baseweb="tab-list"] {
-            background: #f0f7f0;
-            border-radius: 10px;
-            padding: 4px;
-        }
-        .stTabs [data-baseweb="tab"] {
-            border-radius: 8px;
-            font-weight: 600;
-            color: #4a7c4e;
-        }
-        .stTabs [aria-selected="true"] {
-            background: #2e5d32 !important;
-            color: white !important;
-        }
-        /* Green buttons inside login */
-        .login-card .stButton > button {
-            background: linear-gradient(135deg, #2e5d32 0%, #4a7c4e 100%) !important;
-            color: white !important;
-            border: none !important;
-            border-radius: 10px !important;
-            font-weight: 600 !important;
-            font-size: 1rem !important;
-            padding: 0.65rem 1.5rem !important;
-            width: 100% !important;
-            transition: transform 0.15s ease, box-shadow 0.15s ease !important;
-        }
-        .login-card .stButton > button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(46, 93, 50, 0.35) !important;
-        }
-        /* Pulse badge */
-        @keyframes pulse-green {
-            0%   { box-shadow: 0 0 0 0 rgba(46,93,50,0.4); }
-            70%  { box-shadow: 0 0 0 10px rgba(46,93,50,0); }
-            100% { box-shadow: 0 0 0 0 rgba(46,93,50,0); }
-        }
-        .badge-dot {
-            display: inline-block;
-            width: 10px; height: 10px;
-            background: #4caf50;
-            border-radius: 50%;
-            animation: pulse-green 2s infinite;
-            margin-right: 6px;
-            vertical-align: middle;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Centered login card
-    _, center_col, _ = st.columns([1, 2.2, 1])
-    with center_col:
-        st.markdown('<div class="login-logo"><span class="logo-icon">🌱</span></div>', unsafe_allow_html=True)
-        st.markdown('<div class="login-title">AgriSense AI</div>', unsafe_allow_html=True)
-        st.markdown('<div class="login-subtitle">Your Global Farming Intelligence Platform</div>', unsafe_allow_html=True)
-
-        login_tab, signup_tab = st.tabs(["🔑  Login", "✨  Sign Up"])
-
-        # ── LOGIN TAB ──────────────────────────────────────────
-        with login_tab:
-            st.markdown("")
-            login_user = st.text_input(
-                "Username",
-                placeholder="Enter your username",
-                key="login_username"
-            )
-            login_pass = st.text_input(
-                "Password",
-                placeholder="Enter your password",
-                type="password",
-                key="login_password"
-            )
-            st.markdown("")
-            if st.button("🚀 Login to AgriSense", key="login_btn"):
-                if login_user.strip() and login_pass.strip():
-                    st.session_state.logged_in = True
-                    st.session_state.username = login_user.strip()
-                    st.rerun()
-                else:
-                    st.error("Please enter both username and password.")
-
-        # ── SIGN UP TAB ───────────────────────────────────────
-        with signup_tab:
-            st.markdown("")
-            signup_user = st.text_input(
-                "Choose a Username",
-                placeholder="e.g. FarmerAli, GreenField99",
-                key="signup_username"
-            )
-            signup_pass = st.text_input(
-                "Choose a Password",
-                placeholder="At least 6 characters",
-                type="password",
-                key="signup_password"
-            )
-            signup_pass2 = st.text_input(
-                "Confirm Password",
-                placeholder="Repeat your password",
-                type="password",
-                key="signup_password2"
-            )
-            st.markdown("")
-            if st.button("🌾 Create Account & Enter", key="signup_btn"):
-                if not signup_user.strip():
-                    st.error("Please choose a username.")
-                elif len(signup_pass) < 6:
-                    st.error("Password must be at least 6 characters.")
-                elif signup_pass != signup_pass2:
-                    st.error("Passwords do not match.")
-                else:
-                    st.session_state.logged_in = True
-                    st.session_state.username = signup_user.strip()
-                    st.rerun()
-
-        st.markdown(
-            '<div class="login-footer">'
-            '<span class="badge-dot"></span>'
-            'Secure session &nbsp;|&nbsp; No data stored &nbsp;|&nbsp; Powered by Google ADK'
-            '</div>',
-            unsafe_allow_html=True
-        )
-
-    # Stop here — don't render the main app
-    st.stop()
 
 # Helper function
 async def run_agent_async(agent, prompt: str) -> str:
@@ -1350,11 +1167,9 @@ def run_agent_sync(agent, prompt: str) -> str:
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-        result = loop.run_until_complete(run_agent_async(agent, prompt))
-        return result
+        return loop.run_until_complete(run_agent_async(agent, prompt))
     except Exception as e:
-        st.error(f"⚠️ API Error: Please wait a moment and click 'Analyze' again. ({type(e).__name__})")
-        return None
+        return f"Error executing agent: {str(e)}"
 
 # ============================================================
 # SIDEBAR
@@ -1371,20 +1186,7 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
 
-    # ── Slim user strip + logout ──
-    st.markdown(f"""
-        <div class="sidebar-user-strip">
-            <div class="sidebar-avatar">👤</div>
-            <div style="flex:1;min-width:0;">
-                <div class="sidebar-username">{st.session_state.username}</div>
-                <div class="sidebar-status"><span class="online-dot"></span>Active session</div>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-    if st.button("⎋ Logout", key="logout_btn"):
-        st.session_state.logged_in = False
-        st.session_state.username = ""
-        st.rerun()
+
 
     # Language selection FIRST so translations apply to everything
     st.markdown("---")
@@ -1395,6 +1197,13 @@ with st.sidebar:
     lang_key = LANGUAGE_OPTIONS[selected_display]
     T = TRANSLATIONS.get(lang_key, TRANSLATIONS["English"])
     lang_name = LANGUAGE_NAMES.get(lang_key, "English")
+    
+    # Track language changes for translation
+    if "current_lang" not in st.session_state:
+        st.session_state.current_lang = lang_key
+    elif st.session_state.current_lang != lang_key:
+        st.session_state.current_lang = lang_key
+        st.session_state.needs_translation = True
 
     st.markdown("---")
     st.markdown(f"### {T['settings']}")
@@ -1447,8 +1256,40 @@ def validate_inputs():
     if not gemini_key:
         st.warning(T["warning_key"])
         return False
-    if not location or not crop_type or not problem:
-        st.warning(T["warning_fields"])
+    # Location: min 4 chars
+    if not location or len(location.strip()) < 4:
+        st.warning("Please enter a valid farm location with at least 4 characters (e.g. Lahore, Pakistan)")
+        return False
+    # Crop: must be a known crop
+    known_crops = [
+        "wheat","rice","corn","maize","tomato","potato","cotton","sugarcane","mango",
+        "onion","garlic","chili","pepper","soybean","barley","oats","sunflower",
+        "mustard","lentil","chickpea","pea","spinach","carrot","cauliflower","cucumber",
+        "gandum","chawal","tamatar","alu","makki","gehu","gehun","ganna","sarso",
+        "moong","bajra","jowar","millet","cassava","yam","banana","orange","apple",
+        "grape","watermelon","pumpkin","eggplant","brinjal","okra","cabbage","radish",
+        "pineapple","papaya","guava","ginger","turmeric","groundnut","peanut",
+        "aalo","gajar","piyaz","tamater","mirch","bhindi","palak","methi","mooli"
+    ]
+    crop_lower = crop_type.strip().lower()
+    if not crop_type or len(crop_type.strip()) < 3:
+        st.warning("Please enter a valid crop name (e.g. Wheat, Rice, Tomato)")
+        return False
+    if not any(c in crop_lower for c in known_crops):
+        st.warning(f"'{crop_type}' is not a recognized crop. Please enter a real crop name (e.g. Wheat, Rice, Tomato, Cotton)")
+        return False
+    # Problem: min 15 chars and farming related
+    if not problem or len(problem.strip()) < 15:
+        st.warning("Please describe your farming problem in at least 15 characters (e.g. leaves turning yellow, how to grow wheat)")
+        return False
+    farming_words = ["crop","plant","grow","farm","field","soil","water","rain","pest","disease",
+                     "harvest","seed","leaf","leaves","yellow","dry","wet","insect","spray",
+                     "fertilizer","how to","when to","price","sell","market","weather",
+                     "dying","wilting","spots","brown","black","root","stem","fruit","flower",
+                     "irrigation","planting","sowing","harvesting","yield","season",
+                     "فصل","پانی","کیڑے","بیماری","کھاد","گندم","چاول"]
+    if not any(w in problem.strip().lower() for w in farming_words):
+        st.warning("Please ask a farming-related question (e.g. how to grow wheat, leaves turning yellow, market prices)")
         return False
     return True
 
@@ -1469,151 +1310,175 @@ if st.session_state.step == 0:
             st.rerun()
 
 # ============================================================
+# TRANSLATE REPORTS IF LANGUAGE CHANGED
+# ============================================================
+if st.session_state.get("needs_translation") and st.session_state.get("step", 0) > 0:
+    st.session_state.needs_translation = False
+    with st.spinner("Translating to " + lang_name + "..."):
+        def do_translate(text, agent_fn):
+            p = "Translate ENTIRELY into " + lang_name + ". Keep emojis. No English. Text: " + text
+            r = run_agent_sync(agent_fn(), p)
+            return r if r and not r.startswith("Error") else text
+        if st.session_state.weather_report and not st.session_state.weather_report.startswith("Error"):
+            st.session_state.weather_report = do_translate(st.session_state.weather_report, get_weather_agent)
+        if st.session_state.crop_doctor_report and not st.session_state.crop_doctor_report.startswith("Error"):
+            st.session_state.crop_doctor_report = do_translate(st.session_state.crop_doctor_report, get_crop_doctor_agent)
+        if st.session_state.market_price_report and not st.session_state.market_price_report.startswith("Error"):
+            st.session_state.market_price_report = do_translate(st.session_state.market_price_report, get_market_price_agent)
+    st.rerun()
+
+# ============================================================
 # AGENT WORKFLOW
 # ============================================================
 if st.session_state.step >= 1:
     st.markdown("---")
     st.markdown(f"### {T['workflow']}")
 
-    # STEP 1: Weather Agent
-    if not st.session_state.weather_report:
-        with st.spinner(T["weather_status"]):
-            agent = get_weather_agent()
-            prompt = (
-                f"Analyze the weather forecast for '{location}' for crop '{crop_type}'. "
-                f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
-                f"Use bullet points and emojis. Be concise and farmer-friendly. "
-                f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
-            )
-            st.session_state.weather_report = run_agent_sync(agent, prompt)
-        st.success(T["weather_done"])
-
-    if st.session_state.weather_report:
+    # ── Show ALL completed cards first (always on top) ──
+    if st.session_state.weather_report and not st.session_state.weather_report.startswith("Error"):
         st.markdown(f"""
             <div class="report-card">
                 <div class="card-header">{T['weather_header']}</div>
                 <div>{st.session_state.weather_report}</div>
             </div>
         """, unsafe_allow_html=True)
+        st.success(T["weather_done"])
 
-    if st.session_state.step == 1:
-        st.info(T["hitl_weather"])
-        col1, col2 = st.columns([1, 4])
-        with col1:
-            if st.button(T["confirm_btn"], type="primary", key="confirm1"):
-                st.session_state.step = 2
-                st.rerun()
-        with col2:
-            if st.button(T["restart_btn"], key="restart1"):
-                reset_flow()
-                st.rerun()
-
-# STEP 2: Crop Doctor Agent
-if st.session_state.step >= 2:
-    if not st.session_state.crop_doctor_report:
-        with st.spinner(T["crop_status"]):
-            agent = get_crop_doctor_agent()
-            prompt = (
-                f"You are a helpful crop advisor. The farmer from '{location}' is asking about '{crop_type}': {problem}. Whether this is a disease/pest symptom OR a general farming question, answer it helpfully in {lang_name}. Keep response under 150 words. Use bullet points and emojis. Be practical and farmer-friendly."
-                f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
-                f"Use bullet points and emojis. Top 3 causes and 3 actions only. "
-                f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
-            )
-            st.session_state.crop_doctor_report = run_agent_sync(agent, prompt)
-        st.success(T["crop_done"])
-
-    if st.session_state.crop_doctor_report:
+    if st.session_state.step >= 2 and st.session_state.crop_doctor_report and not st.session_state.crop_doctor_report.startswith("Error"):
         st.markdown(f"""
             <div class="report-card">
                 <div class="card-header">{T['crop_header']}</div>
                 <div>{st.session_state.crop_doctor_report}</div>
             </div>
         """, unsafe_allow_html=True)
+        st.success(T["crop_done"])
 
-    if st.session_state.step == 2:
-        st.info(T["hitl_crop"])
-        col1, col2 = st.columns([1, 4])
-        with col1:
-            if st.button(T["confirm_btn"], type="primary", key="confirm2"):
-                st.session_state.step = 3
-                st.rerun()
-        with col2:
-            if st.button(T["restart_btn"], key="restart2"):
-                reset_flow()
-                st.rerun()
-
-# STEP 3: Market Price Agent
-if st.session_state.step >= 3:
-    if not st.session_state.market_price_report:
-        with st.spinner(T["market_status"]):
-            agent = get_market_price_agent()
-            prompt = (
-                f"Analyze market prices for '{crop_type}' near '{location}'. "
-                f"IMPORTANT: Respond ONLY in {lang_name}. Keep response under 150 words. "
-                f"Use bullet points. Current price, best time to sell, top 3 tips only. "
-                f"User may write in Roman script, mixed language, or transliteration - understand it and respond in {lang_name}."
-            )
-            st.session_state.market_price_report = run_agent_sync(agent, prompt)
-        st.success(T["market_done"])
-
-    if st.session_state.market_price_report:
+    if st.session_state.step >= 3 and st.session_state.market_price_report and not st.session_state.market_price_report.startswith("Error"):
         st.markdown(f"""
             <div class="report-card">
                 <div class="card-header">{T['market_header']}</div>
                 <div>{st.session_state.market_price_report}</div>
             </div>
         """, unsafe_allow_html=True)
+        st.success(T["market_done"])
 
-    if st.session_state.step == 3:
-        st.info(T["hitl_market"])
-        col1, col2 = st.columns([1, 4])
-        with col1:
-            if st.button(T["compile_btn"], type="primary", key="confirm3"):
-                st.session_state.step = 4
+    # ── Now show current step spinner/buttons below completed cards ──
+
+    # STEP 1: Weather Agent
+    if st.session_state.step == 1:
+        if not st.session_state.weather_report:
+            with st.spinner(T["weather_status"]):
+                agent = get_weather_agent()
+                prompt = (
+                    f"Analyze the weather forecast for '{location}' for crop '{crop_type}'. "
+                    f"CRITICAL INSTRUCTION: You MUST respond ENTIRELY in {lang_name} language only. "
+                    f"Do NOT write even a single word in English. Every word must be in {lang_name}. "
+                    f"Keep response under 150 words. Use bullet points and emojis. Be concise and farmer-friendly."
+                )
+                st.session_state.weather_report = run_agent_sync(agent, prompt)
                 st.rerun()
-        with col2:
-            if st.button(T["restart_btn"], key="restart3"):
+        else:
+            st.info(T["hitl_weather"])
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                if st.button(T["confirm_btn"], type="primary", key="confirm1"):
+                    st.session_state.step = 2
+                    st.rerun()
+            with col2:
+                if st.button(T["restart_btn"], key="restart1"):
+                    reset_flow()
+                    st.rerun()
+
+    # STEP 2: Crop Doctor Agent
+    elif st.session_state.step == 2:
+        if not st.session_state.crop_doctor_report:
+            with st.spinner(T["crop_status"]):
+                agent = get_crop_doctor_agent()
+                prompt = (
+                    f"You are a helpful crop advisor. The farmer from '{location}' is asking about '{crop_type}': {problem}. "
+                    f"CRITICAL INSTRUCTION: You MUST respond ENTIRELY in {lang_name} language only. "
+                    f"Do NOT write even a single word in English. Every word must be in {lang_name}. "
+                    f"Whether this is a disease/pest symptom OR a general farming question, answer it helpfully. "
+                    f"Keep response under 150 words. Use bullet points and emojis. Be practical and farmer-friendly."
+                )
+                st.session_state.crop_doctor_report = run_agent_sync(agent, prompt)
+                st.rerun()
+        else:
+            st.info(T["hitl_crop"])
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                if st.button(T["confirm_btn"], type="primary", key="confirm2"):
+                    st.session_state.step = 3
+                    st.rerun()
+            with col2:
+                if st.button(T["restart_btn"], key="restart2"):
+                    reset_flow()
+                    st.rerun()
+
+    # STEP 3: Market Price Agent
+    elif st.session_state.step == 3:
+        if not st.session_state.market_price_report:
+            with st.spinner(T["market_status"]):
+                agent = get_market_price_agent()
+                prompt = (
+                    f"You are a market price advisor. The crop is '{crop_type}' near '{location}'. "
+                    f"Provide current market prices for '{crop_type}', best time to sell, and top 3 selling tips. "
+                    f"CRITICAL INSTRUCTION: You MUST respond ENTIRELY in {lang_name} language only. "
+                    f"Do NOT write even a single word in English. Every word must be in {lang_name}. "
+                    f"Keep response under 150 words. Use bullet points."
+                )
+                st.session_state.market_price_report = run_agent_sync(agent, prompt)
+                st.rerun()
+        else:
+            st.info(T["hitl_market"])
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                if st.button(T["compile_btn"], type="primary", key="confirm3"):
+                    st.session_state.step = 4
+                    st.rerun()
+            with col2:
+                if st.button(T["restart_btn"], key="restart3"):
+                    reset_flow()
+                    st.rerun()
+
+    # STEP 4: Advisory Agent - Final Report
+    elif st.session_state.step == 4:
+        if not st.session_state.final_report:
+            with st.spinner(T["advisory_status"]):
+                agent = get_advisory_agent()
+                combined = (
+                    f"Location: {location}\nCrop: {crop_type}\nProblem: {problem}\n\n"
+                    f"WEATHER:\n{st.session_state.weather_report}\n\n"
+                    f"CROP HEALTH:\n{st.session_state.crop_doctor_report}\n\n"
+                    f"MARKET:\n{st.session_state.market_price_report}"
+                )
+                prompt = (
+                    f"CRITICAL INSTRUCTION: Respond ENTIRELY in {lang_name} only. No English words. "
+                    f"Compile a final farming advisory. Use simple words a local farmer can understand. "
+                    f"Format with emojis, bullet points, and a summary checklist. "
+                    f"Keep it concise - maximum 300 words.\n\nData:\n{combined}"
+                )
+                st.session_state.final_report = run_agent_sync(agent, prompt)
+                st.rerun()
+        else:
+            st.success(T["advisory_done"])
+            st.markdown("---")
+            st.success(f"🎉 {T['completed']}")
+            st.markdown(f"""
+                <div class="report-card" style="border-left: 5px solid #ffb300; background-color: #fffdf7;">
+                    <div class="card-header" style="color: #e65100;">📋 {T['final_report']}</div>
+                    <div style="font-size: 1.05rem; line-height: 1.8;">
+                        {st.session_state.final_report}
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+            st.download_button(
+                label=T["download_btn"],
+                data=st.session_state.final_report,
+                file_name=f"agrisense_{location.replace(' ','_').lower()}.md",
+                mime="text/markdown",
+                use_container_width=True
+            )
+            if st.button(T["analyze_another"], use_container_width=True):
                 reset_flow()
                 st.rerun()
-
-# STEP 4: Advisory Agent - Final Report
-if st.session_state.step >= 4:
-    if not st.session_state.final_report:
-        with st.spinner(T["advisory_status"]):
-            agent = get_advisory_agent()
-            combined = (
-                f"Location: {location}\nCrop: {crop_type}\nProblem: {problem}\n\n"
-                f"WEATHER:\n{st.session_state.weather_report}\n\n"
-                f"CROP HEALTH:\n{st.session_state.crop_doctor_report}\n\n"
-                f"MARKET:\n{st.session_state.market_price_report}"
-            )
-            prompt = (
-                f"Compile a final farming advisory in {lang_name} ONLY. "
-                f"Use simple words a local farmer can understand. "
-                f"Format with emojis, bullet points, and a summary checklist. "
-                f"Keep it concise - maximum 300 words.\n\nData:\n{combined}"
-            )
-            st.session_state.final_report = run_agent_sync(agent, prompt)
-        st.success(T["advisory_done"])
-
-    st.markdown("---")
-    st.success(f"🎉 {T['completed']}")
-    st.markdown(f"""
-        <div class="report-card" style="border-left: 5px solid #ffb300; background-color: #fffdf7;">
-            <div class="card-header" style="color: #e65100;">📋 {T['final_report']}</div>
-            <div style="font-size: 1.05rem; line-height: 1.8;">
-                {st.session_state.final_report}
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    st.download_button(
-        label=T["download_btn"],
-        data=st.session_state.final_report,
-        file_name=f"agrisense_{location.replace(' ','_').lower()}.md",
-        mime="text/markdown",
-        use_container_width=True
-    )
-    if st.button(T["analyze_another"], use_container_width=True):
-        reset_flow()
-        st.rerun()
