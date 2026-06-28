@@ -2,6 +2,8 @@ import os
 import asyncio
 import streamlit as st
 import sys
+import re
+import unicodedata
 from dotenv import load_dotenv
 
 # Load environment variables if .env exists
@@ -1138,6 +1140,145 @@ div[data-testid="stStatus"] > div {
 
 
 
+# ============================================================
+# LOGIN PAGE — UI and frontend validation only
+# ============================================================
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+if "username" not in st.session_state:
+    st.session_state.username = ""
+
+LOGIN_EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$")
+LOGIN_USERNAME_PATTERN = re.compile(r"^[A-Za-z0-9_]+$")
+
+def sanitize_login_identifier(value):
+    """Normalize the identifier without ever touching or logging the password."""
+    value = unicodedata.normalize("NFKC", value or "").strip()
+    return "".join(ch for ch in value if unicodedata.category(ch)[0] != "C")
+
+def validate_login_identifier(value):
+    value = sanitize_login_identifier(value)
+    if not value:
+        return None, "Please enter your email or username."
+    if "@" in value:
+        if len(value) > 254 or not LOGIN_EMAIL_PATTERN.fullmatch(value):
+            return None, "Invalid email format."
+        return value, None
+    if not 3 <= len(value) <= 30:
+        return None, "Username must be between 3 and 30 characters."
+    if not LOGIN_USERNAME_PATTERN.fullmatch(value):
+        return None, "Username can only contain letters, numbers, and underscores."
+    return value, None
+
+def validate_login_password(value):
+    if not value:
+        return ["Please enter your password."]
+    errors = []
+    if not 8 <= len(value) <= 64:
+        errors.append("Password must be between 8 and 64 characters.")
+    if not re.search(r"[A-Z]", value):
+        errors.append("Password must contain at least one uppercase letter.")
+    if not re.search(r"[a-z]", value):
+        errors.append("Password must contain at least one lowercase letter.")
+    if not re.search(r"\d", value):
+        errors.append("Password must contain at least one number.")
+    if not re.search(r"[^A-Za-z0-9\s]", value):
+        errors.append("Password must contain at least one special character.")
+    return errors
+
+def password_strength(value):
+    score = sum((len(value) >= 8, len(value) >= 12, bool(re.search(r"[A-Z]", value)),
+                 bool(re.search(r"[a-z]", value)), bool(re.search(r"\d", value)),
+                 bool(re.search(r"[^A-Za-z0-9\s]", value))))
+    return ("Strong", "strong") if score >= 6 else (("Medium", "medium") if score >= 4 else ("Weak", "weak"))
+
+if not st.session_state.logged_in:
+    st.markdown("""
+        <style>
+        [data-testid="stAppViewContainer"] {
+            background:
+                radial-gradient(circle at 15% 15%, rgba(76,175,80,.13), transparent 28rem),
+                radial-gradient(circle at 90% 90%, rgba(129,199,132,.16), transparent 30rem),
+                linear-gradient(145deg, #f8fbf8 0%, #eef6ef 100%);
+        }
+        [data-testid="stHeader"], [data-testid="stSidebar"] { display: none; }
+        .block-container { max-width: 520px; padding-top: clamp(2rem, 9vh, 6rem); padding-bottom: 3rem; }
+        .auth-brand { text-align:center; margin-bottom:1.6rem; }
+        .auth-logo { display:inline-grid; place-items:center; width:58px; height:58px; border-radius:17px;
+            background:linear-gradient(145deg,#1b5e20,#43a047); color:white; font-size:1.8rem;
+            box-shadow:0 12px 28px rgba(27,94,32,.24); margin-bottom:1rem; }
+        .auth-brand h1 { color:#153c1a; font-size:2rem; letter-spacing:-.04em; margin:0 0 .45rem; }
+        .auth-brand p { color:#627465; font-size:.96rem; margin:0; line-height:1.55; }
+        .auth-kicker { color:#2e7d32; font-size:.76rem; font-weight:750; letter-spacing:.12em;
+            text-transform:uppercase; margin-bottom:.5rem; }
+        div[data-testid="stTextInput"] input { border-radius:12px !important; min-height:48px;
+            transition:border-color .2s, box-shadow .2s, transform .2s; }
+        div[data-testid="stTextInput"] input:focus { border-color:#43a047 !important;
+            box-shadow:0 0 0 4px rgba(67,160,71,.13) !important; }
+        .auth-error { color:#b42318; font-size:.82rem; margin:-.45rem 0 .65rem; }
+        .auth-valid { color:#247a35; font-size:.82rem; margin:-.45rem 0 .65rem; }
+        .strength-track { height:5px; border-radius:999px; background:#e4e9e4; overflow:hidden; margin:.1rem 0 .35rem; }
+        .strength-fill { height:100%; border-radius:999px; transition:width .25s ease; }
+        .strength-fill.weak { width:33%; background:#d92d20; } .strength-fill.medium { width:66%; background:#f79009; }
+        .strength-fill.strong { width:100%; background:#2e9b45; }
+        .strength-label { font-size:.78rem; color:#69776b; margin-bottom:.7rem; }
+        .auth-links { display:flex; justify-content:space-between; align-items:center; margin:.25rem 0 1rem; }
+        .auth-links a, .signup-copy a { color:#237b35; text-decoration:none; font-weight:650; }
+        .auth-links a:hover, .signup-copy a:hover { text-decoration:underline; }
+        div[data-testid="stButton"] > button { width:100%; min-height:49px; border:0; border-radius:12px;
+            background:linear-gradient(135deg,#1f702d,#3e9b4c); color:white; font-weight:700;
+            box-shadow:0 8px 20px rgba(31,112,45,.22); transition:transform .18s,box-shadow .18s; }
+        div[data-testid="stButton"] > button:hover:not(:disabled) { transform:translateY(-1px);
+            box-shadow:0 12px 26px rgba(31,112,45,.3); color:white; }
+        div[data-testid="stButton"] > button:disabled { background:#c8d4ca; color:#f7faf7; box-shadow:none; }
+        .signup-copy { text-align:center; color:#6c786e; font-size:.9rem; margin-top:1.25rem; }
+        .trust-copy { text-align:center; color:#8a958c; font-size:.75rem; margin-top:1.8rem; }
+        @media (max-width:600px) { .block-container { padding:2rem 1.15rem; } .auth-brand h1 { font-size:1.75rem; } }
+        </style>
+        <div class="auth-brand">
+            <div class="auth-logo" aria-hidden="true">🌱</div>
+            <div class="auth-kicker">AgriSense AI</div>
+            <h1>Welcome back</h1>
+            <p>Sign in to access intelligent farm insights and advisory tools.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    raw_identifier = st.text_input("👤 Email or Username", placeholder="farmer_ali or farmer@example.com",
+                                   max_chars=254, key="login_identifier")
+    identifier, identifier_error = validate_login_identifier(raw_identifier)
+    if raw_identifier and identifier_error:
+        st.markdown(f'<div class="auth-error" role="alert">{identifier_error}</div>', unsafe_allow_html=True)
+    elif identifier:
+        st.markdown('<div class="auth-valid">✓ Looks good</div>', unsafe_allow_html=True)
+
+    show_password = st.checkbox("Show password", key="login_show_password")
+    login_password = st.text_input("🔒 Password", placeholder="Enter your password",
+                                   type="default" if show_password else "password", max_chars=64,
+                                   key="login_password")
+    password_errors = validate_login_password(login_password)
+    if login_password:
+        strength_name, strength_class = password_strength(login_password)
+        st.markdown(f'<div class="strength-track"><div class="strength-fill {strength_class}"></div></div>'
+                    f'<div class="strength-label">Password strength: <strong>{strength_name}</strong></div>',
+                    unsafe_allow_html=True)
+        for error in password_errors:
+            st.markdown(f'<div class="auth-error" role="alert">{error}</div>', unsafe_allow_html=True)
+
+    remember_me = st.checkbox("Remember me", key="login_remember_me")
+    st.markdown('<div class="auth-links"><span></span><a href="#" aria-label="Forgot password">Forgot password?</a></div>',
+                unsafe_allow_html=True)
+    login_valid = bool(identifier and not password_errors)
+    if st.button("Sign in", disabled=not login_valid, use_container_width=True, key="login_submit",
+                 help=None if login_valid else "Enter a valid email or username and password."):
+        with st.spinner("Signing you in…"):
+            st.session_state.logged_in = True
+            st.session_state.username = identifier
+        st.rerun()
+    st.markdown('<div class="signup-copy">New to AgriSense? <a href="#">Create an account</a></div>'
+                '<div class="trust-copy">Protected session · Passwords are never displayed or logged</div>',
+                unsafe_allow_html=True)
+    st.stop()
+
 # Helper function
 async def run_agent_async(agent, prompt: str) -> str:
     from google.adk.runners import Runner
@@ -1240,12 +1381,69 @@ st.markdown(f"""
         <span>{T['advisory_inputs']}</span>
     </div>
 """, unsafe_allow_html=True)
+LOCATION_ERROR = "Please enter a valid farm location."
+CROP_ERROR = "Please select a crop type."
+PROBLEM_ERROR = "Please describe your crop problem in more detail."
+CROP_OPTIONS = [
+    "Wheat", "Rice", "Corn", "Maize", "Tomato", "Potato", "Cotton", "Sugarcane",
+    "Mango", "Onion", "Garlic", "Chili", "Pepper", "Soybean", "Barley", "Oats",
+    "Sunflower", "Mustard", "Lentil", "Chickpea", "Pea", "Spinach", "Carrot",
+    "Cauliflower", "Cucumber", "Millet", "Cassava", "Yam", "Banana", "Orange",
+    "Apple", "Grape", "Watermelon", "Pumpkin", "Eggplant", "Okra", "Cabbage",
+    "Radish", "Pineapple", "Papaya", "Guava", "Ginger", "Turmeric", "Groundnut",
+]
+
+def sanitize_text(value, multiline=False):
+    value = unicodedata.normalize("NFKC", value or "")
+    value = "".join(ch for ch in value if ch in "\n\t" or unicodedata.category(ch)[0] != "C")
+    if multiline:
+        return "\n".join(" ".join(line.split()) for line in value.strip().splitlines())
+    return " ".join(value.strip().split())
+
+def validate_location(value):
+    cleaned = sanitize_text(value)
+    return cleaned if 2 <= len(cleaned) <= 100 and any(ch.isalpha() for ch in cleaned) else None
+
+def validate_crop(value):
+    return value if value in CROP_OPTIONS else None
+
+def validate_problem(value):
+    cleaned = sanitize_text(value, multiline=True)
+    compact = "".join(ch.lower() for ch in cleaned if ch.isalnum())
+    letters = "".join(ch for ch in compact if ch.isalpha())
+    meaningless = (not any(ch.isalpha() for ch in cleaned) or len(set(compact)) <= 2
+                   or compact in {"asdf", "asdfasdf", "qwerty", "test", "testing"}
+                   or (letters and len(set(letters)) == 1)
+                   or bool(re.fullmatch(r"(?:asdf)+", compact)))
+    return cleaned if 15 <= len(cleaned) <= 500 and not meaningless else None
+
 col1, col2 = st.columns(2)
 with col1:
-    location = st.text_input(T["location"], placeholder=T["location_placeholder"])
-    crop_type = st.text_input(T["crop_type"], placeholder=T["crop_placeholder"])
+    raw_location = st.text_input(T["location"], placeholder=T["location_placeholder"],
+                                 max_chars=100, key="advisory_location",
+                                 help="Required · 2–100 characters")
+    location = validate_location(raw_location)
+    if raw_location and not location:
+        st.error(LOCATION_ERROR, icon="⚠️")
+    elif location:
+        st.caption("✓ Location looks good")
+    raw_crop_type = st.selectbox(T["crop_type"], ["Select a crop…", *CROP_OPTIONS],
+                                 key="advisory_crop_type")
+    crop_type = validate_crop(raw_crop_type)
+    if not crop_type:
+        st.error(CROP_ERROR, icon="⚠️")
+    else:
+        st.caption("✓ Crop selected")
 with col2:
-    problem = st.text_area(T["problem"], placeholder=T["problem_placeholder"], height=100)
+    raw_problem = st.text_area(T["problem"], placeholder=T["problem_placeholder"],
+                               height=140, max_chars=500, key="advisory_problem",
+                               help="Required · 15–500 meaningful characters")
+    st.caption(f"{len(raw_problem)} / 500")
+    problem = validate_problem(raw_problem)
+    if raw_problem and not problem:
+        st.error(PROBLEM_ERROR, icon="⚠️")
+    elif problem:
+        st.caption("✓ Description is detailed enough")
 
 # Session state
 for key in ["step", "weather_report", "crop_doctor_report", "market_price_report", "final_report"]:
@@ -1256,6 +1454,12 @@ def validate_inputs():
     if not gemini_key:
         st.warning(T["warning_key"])
         return False
+    # Final defensive gate immediately before any agent workflow can start.
+    # Values are already normalized by the reusable field validators above.
+    return bool(location and crop_type and problem)
+
+    # Legacy checks retained below for historical context; they are superseded by
+    # the stricter reusable validation layer above.
     # Location: min 4 chars
     if not location or len(location.strip()) < 4:
         st.warning("Please enter a valid farm location with at least 4 characters (e.g. Lahore, Pakistan)")
@@ -1303,7 +1507,14 @@ def reset_flow():
 # Analyze button
 if st.session_state.step == 0:
     st.markdown("---")
-    if st.button(T["analyze_btn"], use_container_width=True):
+    advisory_form_valid = bool(location and crop_type and problem)
+    if not advisory_form_valid:
+        st.caption("Complete all advisory fields correctly to enable analysis.")
+    if st.button(
+        T["analyze_btn"], use_container_width=True,
+        disabled=not advisory_form_valid,
+        help=None if advisory_form_valid else "Enter a valid location, crop, and detailed problem description.",
+    ):
         if validate_inputs():
             reset_flow()
             st.session_state.step = 1
