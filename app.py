@@ -12,7 +12,7 @@ import sys
 import re
 import unicodedata
 from dotenv import load_dotenv
-from utils.input_validation import classify_agricultural_intent, passes_rule_based_validation
+from utils.input_validation import is_valid_agriculture_query
 
 # Load environment variables if .env exists
 load_dotenv()
@@ -1521,11 +1521,6 @@ st.markdown(f"""
 LOCATION_ERROR = "Please enter a valid farm location."
 CROP_ERROR = "Please select a crop type."
 PROBLEM_ERROR = "Please describe your farming problem in more detail."
-AGRICULTURAL_INTENT_ERROR = (
-    "AgriSense AI is designed exclusively for agriculture-related advisory. Please describe "
-    "your farming issue, crop condition, pest, disease, irrigation, fertilizer, weather, "
-    "harvesting, or market-related question."
-)
 CROP_OPTIONS = [
     "Wheat", "Rice", "Corn", "Maize", "Tomato", "Potato", "Cotton", "Sugarcane",
     "Mango", "Onion", "Garlic", "Chili", "Pepper", "Soybean", "Barley", "Oats",
@@ -1551,7 +1546,7 @@ def validate_crop(value):
 
 def validate_problem(value):
     cleaned = sanitize_text(value, multiline=True)
-    return cleaned if len(cleaned) <= 500 and passes_rule_based_validation(cleaned) else None
+    return cleaned if len(cleaned) <= 500 and is_valid_agriculture_query(cleaned) else None
 
 col1, col2 = st.columns(2)
 with col1:
@@ -1594,13 +1589,6 @@ def validate_inputs():
     # Values are already normalized by the reusable field validators above.
     if not (location and crop_type and problem):
         st.error(PROBLEM_ERROR, icon="⚠️")
-        return False
-
-    with st.spinner("Validating agricultural intent..."):
-        is_agricultural_intent, _ = classify_agricultural_intent(problem, gemini_key)
-
-    if not is_agricultural_intent:
-        st.error(AGRICULTURAL_INTENT_ERROR, icon="⚠️")
         return False
 
     return True

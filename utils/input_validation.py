@@ -1,15 +1,8 @@
-"""Hybrid validation helpers for farmer advisory queries."""
+"""Rule-based validation helpers for farmer advisory queries."""
 
-import json
 import re
+import string
 import unicodedata
-
-try:
-    from google import genai
-    from google.genai import types
-except ImportError:  # pragma: no cover - handled at runtime in Streamlit
-    genai = None
-    types = None
 
 
 MIN_QUERY_LENGTH = 15
@@ -31,51 +24,49 @@ TRIVIAL_QUERIES = {
     "qwerty",
 }
 
-INTENT_CLASSIFIER_PROMPT = """You are an agricultural intent classifier.
-
-Determine whether the user's message is requesting agricultural advice.
-
-Return ONLY valid JSON in this format:
-
-{
-  "status": "VALID"
+AGRICULTURE_KEYWORDS = {
+    # General farming
+    "agriculture", "agricultural", "farm", "farmer", "farming", "field",
+    "crop", "crops", "plant", "plants", "planting", "grow", "growing",
+    "cultivate", "cultivation", "sow", "sowing", "seed", "seedling",
+    "harvest", "harvesting", "yield", "season", "greenhouse", "orchard",
+    # Soil, water, nutrients, and weather
+    "soil", "compost", "manure", "fertilizer", "fertiliser", "nutrient",
+    "irrigation", "irrigate", "water", "watering", "rain", "rainfall",
+    "weather", "temperature", "drought", "flood", "frost", "humidity",
+    # Crop health
+    "pest", "pests", "insect", "insects", "disease", "diseases", "fungus",
+    "fungal", "weed", "weeds", "spray", "pesticide", "herbicide", "wilt",
+    "wilting", "leaf", "leaves", "root", "roots", "stem", "fruit",
+    "flower", "spots", "spot", "yellow", "yellowing", "brown", "black",
+    "blight", "rot", "dry", "dying",
+    # Agricultural markets
+    "market", "price", "prices", "sell", "selling", "buyer", "commodity",
+    # Common crops
+    "wheat", "rice", "corn", "maize", "tomato", "tomatoes", "potato",
+    "potatoes", "cotton", "sugarcane", "mango", "onion", "garlic",
+    "chili", "pepper", "soybean", "barley", "oats", "sunflower",
+    "mustard", "lentil", "chickpea", "pea", "spinach", "carrot",
+    "cauliflower", "cucumber", "millet", "cassava", "yam", "banana",
+    "orange", "apple", "grape", "watermelon", "pumpkin", "eggplant",
+    "okra", "cabbage", "radish", "pineapple", "papaya", "guava",
+    "ginger", "turmeric", "groundnut",
 }
 
-or
-
-{
-  "status": "INVALID",
-  "reason": "The query is not related to agriculture."
+ADVISORY_INTENT_KEYWORDS = {
+    "advice", "advise", "recommend", "suggest", "should", "when", "what",
+    "how", "why", "which", "use", "apply", "treat", "control", "prevent",
+    "manage", "fix", "improve", "need", "help", "problem", "issue",
+    "disease", "pest", "spots", "yellow", "brown", "wilting", "dying",
+    "irrigate", "harvest", "fertilizer", "fertiliser", "price", "market",
 }
 
-Return VALID only if the user is genuinely requesting advice related to:
-
-* Crops
-* Farming
-* Irrigation
-* Fertilizers
-* Weather
-* Harvesting
-* Plant diseases
-* Pests
-* Soil
-* Agricultural markets
-
-Return INVALID for:
-
-* Greetings
-* Casual conversation
-* Personal introductions
-* Programming questions
-* Jokes
-* Sports
-* Politics
-* General knowledge
-* Any non-agricultural topic.
-
-User message:
-{advisory_text}
-"""
+NON_ADVISORY_PHRASES = {
+    "my favourite word",
+    "my favorite word",
+    "favorite word",
+    "favourite word",
+}
 
 
 def _normalize(value: str) -> str:
@@ -84,18 +75,27 @@ def _normalize(value: str) -> str:
     return " ".join(normalized.split())
 
 
-def clean_advisory_text(value: str) -> str:
-    """Trim and normalize user advisory text without changing its meaning."""
-    return " ".join(unicodedata.normalize("NFKC", value or "").strip().split())
+def _strip_outer_punctuation(value: str) -> str:
+    """Remove punctuation around a normalized phrase for exact comparisons."""
+    return value.strip(string.whitespace + string.punctuation)
 
 
-def passes_rule_based_validation(value: str) -> bool:
-    """Reject obviously invalid advisory input before any AI call is made."""
+def _words(value: str) -> set[str]:
+    """Return alphabetic words from normalized text."""
+    return set(re.findall(r"[^\W\d_]+", value, flags=re.UNICODE))
+
+
+def is_valid_agriculture_query(value: str) -> bool:
+    """Return True only for meaningful agriculture-related advisory input."""
     query = _normalize(value)
+    phrase = _strip_outer_punctuation(query)
     if not query or len(query) < MIN_QUERY_LENGTH:
         return False
 
-    if query in GREETING_QUERIES or query in TRIVIAL_QUERIES:
+    if phrase in GREETING_QUERIES or phrase in TRIVIAL_QUERIES:
+        return False
+
+    if any(non_advisory in phrase for non_advisory in NON_ADVISORY_PHRASES):
         return False
 
     compact = re.sub(r"\s+", "", query)
@@ -108,49 +108,7 @@ def passes_rule_based_validation(value: str) -> bool:
     if not any(ch.isalpha() for ch in query):
         return False
 
-    return True
-
-
-def _extract_json_object(text: str) -> dict:
-    """Parse the first JSON object from a Gemini response."""
-    cleaned = (text or "").strip()
-    cleaned = re.sub(r"^```(?:json)?\s*|\s*```$", "", cleaned, flags=re.IGNORECASE)
-    try:
-        return json.loads(cleaned)
-    except json.JSONDecodeError:
-        match = re.search(r"\{.*\}", cleaned, flags=re.DOTALL)
-        if not match:
-            return {}
-        try:
-            return json.loads(match.group(0))
-        except json.JSONDecodeError:
-            return {}
-
-
-def classify_agricultural_intent(advisory_text: str, api_key: str, model: str = "gemini-2.5-flash") -> tuple[bool, str]:
-    """Use Gemini to decide whether the advisory text is genuinely agricultural."""
-    if genai is None:
-        return False, "Gemini SDK is not available."
-    if not api_key:
-        return False, "Gemini API key is missing."
-
-    client = genai.Client(api_key=api_key)
-    prompt = INTENT_CLASSIFIER_PROMPT.format(advisory_text=advisory_text)
-    request = {
-        "model": model,
-        "contents": prompt,
-    }
-    if types is not None:
-        request["config"] = types.GenerateContentConfig(
-            temperature=0,
-            response_mime_type="application/json",
-        )
-
-    try:
-        response = client.models.generate_content(**request)
-    except Exception as exc:  # pragma: no cover - depends on external Gemini service
-        return False, f"Gemini intent classification failed: {exc}"
-
-    payload = _extract_json_object(getattr(response, "text", ""))
-    status = str(payload.get("status", "")).strip().upper()
-    return status == "VALID", str(payload.get("reason", ""))
+    words = _words(query)
+    has_agriculture_context = bool(words.intersection(AGRICULTURE_KEYWORDS))
+    has_advisory_intent = bool(words.intersection(ADVISORY_INTENT_KEYWORDS))
+    return has_agriculture_context and has_advisory_intent
