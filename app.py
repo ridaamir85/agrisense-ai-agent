@@ -759,6 +759,33 @@ LANGUAGE_NAMES = {
 # PDF GENERATION
 # ============================================================
 def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report, market_price_report, final_report):
+    import urllib.request, os, tempfile
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+
+    # Download NotoSans font for Unicode support (Japanese, Arabic, Hindi etc.)
+    font_name = "Helvetica"
+    bold_font_name = "Helvetica-Bold"
+    try:
+        font_path = os.path.join(tempfile.gettempdir(), "NotoSans-Regular.ttf")
+        bold_path = os.path.join(tempfile.gettempdir(), "NotoSans-Bold.ttf")
+        if not os.path.exists(font_path):
+            urllib.request.urlretrieve(
+                "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf",
+                font_path
+            )
+        if not os.path.exists(bold_path):
+            urllib.request.urlretrieve(
+                "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSans/NotoSans-Bold.ttf",
+                bold_path
+            )
+        pdfmetrics.registerFont(TTFont("NotoSans", font_path))
+        pdfmetrics.registerFont(TTFont("NotoSans-Bold", bold_path))
+        font_name = "NotoSans"
+        bold_font_name = "NotoSans-Bold"
+    except Exception:
+        pass  # Fall back to Helvetica if download fails
+
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(
         buffer, pagesize=A4,
@@ -770,20 +797,20 @@ def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report,
     # Custom styles
     title_style = ParagraphStyle("Title", parent=styles["Title"],
         fontSize=22, textColor=colors.HexColor("#1b5e20"),
-        spaceAfter=6, alignment=TA_CENTER, fontName="Helvetica-Bold")
+        spaceAfter=6, alignment=TA_CENTER, fontName=bold_font_name)
     subtitle_style = ParagraphStyle("Subtitle", parent=styles["Normal"],
         fontSize=11, textColor=colors.HexColor("#4a6b4e"),
-        spaceAfter=4, alignment=TA_CENTER)
+        spaceAfter=4, alignment=TA_CENTER, fontName=font_name)
     section_style = ParagraphStyle("Section", parent=styles["Heading2"],
         fontSize=13, textColor=colors.HexColor("#2e7d32"),
-        spaceBefore=14, spaceAfter=6, fontName="Helvetica-Bold",
+        spaceBefore=14, spaceAfter=6, fontName=bold_font_name,
         borderPad=4)
     body_style = ParagraphStyle("Body", parent=styles["Normal"],
         fontSize=10, textColor=colors.HexColor("#1a2e1a"),
-        spaceAfter=4, leading=16)
+        spaceAfter=4, leading=16, fontName=font_name)
     meta_style = ParagraphStyle("Meta", parent=styles["Normal"],
         fontSize=9, textColor=colors.HexColor("#627465"),
-        spaceAfter=2)
+        spaceAfter=2, fontName=font_name)
 
     def clean(text):
         import re
@@ -1004,6 +1031,7 @@ st.markdown("""
         .main-header h1 {
             position: relative; z-index: 1;
             color: #e8f5e9 !important;
+            -webkit-text-fill-color: #e8f5e9 !important;
             font-weight: 800 !important;
             font-size: 2.9rem !important;
             letter-spacing: -0.5px !important;
@@ -1382,35 +1410,29 @@ if not st.session_state.logged_in:
 
     raw_identifier = st.text_input("👤 Email or Username", placeholder="farmer_ali or farmer@example.com",
                                    max_chars=254, key="login_identifier")
-    identifier, identifier_error = validate_login_identifier(raw_identifier)
-    if raw_identifier and identifier_error:
-        st.markdown(f'<div class="auth-error" role="alert">{identifier_error}</div>', unsafe_allow_html=True)
-    elif identifier:
-        st.markdown('<div class="auth-valid">✓ Looks good</div>', unsafe_allow_html=True)
 
     show_password = st.checkbox("Show password", key="login_show_password")
     login_password = st.text_input("🔒 Password", placeholder="Enter your password",
                                    type="default" if show_password else "password", max_chars=64,
                                    key="login_password")
-    password_errors = validate_login_password(login_password)
-    if login_password:
-        strength_name, strength_class = password_strength(login_password)
-        st.markdown(f'<div class="strength-track"><div class="strength-fill {strength_class}"></div></div>'
-                    f'<div class="strength-label">Password strength: <strong>{strength_name}</strong></div>',
-                    unsafe_allow_html=True)
-        for error in password_errors:
-            st.markdown(f'<div class="auth-error" role="alert">{error}</div>', unsafe_allow_html=True)
 
     remember_me = st.checkbox("Remember me", key="login_remember_me")
     st.markdown('<div class="auth-links"><span></span><a href="#" aria-label="Forgot password">Forgot password?</a></div>',
                 unsafe_allow_html=True)
-    login_valid = bool(identifier and not password_errors)
-    if st.button("Sign in", disabled=not login_valid, use_container_width=True, key="login_submit",
-                 help=None if login_valid else "Enter a valid email or username and password."):
-        with st.spinner("Signing you in…"):
-            st.session_state.logged_in = True
-            st.session_state.username = identifier
-        st.rerun()
+
+    if st.button("Sign in", use_container_width=True, key="login_submit"):
+        identifier, identifier_error = validate_login_identifier(raw_identifier)
+        password_errors = validate_login_password(login_password)
+        if identifier_error:
+            st.error(identifier_error)
+        elif password_errors:
+            for err in password_errors:
+                st.error(err)
+        else:
+            with st.spinner("Signing you in…"):
+                st.session_state.logged_in = True
+                st.session_state.username = identifier
+            st.rerun()
     st.markdown('<div class="signup-copy">New to AgriSense? <a href="#">Create an account</a></div>'
                 '<div class="trust-copy">Protected session · Passwords are never displayed or logged</div>',
                 unsafe_allow_html=True)
@@ -1463,6 +1485,31 @@ with st.sidebar:
             </div>
         </div>
     """, unsafe_allow_html=True)
+
+    # ── User profile card + logout ──
+    st.markdown(f"""
+        <div style="display:flex;align-items:center;gap:10px;padding:0.75rem 1rem;
+                    background:rgba(255,255,255,0.06);border-radius:12px;
+                    border:1px solid rgba(255,255,255,0.10);margin-bottom:0.5rem;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#4caf50,#2e7d32);
+                        border-radius:50%;display:flex;align-items:center;justify-content:center;
+                        font-size:1rem;flex-shrink:0;">👤</div>
+            <div style="flex:1;min-width:0;">
+                <div style="font-weight:700;font-size:0.92rem;color:#e8f5e9;">{st.session_state.get('username', 'Farmer')}</div>
+                <div style="font-size:0.70rem;color:#81c784;">
+                    <span style="width:7px;height:7px;background:#4caf50;border-radius:50%;display:inline-block;margin-right:4px;"></span>
+                    Active session
+                </div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    if st.button("⎋ Logout", key="logout_btn"):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+        st.rerun()
+
+    st.markdown("---")
 
 
 
@@ -1539,7 +1586,27 @@ def sanitize_text(value, multiline=False):
 
 def validate_location(value):
     cleaned = sanitize_text(value)
-    return cleaned if 2 <= len(cleaned) <= 100 and any(ch.isalpha() for ch in cleaned) else None
+    if not cleaned or len(cleaned) < 3 or len(cleaned) > 100:
+        return None
+    if not any(ch.isalpha() for ch in cleaned):
+        return None
+    # Reject common non-location words including crop names and random words
+    bad_words = [
+        "hello","hi","hey","how are","what up","good morning","test","asdf",
+        "lol","ok","okay","bye","nothing","something","wassup","sup",
+        # crop names
+        "wheat","rice","corn","maize","cotton","sugarcane","tomato","potato",
+        "onion","garlic","carrot","spinach","mango","banana","apple","orange",
+        "grape","strawberry","soybean","sunflower","mustard","barley","oats",
+        "millet","sorghum","coffee","tea","rubber","coconut","groundnut",
+        # random non-location words
+        "crop","farm","plant","seed","flower","tree","grass","leaf","leaves",
+        "animal","water","soil","food","weather","rain","sun","wind","cloud",
+        "random","words","text","blah","abc","xyz","qwerty","testing","yes","no",
+    ]
+    if any(b == cleaned.lower().strip() or cleaned.lower().strip().startswith(b + " ") for b in bad_words):
+        return None
+    return cleaned
 
 def validate_crop(value):
     return value if value in CROP_OPTIONS else None
