@@ -1,6 +1,13 @@
 import os
 import asyncio
 import streamlit as st
+import io
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import cm
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
+from reportlab.lib.enums import TA_LEFT, TA_CENTER
 import sys
 import re
 import unicodedata
@@ -57,7 +64,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Human-in-the-Loop: Review crop diagnosis above. Click Confirm to proceed.",
         "hitl_market": "💡 Human-in-the-Loop: Review market strategy above. Click Confirm to compile final report.",
         "confirm_btn": "✅ Confirm & Proceed",
-        "restart_btn": "❌ Restart",
+        "restart_btn": "🔄 Reanalyze",
         "compile_btn": "📝 Compile Final Report",
         "completed": "🎉 AgriSense Completed Report",
         "final_report": "📋 Complete Advisory Report",
@@ -99,7 +106,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 براہ کرم فصل کی تشخیص دیکھیں اور تصدیق کریں۔",
         "hitl_market": "💡 براہ کرم مارکیٹ حکمت عملی دیکھیں اور حتمی رپورٹ بنائیں۔",
         "confirm_btn": "✅ تصدیق کریں اور آگے بڑھیں",
-        "restart_btn": "❌ دوبارہ شروع کریں",
+        "restart_btn": "🔄 دوبارہ تجزیہ کریں",
         "compile_btn": "📝 حتمی رپورٹ مرتب کریں",
         "completed": "🎉 AgriSense مکمل رپورٹ",
         "final_report": "📋 مکمل مشاورتی رپورٹ",
@@ -141,7 +148,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 मानव-इन-लूप: ऊपर फसल निदान की समीक्षा करें। आगे बढ़ने के लिए पुष्टि करें।",
         "hitl_market": "💡 मानव-इन-लूप: बाजार रणनीति की समीक्षा करें। अंतिम रिपोर्ट बनाने के लिए पुष्टि करें।",
         "confirm_btn": "✅ पुष्टि करें और आगे बढ़ें",
-        "restart_btn": "❌ पुनः शुरू करें",
+        "restart_btn": "🔄 पुनः विश्लेषण करें",
         "compile_btn": "📝 अंतिम रिपोर्ट बनाएं",
         "completed": "🎉 AgriSense पूर्ण रिपोर्ट",
         "final_report": "📋 पूर्ण सलाह रिपोर्ट",
@@ -183,7 +190,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 ਫਸਲ ਨਿਦਾਨ ਦੀ ਸਮੀਖਿਆ ਕਰੋ ਅਤੇ ਪੁਸ਼ਟੀ ਕਰੋ।",
         "hitl_market": "💡 ਮਾਰਕੀਟ ਰਣਨੀਤੀ ਦੀ ਸਮੀਖਿਆ ਕਰੋ।",
         "confirm_btn": "✅ ਪੁਸ਼ਟੀ ਕਰੋ ਅਤੇ ਅੱਗੇ ਵਧੋ",
-        "restart_btn": "❌ ਮੁੜ ਸ਼ੁਰੂ ਕਰੋ",
+        "restart_btn": "🔄 ਮੁੜ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ",
         "compile_btn": "📝 ਅੰਤਿਮ ਰਿਪੋਰਟ ਬਣਾਓ",
         "completed": "🎉 AgriSense ਮੁਕੰਮਲ ਰਿਪੋਰਟ",
         "final_report": "📋 ਮੁਕੰਮਲ ਸਲਾਹ ਰਿਪੋਰਟ",
@@ -225,7 +232,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Revise el diagnóstico del cultivo y confirme.",
         "hitl_market": "💡 Revise la estrategia de mercado y confirme.",
         "confirm_btn": "✅ Confirmar y Continuar",
-        "restart_btn": "❌ Reiniciar",
+        "restart_btn": "🔄 Reanalizar",
         "compile_btn": "📝 Compilar Informe Final",
         "completed": "🎉 Informe Completo de AgriSense",
         "final_report": "📋 Informe de Asesoría Completo",
@@ -267,7 +274,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Examinez le diagnostic et confirmez.",
         "hitl_market": "💡 Examinez la stratégie de marché et confirmez.",
         "confirm_btn": "✅ Confirmer et Continuer",
-        "restart_btn": "❌ Recommencer",
+        "restart_btn": "🔄 Réanalyzer",
         "compile_btn": "📝 Compiler le Rapport Final",
         "completed": "🎉 Rapport AgriSense Complet",
         "final_report": "📋 Rapport de Conseil Complet",
@@ -309,7 +316,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Kagua utambuzi wa mazao na uthibitishe.",
         "hitl_market": "💡 Kagua mkakati wa soko na uthibitishe.",
         "confirm_btn": "✅ Thibitisha na Endelea",
-        "restart_btn": "❌ Anza Upya",
+        "restart_btn": "🔄 Changanua Tena",
         "compile_btn": "📝 Kusanya Ripoti ya Mwisho",
         "completed": "🎉 Ripoti Kamili ya AgriSense",
         "final_report": "📋 Ripoti Kamili ya Ushauri",
@@ -351,7 +358,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 راجع تشخيص المحصول وأكد.",
         "hitl_market": "💡 راجع استراتيجية السوق وأكد.",
         "confirm_btn": "✅ تأكيد والمتابعة",
-        "restart_btn": "❌ إعادة البدء",
+        "restart_btn": "🔄 إعادة التحليل",
         "compile_btn": "📝 تجميع التقرير النهائي",
         "completed": "🎉 تقرير AgriSense المكتمل",
         "final_report": "📋 تقرير الاستشارة الكامل",
@@ -393,7 +400,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Revise o diagnóstico e confirme.",
         "hitl_market": "💡 Revise a estratégia de mercado e confirme.",
         "confirm_btn": "✅ Confirmar e Continuar",
-        "restart_btn": "❌ Reiniciar",
+        "restart_btn": "🔄 Reanalizar",
         "compile_btn": "📝 Compilar Relatório Final",
         "completed": "🎉 Relatório AgriSense Completo",
         "final_report": "📋 Relatório de Consultoria Completo",
@@ -435,7 +442,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 请查看作物诊断并确认。",
         "hitl_market": "💡 请查看市场策略并确认。",
         "confirm_btn": "✅ 确认并继续",
-        "restart_btn": "❌ 重新开始",
+        "restart_btn": "🔄 重新分析",
         "compile_btn": "📝 编制最终报告",
         "completed": "🎉 AgriSense 完整报告",
         "final_report": "📋 完整咨询报告",
@@ -477,7 +484,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 ফসল রোগ নির্ণয় পর্যালোচনা করুন এবং নিশ্চিত করুন।",
         "hitl_market": "💡 বাজার কৌশল পর্যালোচনা করুন এবং নিশ্চিত করুন।",
         "confirm_btn": "✅ নিশ্চিত করুন এবং এগিয়ে যান",
-        "restart_btn": "❌ পুনরায় শুরু করুন",
+        "restart_btn": "🔄 পুনরায় বিশ্লেষণ করুন",
         "compile_btn": "📝 চূড়ান্ত রিপোর্ট তৈরি করুন",
         "completed": "🎉 AgriSense সম্পূর্ণ রিপোর্ট",
         "final_report": "📋 সম্পূর্ণ পরামর্শ রিপোর্ট",
@@ -519,7 +526,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Проверьте диагноз и подтвердите.",
         "hitl_market": "💡 Проверьте рыночную стратегию и подтвердите.",
         "confirm_btn": "✅ Подтвердить и продолжить",
-        "restart_btn": "❌ Перезапустить",
+        "restart_btn": "🔄 Повторный анализ",
         "compile_btn": "📝 Составить итоговый отчет",
         "completed": "🎉 Полный отчет AgriSense",
         "final_report": "📋 Полный консультационный отчет",
@@ -561,7 +568,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Tinjau diagnosis tanaman dan konfirmasi.",
         "hitl_market": "💡 Tinjau strategi pasar dan konfirmasi.",
         "confirm_btn": "✅ Konfirmasi dan Lanjutkan",
-        "restart_btn": "❌ Mulai Ulang",
+        "restart_btn": "🔄 Analisis Ulang",
         "compile_btn": "📝 Kompilasi Laporan Akhir",
         "completed": "🎉 Laporan AgriSense Selesai",
         "final_report": "📋 Laporan Konsultasi Lengkap",
@@ -603,7 +610,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Ürün tanısını inceleyin ve onaylayın.",
         "hitl_market": "💡 Pazar stratejisini inceleyin ve onaylayın.",
         "confirm_btn": "✅ Onayla ve Devam Et",
-        "restart_btn": "❌ Yeniden Başlat",
+        "restart_btn": "🔄 Yeniden Analiz Et",
         "compile_btn": "📝 Son Raporu Derle",
         "completed": "🎉 AgriSense Tamamlanan Rapor",
         "final_report": "📋 Tam Danışma Raporu",
@@ -645,7 +652,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 作物診断を確認して承認してください。",
         "hitl_market": "💡 市場戦略を確認して承認してください。",
         "confirm_btn": "✅ 確認して続ける",
-        "restart_btn": "❌ やり直す",
+        "restart_btn": "🔄 再分析する",
         "compile_btn": "📝 最終レポートを作成",
         "completed": "🎉 AgriSense 完了レポート",
         "final_report": "📋 完全なアドバイザリーレポート",
@@ -687,7 +694,7 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Xem xét chẩn đoán cây trồng và xác nhận.",
         "hitl_market": "💡 Xem xét chiến lược thị trường và xác nhận.",
         "confirm_btn": "✅ Xác nhận và Tiếp tục",
-        "restart_btn": "❌ Bắt đầu lại",
+        "restart_btn": "🔄 Phân tích lại",
         "compile_btn": "📝 Biên soạn Báo cáo Cuối cùng",
         "completed": "🎉 Báo cáo AgriSense Hoàn chỉnh",
         "final_report": "📋 Báo cáo Tư vấn Hoàn chỉnh",
@@ -746,6 +753,95 @@ LANGUAGE_NAMES = {
     "Indonesian": "Indonesian",
     "Japanese": "Japanese",
 }
+
+# ============================================================
+# PDF GENERATION
+# ============================================================
+def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report, market_price_report, final_report):
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(
+        buffer, pagesize=A4,
+        rightMargin=2*cm, leftMargin=2*cm,
+        topMargin=2*cm, bottomMargin=2*cm
+    )
+    styles = getSampleStyleSheet()
+
+    # Custom styles
+    title_style = ParagraphStyle("Title", parent=styles["Title"],
+        fontSize=22, textColor=colors.HexColor("#1b5e20"),
+        spaceAfter=6, alignment=TA_CENTER, fontName="Helvetica-Bold")
+    subtitle_style = ParagraphStyle("Subtitle", parent=styles["Normal"],
+        fontSize=11, textColor=colors.HexColor("#4a6b4e"),
+        spaceAfter=4, alignment=TA_CENTER)
+    section_style = ParagraphStyle("Section", parent=styles["Heading2"],
+        fontSize=13, textColor=colors.HexColor("#2e7d32"),
+        spaceBefore=14, spaceAfter=6, fontName="Helvetica-Bold",
+        borderPad=4)
+    body_style = ParagraphStyle("Body", parent=styles["Normal"],
+        fontSize=10, textColor=colors.HexColor("#1a2e1a"),
+        spaceAfter=4, leading=16)
+    meta_style = ParagraphStyle("Meta", parent=styles["Normal"],
+        fontSize=9, textColor=colors.HexColor("#627465"),
+        spaceAfter=2)
+
+    def clean(text):
+        import re
+        if not text:
+            return ""
+        # Remove markdown bold/italic
+        text = re.sub(r"[*][*](.+?)[*][*]", r"<b>\1</b>", text)
+        text = re.sub(r"[*](.+?)[*]", r"<i>\1</i>", text)
+        # Convert markdown bullets to HTML
+        lines = text.splitlines()
+        result = []
+        for line in lines:
+            line = line.strip()
+            if line.startswith("- ") or line.startswith("• "):
+                result.append("&bull; " + line[2:])
+            elif line:
+                result.append(line)
+        return "<br/>".join(result)
+
+    from datetime import date
+    story = []
+
+    # Header
+    story.append(Paragraph("🌱 AgriSense AI", title_style))
+    story.append(Paragraph("Farming Intelligence Advisory Report", subtitle_style))
+    story.append(Spacer(1, 0.2*cm))
+    story.append(HRFlowable(width="100%", thickness=2, color=colors.HexColor("#2e7d32")))
+    story.append(Spacer(1, 0.3*cm))
+
+    # Farm info
+    story.append(Paragraph(f"<b>Farm Location:</b> {location}", body_style))
+    story.append(Paragraph(f"<b>Crop:</b> {crop_type}", body_style))
+    story.append(Paragraph(f"<b>Report Date:</b> {date.today().strftime('%B %d, %Y')}", meta_style))
+    story.append(Spacer(1, 0.4*cm))
+    story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#c8e6c9")))
+
+    # Sections
+    sections = [
+        ("☁️ Weather Advisory & Forecast", weather_report),
+        ("🌿 Crop Doctor Analysis", crop_doctor_report),
+        ("📈 Market Price Advisory", market_price_report),
+        ("📋 Final Advisory Report", final_report),
+    ]
+    for heading, text in sections:
+        if text:
+            story.append(Spacer(1, 0.3*cm))
+            story.append(Paragraph(heading, section_style))
+            story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#e8f5e9")))
+            story.append(Spacer(1, 0.15*cm))
+            story.append(Paragraph(clean(text), body_style))
+
+    story.append(Spacer(1, 0.5*cm))
+    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#2e7d32")))
+    story.append(Spacer(1, 0.2*cm))
+    story.append(Paragraph("Generated by AgriSense AI · Farming Intelligence", meta_style))
+
+    doc.build(story)
+    buffer.seek(0)
+    return buffer.read()
 
 # CSS Styles
 st.markdown("""
@@ -1035,6 +1131,14 @@ st.markdown("""
             margin-bottom: 1.6rem;
             transition: box-shadow 0.25s ease, transform 0.25s ease;
             border-top: 1px solid rgba(200,230,201,0.5);
+            color: #1a2e1a !important;
+        }
+        .report-card * {
+            color: #1a2e1a !important;
+        }
+        .report-card p, .report-card li, .report-card span,
+        .report-card div, .report-card ul, .report-card ol {
+            color: #1a2e1a !important;
         }
         .report-card:hover {
             box-shadow: 0 8px 36px rgba(46,125,50,0.12), 0 2px 6px rgba(0,0,0,0.06);
@@ -1043,7 +1147,7 @@ st.markdown("""
         .card-header {
             font-weight: 700;
             font-size: 1.15rem;
-            color: #1b5e20;
+            color: #1b5e20 !important;
             margin-bottom: 1.1rem;
             display: flex;
             align-items: center;
@@ -1089,6 +1193,35 @@ st.markdown("""
         [data-testid="stSidebarResizer"] {
             display: none !important;
         }
+
+        /* ── Global main content text color fix ──────────────── */
+        .stApp p, .stApp li, .stApp span:not(.sidebar-username):not(.sidebar-status):not(.online-dot),
+        [data-testid="stAppViewContainer"] p,
+        [data-testid="stAppViewContainer"] li,
+        [data-testid="stMarkdownContainer"] p,
+        [data-testid="stMarkdownContainer"] li,
+        [data-testid="stMarkdownContainer"] span,
+        [data-testid="stMarkdownContainer"] div {
+            color: #1a2e1a;
+        }
+        /* Alert/info/success/warning box text */
+        .stAlert p, .stAlert div, .stAlert span,
+        [data-testid="stNotification"] p,
+        [data-testid="stNotification"] span,
+        div[data-baseweb="notification"] *,
+        div[role="alert"] * {
+            color: inherit !important;
+        }
+        /* Main area label text */
+        .stTextInput label, .stTextArea label,
+        .stSelectbox label, .stSlider label,
+        [data-testid="stWidgetLabel"] p {
+            color: #2e5d32 !important;
+        }
+        /* Workflow heading */
+        h3 { color: #1b5e20 !important; }
+        /* Caption text */
+        .stCaption, small { color: #4a6b4e !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -1212,9 +1345,12 @@ if not st.session_state.logged_in:
         .auth-kicker { color:#2e7d32; font-size:.76rem; font-weight:750; letter-spacing:.12em;
             text-transform:uppercase; margin-bottom:.5rem; }
         div[data-testid="stTextInput"] input { border-radius:12px !important; min-height:48px;
-            transition:border-color .2s, box-shadow .2s, transform .2s; }
+            transition:border-color .2s, box-shadow .2s, transform .2s;
+            color: #1a2e1a !important; background: #ffffff !important; }
         div[data-testid="stTextInput"] input:focus { border-color:#43a047 !important;
-            box-shadow:0 0 0 4px rgba(67,160,71,.13) !important; }
+            box-shadow:0 0 0 4px rgba(67,160,71,.13) !important; color: #1a2e1a !important; }
+        div[data-testid="stTextInput"] label, div[data-testid="stTextInput"] p,
+        .stCheckbox label, .stCheckbox span, div[data-testid="stCheckbox"] span { color: #2e5d32 !important; font-weight: 600 !important; }
         .auth-error { color:#b42318; font-size:.82rem; margin:-.45rem 0 .65rem; }
         .auth-valid { color:#247a35; font-size:.82rem; margin:-.45rem 0 .65rem; }
         .strength-track { height:5px; border-radius:999px; background:#e4e9e4; overflow:hidden; margin:.1rem 0 .35rem; }
@@ -1587,7 +1723,7 @@ if st.session_state.step >= 1:
                     f"Keep response under 150 words. Use bullet points and emojis. Be concise and farmer-friendly."
                 )
                 st.session_state.weather_report = run_agent_sync(agent, prompt)
-                st.rerun()
+            st.rerun()
         else:
             st.info(T["hitl_weather"])
             col1, col2 = st.columns([1, 4])
@@ -1676,18 +1812,25 @@ if st.session_state.step >= 1:
             st.markdown("---")
             st.success(f"🎉 {T['completed']}")
             st.markdown(f"""
-                <div class="report-card" style="border-left: 5px solid #ffb300; background-color: #fffdf7;">
-                    <div class="card-header" style="color: #e65100;">📋 {T['final_report']}</div>
-                    <div style="font-size: 1.05rem; line-height: 1.8;">
+                <div class="report-card" style="border-left: 5px solid #ffb300; background-color: #fffdf7; color: #1a2e1a !important;">
+                    <div class="card-header" style="color: #e65100 !important;">📋 {T['final_report']}</div>
+                    <div style="font-size: 1.05rem; line-height: 1.8; color: #1a2e1a !important;">
                         {st.session_state.final_report}
                     </div>
                 </div>
             """, unsafe_allow_html=True)
+            pdf_bytes = generate_pdf_report(
+                location, crop_type,
+                st.session_state.weather_report,
+                st.session_state.crop_doctor_report,
+                st.session_state.market_price_report,
+                st.session_state.final_report
+            )
             st.download_button(
                 label=T["download_btn"],
-                data=st.session_state.final_report,
-                file_name=f"agrisense_{location.replace(' ','_').lower()}.md",
-                mime="text/markdown",
+                data=pdf_bytes,
+                file_name=f"agrisense_{location.replace(" ","_").lower()}.pdf",
+                mime="application/pdf",
                 use_container_width=True
             )
             if st.button(T["analyze_another"], use_container_width=True):
