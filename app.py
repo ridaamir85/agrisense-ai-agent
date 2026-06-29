@@ -12,6 +12,7 @@ import sys
 import re
 import unicodedata
 from dotenv import load_dotenv
+from utils.input_validation import classify_agricultural_intent, passes_rule_based_validation
 
 # Load environment variables if .env exists
 load_dotenv()
@@ -1519,7 +1520,12 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 LOCATION_ERROR = "Please enter a valid farm location."
 CROP_ERROR = "Please select a crop type."
-PROBLEM_ERROR = "Please describe your crop problem in more detail."
+PROBLEM_ERROR = "Please describe your farming problem in more detail."
+AGRICULTURAL_INTENT_ERROR = (
+    "AgriSense AI is designed exclusively for agriculture-related advisory. Please describe "
+    "your farming issue, crop condition, pest, disease, irrigation, fertilizer, weather, "
+    "harvesting, or market-related question."
+)
 CROP_OPTIONS = [
     "Wheat", "Rice", "Corn", "Maize", "Tomato", "Potato", "Cotton", "Sugarcane",
     "Mango", "Onion", "Garlic", "Chili", "Pepper", "Soybean", "Barley", "Oats",
@@ -1545,13 +1551,7 @@ def validate_crop(value):
 
 def validate_problem(value):
     cleaned = sanitize_text(value, multiline=True)
-    compact = "".join(ch.lower() for ch in cleaned if ch.isalnum())
-    letters = "".join(ch for ch in compact if ch.isalpha())
-    meaningless = (not any(ch.isalpha() for ch in cleaned) or len(set(compact)) <= 2
-                   or compact in {"asdf", "asdfasdf", "qwerty", "test", "testing"}
-                   or (letters and len(set(letters)) == 1)
-                   or bool(re.fullmatch(r"(?:asdf)+", compact)))
-    return cleaned if 15 <= len(cleaned) <= 500 and not meaningless else None
+    return cleaned if len(cleaned) <= 500 and passes_rule_based_validation(cleaned) else None
 
 col1, col2 = st.columns(2)
 with col1:
@@ -1592,7 +1592,18 @@ def validate_inputs():
         return False
     # Final defensive gate immediately before any agent workflow can start.
     # Values are already normalized by the reusable field validators above.
-    return bool(location and crop_type and problem)
+    if not (location and crop_type and problem):
+        st.error(PROBLEM_ERROR, icon="⚠️")
+        return False
+
+    with st.spinner("Validating agricultural intent..."):
+        is_agricultural_intent, _ = classify_agricultural_intent(problem, gemini_key)
+
+    if not is_agricultural_intent:
+        st.error(AGRICULTURAL_INTENT_ERROR, icon="⚠️")
+        return False
+
+    return True
 
     # Legacy checks retained below for historical context; they are superseded by
     # the stricter reusable validation layer above.
@@ -1829,7 +1840,7 @@ if st.session_state.step >= 1:
             st.download_button(
                 label=T["download_btn"],
                 data=pdf_bytes,
-                file_name=f"agrisense_{location.replace(" ","_").lower()}.pdf",
+                file_name=f"agrisense_{location.replace(' ', '_').lower()}.pdf",
                 mime="application/pdf",
                 use_container_width=True
             )
