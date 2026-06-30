@@ -2,7 +2,10 @@
 
 A multilingual, multi-agent farming advisory app built with Google ADK, Gemini, MCP, and Streamlit for the Kaggle AI Agents Intensive Capstone Project.
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Streamlit](https://img.shields.io/badge/Streamlit-App-red) ![Google ADK](https://img.shields.io/badge/Google-ADK-green) ![Gemini](https://img.shields.io/badge/Gemini-2.5--Flash-purple)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Google ADK](https://img.shields.io/badge/Google-ADK-4285F4?logo=google&logoColor=white)](https://google.github.io/adk-docs/)
+[![Gemini](https://img.shields.io/badge/Model-Gemini%202.5%20Flash-8E75B2?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 
 ## The Problem
 
