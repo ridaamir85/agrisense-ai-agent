@@ -51,6 +51,13 @@ AGRICULTURE_KEYWORDS = {
     "orange", "apple", "grape", "watermelon", "pumpkin", "eggplant",
     "okra", "cabbage", "radish", "pineapple", "papaya", "guava",
     "ginger", "turmeric", "groundnut",
+    # Roman Urdu / Hinglish crop and farming terms
+    "gandum", "gundum", "gehu", "gehun", "chawal", "makai", "fasal",
+    "kheti", "kasht", "zameen", "zamin", "mitti", "beej", "poda",
+    "poday", "pattay", "patte", "patti", "pani", "barish", "mausam",
+    "dhoop", "garmi", "sardi", "khad", "khaad", "keera", "keeray",
+    "bemari", "bimari", "peela", "peeli", "peelay", "sookh", "sukh",
+    "ugao", "ugaon", "ugana", "lagao", "kaatna", "katai", "mandi",
 }
 
 ADVISORY_INTENT_KEYWORDS = {
@@ -59,6 +66,10 @@ ADVISORY_INTENT_KEYWORDS = {
     "manage", "fix", "improve", "need", "help", "problem", "issue",
     "disease", "pest", "spots", "yellow", "brown", "wilting", "dying",
     "irrigate", "harvest", "fertilizer", "fertiliser", "price", "market",
+    # Roman Urdu / Hinglish advisory intent terms
+    "kya", "kia", "kaise", "kaisay", "kesay", "kese", "kab", "kyun",
+    "q", "chahiye", "karun", "karon", "karain", "karein", "batao",
+    "batain", "madad", "mashwara", "ilaj", "ilaaj", "bachao", "behtar",
 }
 
 NON_ADVISORY_PHRASES = {
@@ -109,6 +120,18 @@ def is_valid_agriculture_query(value: str) -> bool:
         return False
 
     words = _words(query)
+    # NOTE: Previously this required BOTH an agriculture-topic word AND a
+    # separate "question intent" word (how/why/kesay/kya/etc). That
+    # rejected perfectly valid farmer input that states a problem rather
+    # than asking a question - e.g. "potato k pattay peelay horahay hain"
+    # (potato leaves are turning yellow) or "fasal mein keeray lag gaye
+    # hain" (pests have appeared in the crop) both correctly match
+    # agriculture vocabulary but contain no question word, since farmers
+    # often describe symptoms as statements, not questions, in any
+    # language. Requiring agriculture-topic vocabulary alone (already
+    # covering English + Roman Urdu/Hinglish terms above) is sufficient:
+    # genuinely unrelated input (greetings, small talk, spam) won't match
+    # any agriculture keyword either, so this still filters out off-topic
+    # text without rejecting real symptom reports.
     has_agriculture_context = bool(words.intersection(AGRICULTURE_KEYWORDS))
-    has_advisory_intent = bool(words.intersection(ADVISORY_INTENT_KEYWORDS))
-    return has_agriculture_context and has_advisory_intent
+    return has_agriculture_context

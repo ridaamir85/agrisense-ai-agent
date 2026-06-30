@@ -6,16 +6,17 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
-from reportlab.lib.enums import TA_LEFT, TA_CENTER
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable, Flowable
+from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 import sys
 import re
 import unicodedata
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from utils.input_validation import is_valid_agriculture_query
 
-# Load environment variables if .env exists
-load_dotenv()
+# Load environment variables from the project .env file when running locally.
+env_file = find_dotenv(usecwd=True)
+load_dotenv(env_file, override=True)
 
 # Add current workspace directory to python path for importing agents
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -65,7 +66,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Human-in-the-Loop: Review crop diagnosis above. Click Confirm to proceed.",
         "hitl_market": "💡 Human-in-the-Loop: Review market strategy above. Click Confirm to compile final report.",
         "confirm_btn": "✅ Confirm & Proceed",
-        "restart_btn": "🔄 Reanalyze",
         "compile_btn": "📝 Compile Final Report",
         "completed": "🎉 AgriSense Completed Report",
         "final_report": "📋 Complete Advisory Report",
@@ -107,7 +107,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 براہ کرم فصل کی تشخیص دیکھیں اور تصدیق کریں۔",
         "hitl_market": "💡 براہ کرم مارکیٹ حکمت عملی دیکھیں اور حتمی رپورٹ بنائیں۔",
         "confirm_btn": "✅ تصدیق کریں اور آگے بڑھیں",
-        "restart_btn": "🔄 دوبارہ تجزیہ کریں",
         "compile_btn": "📝 حتمی رپورٹ مرتب کریں",
         "completed": "🎉 AgriSense مکمل رپورٹ",
         "final_report": "📋 مکمل مشاورتی رپورٹ",
@@ -149,7 +148,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 मानव-इन-लूप: ऊपर फसल निदान की समीक्षा करें। आगे बढ़ने के लिए पुष्टि करें।",
         "hitl_market": "💡 मानव-इन-लूप: बाजार रणनीति की समीक्षा करें। अंतिम रिपोर्ट बनाने के लिए पुष्टि करें।",
         "confirm_btn": "✅ पुष्टि करें और आगे बढ़ें",
-        "restart_btn": "🔄 पुनः विश्लेषण करें",
         "compile_btn": "📝 अंतिम रिपोर्ट बनाएं",
         "completed": "🎉 AgriSense पूर्ण रिपोर्ट",
         "final_report": "📋 पूर्ण सलाह रिपोर्ट",
@@ -191,7 +189,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 ਫਸਲ ਨਿਦਾਨ ਦੀ ਸਮੀਖਿਆ ਕਰੋ ਅਤੇ ਪੁਸ਼ਟੀ ਕਰੋ।",
         "hitl_market": "💡 ਮਾਰਕੀਟ ਰਣਨੀਤੀ ਦੀ ਸਮੀਖਿਆ ਕਰੋ।",
         "confirm_btn": "✅ ਪੁਸ਼ਟੀ ਕਰੋ ਅਤੇ ਅੱਗੇ ਵਧੋ",
-        "restart_btn": "🔄 ਮੁੜ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ",
         "compile_btn": "📝 ਅੰਤਿਮ ਰਿਪੋਰਟ ਬਣਾਓ",
         "completed": "🎉 AgriSense ਮੁਕੰਮਲ ਰਿਪੋਰਟ",
         "final_report": "📋 ਮੁਕੰਮਲ ਸਲਾਹ ਰਿਪੋਰਟ",
@@ -233,7 +230,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Revise el diagnóstico del cultivo y confirme.",
         "hitl_market": "💡 Revise la estrategia de mercado y confirme.",
         "confirm_btn": "✅ Confirmar y Continuar",
-        "restart_btn": "🔄 Reanalizar",
         "compile_btn": "📝 Compilar Informe Final",
         "completed": "🎉 Informe Completo de AgriSense",
         "final_report": "📋 Informe de Asesoría Completo",
@@ -275,7 +271,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Examinez le diagnostic et confirmez.",
         "hitl_market": "💡 Examinez la stratégie de marché et confirmez.",
         "confirm_btn": "✅ Confirmer et Continuer",
-        "restart_btn": "🔄 Réanalyzer",
         "compile_btn": "📝 Compiler le Rapport Final",
         "completed": "🎉 Rapport AgriSense Complet",
         "final_report": "📋 Rapport de Conseil Complet",
@@ -317,7 +312,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Kagua utambuzi wa mazao na uthibitishe.",
         "hitl_market": "💡 Kagua mkakati wa soko na uthibitishe.",
         "confirm_btn": "✅ Thibitisha na Endelea",
-        "restart_btn": "🔄 Changanua Tena",
         "compile_btn": "📝 Kusanya Ripoti ya Mwisho",
         "completed": "🎉 Ripoti Kamili ya AgriSense",
         "final_report": "📋 Ripoti Kamili ya Ushauri",
@@ -359,7 +353,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 راجع تشخيص المحصول وأكد.",
         "hitl_market": "💡 راجع استراتيجية السوق وأكد.",
         "confirm_btn": "✅ تأكيد والمتابعة",
-        "restart_btn": "🔄 إعادة التحليل",
         "compile_btn": "📝 تجميع التقرير النهائي",
         "completed": "🎉 تقرير AgriSense المكتمل",
         "final_report": "📋 تقرير الاستشارة الكامل",
@@ -401,7 +394,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Revise o diagnóstico e confirme.",
         "hitl_market": "💡 Revise a estratégia de mercado e confirme.",
         "confirm_btn": "✅ Confirmar e Continuar",
-        "restart_btn": "🔄 Reanalizar",
         "compile_btn": "📝 Compilar Relatório Final",
         "completed": "🎉 Relatório AgriSense Completo",
         "final_report": "📋 Relatório de Consultoria Completo",
@@ -443,7 +435,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 请查看作物诊断并确认。",
         "hitl_market": "💡 请查看市场策略并确认。",
         "confirm_btn": "✅ 确认并继续",
-        "restart_btn": "🔄 重新分析",
         "compile_btn": "📝 编制最终报告",
         "completed": "🎉 AgriSense 完整报告",
         "final_report": "📋 完整咨询报告",
@@ -485,7 +476,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 ফসল রোগ নির্ণয় পর্যালোচনা করুন এবং নিশ্চিত করুন।",
         "hitl_market": "💡 বাজার কৌশল পর্যালোচনা করুন এবং নিশ্চিত করুন।",
         "confirm_btn": "✅ নিশ্চিত করুন এবং এগিয়ে যান",
-        "restart_btn": "🔄 পুনরায় বিশ্লেষণ করুন",
         "compile_btn": "📝 চূড়ান্ত রিপোর্ট তৈরি করুন",
         "completed": "🎉 AgriSense সম্পূর্ণ রিপোর্ট",
         "final_report": "📋 সম্পূর্ণ পরামর্শ রিপোর্ট",
@@ -527,7 +517,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Проверьте диагноз и подтвердите.",
         "hitl_market": "💡 Проверьте рыночную стратегию и подтвердите.",
         "confirm_btn": "✅ Подтвердить и продолжить",
-        "restart_btn": "🔄 Повторный анализ",
         "compile_btn": "📝 Составить итоговый отчет",
         "completed": "🎉 Полный отчет AgriSense",
         "final_report": "📋 Полный консультационный отчет",
@@ -569,7 +558,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Tinjau diagnosis tanaman dan konfirmasi.",
         "hitl_market": "💡 Tinjau strategi pasar dan konfirmasi.",
         "confirm_btn": "✅ Konfirmasi dan Lanjutkan",
-        "restart_btn": "🔄 Analisis Ulang",
         "compile_btn": "📝 Kompilasi Laporan Akhir",
         "completed": "🎉 Laporan AgriSense Selesai",
         "final_report": "📋 Laporan Konsultasi Lengkap",
@@ -611,7 +599,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Ürün tanısını inceleyin ve onaylayın.",
         "hitl_market": "💡 Pazar stratejisini inceleyin ve onaylayın.",
         "confirm_btn": "✅ Onayla ve Devam Et",
-        "restart_btn": "🔄 Yeniden Analiz Et",
         "compile_btn": "📝 Son Raporu Derle",
         "completed": "🎉 AgriSense Tamamlanan Rapor",
         "final_report": "📋 Tam Danışma Raporu",
@@ -653,7 +640,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 作物診断を確認して承認してください。",
         "hitl_market": "💡 市場戦略を確認して承認してください。",
         "confirm_btn": "✅ 確認して続ける",
-        "restart_btn": "🔄 再分析する",
         "compile_btn": "📝 最終レポートを作成",
         "completed": "🎉 AgriSense 完了レポート",
         "final_report": "📋 完全なアドバイザリーレポート",
@@ -695,7 +681,6 @@ TRANSLATIONS = {
         "hitl_crop": "💡 Xem xét chẩn đoán cây trồng và xác nhận.",
         "hitl_market": "💡 Xem xét chiến lược thị trường và xác nhận.",
         "confirm_btn": "✅ Xác nhận và Tiếp tục",
-        "restart_btn": "🔄 Phân tích lại",
         "compile_btn": "📝 Biên soạn Báo cáo Cuối cùng",
         "completed": "🎉 Báo cáo AgriSense Hoàn chỉnh",
         "final_report": "📋 Báo cáo Tư vấn Hoàn chỉnh",
@@ -758,33 +743,78 @@ LANGUAGE_NAMES = {
 # ============================================================
 # PDF GENERATION
 # ============================================================
-def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report, market_price_report, final_report):
+# Map each language to the correct Unicode font (script-specific) needed
+# to render its glyphs correctly in the PDF. A single Latin font cannot
+# render Hindi/Urdu/Arabic/Bengali/Japanese/Chinese, so we pick per-script.
+PDF_FONT_SOURCES = {
+    "Latin": "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf",
+    "Devanagari": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansdevanagari/NotoSansDevanagari%5Bwdth%2Cwght%5D.ttf",
+    "Arabic": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansarabic/NotoSansArabic%5Bwdth%2Cwght%5D.ttf",
+    "Bengali": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansbengali/NotoSansBengali%5Bwdth%2Cwght%5D.ttf",
+    "Gurmukhi": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansgurmukhi/NotoSansGurmukhi%5Bwdth%2Cwght%5D.ttf",
+    "Japanese": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansjp/NotoSansJP%5Bwght%5D.ttf",
+    "Mandarin": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+}
+# Which script family each app language needs
+LANGUAGE_TO_SCRIPT = {
+    "English": "Latin", "Spanish": "Latin", "French": "Latin", "Swahili": "Latin",
+    "Portuguese": "Latin", "Vietnamese": "Latin", "Turkish": "Latin",
+    "Russian": "Latin", "Indonesian": "Latin",
+    "Hindi": "Devanagari",
+    "Urdu": "Arabic", "Arabic": "Arabic",
+    "Punjabi": "Gurmukhi",
+    "Bengali": "Bengali",
+    "Mandarin": "Mandarin", "Japanese": "Japanese",
+}
+
+def _get_pdf_fonts(script, lang_key="English"):
+    font_name = _get_pdf_font(script)
+    if font_name:
+        return font_name, font_name
+    return None, None
+
+def _get_pdf_font(script):
+    """Download (once) and register a static, reportlab-compatible TTFont
+    for the given script family. Returns the registered font name, or
+    None if it could not be prepared (caller should fall back to Helvetica)."""
     import urllib.request, os, tempfile
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfbase.ttfonts import TTFont
 
-    # Download NotoSans font for Unicode support (Japanese, Arabic, Hindi etc.)
-    font_name = "Helvetica"
-    bold_font_name = "Helvetica-Bold"
+    font_name = f"PDF_{script}"
+    cache_dir = tempfile.gettempdir()
+    static_path = os.path.join(cache_dir, f"agrisense_{script}.ttf")
+
     try:
-        font_path = os.path.join(tempfile.gettempdir(), "NotoSans-Regular.ttf")
-        bold_path = os.path.join(tempfile.gettempdir(), "NotoSans-Bold.ttf")
-        if not os.path.exists(font_path):
-            urllib.request.urlretrieve(
-                "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf",
-                font_path
-            )
-        if not os.path.exists(bold_path):
-            urllib.request.urlretrieve(
-                "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSans/NotoSans-Bold.ttf",
-                bold_path
-            )
-        pdfmetrics.registerFont(TTFont("NotoSans", font_path))
-        pdfmetrics.registerFont(TTFont("NotoSans-Bold", bold_path))
-        font_name = "NotoSans"
-        bold_font_name = "NotoSans-Bold"
+        if not os.path.exists(static_path):
+            raw_path = os.path.join(cache_dir, f"agrisense_{script}_raw.ttf")
+            urllib.request.urlretrieve(PDF_FONT_SOURCES[script], raw_path)
+            # Variable fonts must be instantiated to a static weight for reportlab
+            from fontTools.varLib.instancer import instantiateVariableFont
+            from fontTools.ttLib import TTFont as FTFont
+            ft = FTFont(raw_path)
+            if "fvar" in ft:
+                axes = {a.axisTag: (400 if a.axisTag == "wght" else a.defaultValue)
+                        for a in ft["fvar"].axes}
+                ft = instantiateVariableFont(ft, axes)
+            ft.save(static_path)
+        pdfmetrics.registerFont(TTFont(font_name, static_path))
+        return font_name
     except Exception:
-        pass  # Fall back to Helvetica if download fails
+        return None
+
+
+def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report, market_price_report, final_report, lang_key="English"):
+    script = LANGUAGE_TO_SCRIPT.get(lang_key, "Latin")
+    labels = TRANSLATIONS.get(lang_key, TRANSLATIONS["English"])
+    font_name, bold_font_name = _get_pdf_fonts(script, lang_key)
+    if font_name is None and script != "Latin":
+        # Fall back to the Latin Unicode font rather than pure Helvetica
+        font_name, bold_font_name = _get_pdf_fonts("Latin", lang_key)
+
+    if font_name is None:
+        font_name = "Helvetica"
+        bold_font_name = "Helvetica-Bold"
 
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(
@@ -793,71 +823,153 @@ def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report,
         topMargin=2*cm, bottomMargin=2*cm
     )
     styles = getSampleStyleSheet()
+    is_rtl_pdf = lang_key in {"Arabic", "Urdu"}
+    pdf_alignment = TA_RIGHT if is_rtl_pdf else TA_LEFT
 
     # Custom styles
     title_style = ParagraphStyle("Title", parent=styles["Title"],
-        fontSize=22, textColor=colors.HexColor("#1b5e20"),
-        spaceAfter=6, alignment=TA_CENTER, fontName=bold_font_name)
+        fontSize=24, textColor=colors.HexColor("#1b5e20"),
+        spaceAfter=6, alignment=TA_CENTER, fontName="Helvetica-Bold")
     subtitle_style = ParagraphStyle("Subtitle", parent=styles["Normal"],
         fontSize=11, textColor=colors.HexColor("#4a6b4e"),
         spaceAfter=4, alignment=TA_CENTER, fontName=font_name)
     section_style = ParagraphStyle("Section", parent=styles["Heading2"],
         fontSize=13, textColor=colors.HexColor("#2e7d32"),
         spaceBefore=14, spaceAfter=6, fontName=bold_font_name,
-        borderPad=4)
+        borderPad=4, alignment=pdf_alignment)
     body_style = ParagraphStyle("Body", parent=styles["Normal"],
         fontSize=10, textColor=colors.HexColor("#1a2e1a"),
-        spaceAfter=4, leading=16, fontName=font_name)
+        spaceAfter=4, leading=16, fontName=font_name,
+        alignment=pdf_alignment)
     meta_style = ParagraphStyle("Meta", parent=styles["Normal"],
         fontSize=9, textColor=colors.HexColor("#627465"),
-        spaceAfter=2, fontName=font_name)
+        spaceAfter=2, fontName=font_name,
+        alignment=pdf_alignment)
+
+    class BrandTitle(Flowable):
+        def wrap(self, avail_width, avail_height):
+            self.width = avail_width
+            self.height = 1.0 * cm
+            return avail_width, self.height
+
+        def drawOn(self, canvas, x, y, _sW=0):
+            title = "AgriSense AI"
+            font_name_local = "Helvetica-Bold"
+            font_size = 24
+            title_width = canvas.stringWidth(title, font_name_local, font_size)
+            center_x = x + self.width / 2
+            text_x = center_x - title_width / 2 + 11
+            base_y = y + 0.18 * cm
+            icon_x = text_x - 0.50 * cm
+            icon_y = base_y + 0.26 * cm
+
+            canvas.saveState()
+            canvas.setStrokeColor(colors.HexColor("#2e7d32"))
+            canvas.setLineWidth(1.6)
+            canvas.line(icon_x + 0.18 * cm, icon_y - 0.18 * cm, icon_x + 0.18 * cm, icon_y + 0.20 * cm)
+            canvas.setFillColor(colors.HexColor("#8bc34a"))
+            canvas.ellipse(icon_x - 0.05 * cm, icon_y + 0.02 * cm, icon_x + 0.28 * cm, icon_y + 0.28 * cm, stroke=0, fill=1)
+            canvas.ellipse(icon_x + 0.16 * cm, icon_y + 0.00 * cm, icon_x + 0.48 * cm, icon_y + 0.25 * cm, stroke=0, fill=1)
+            canvas.setFillColor(colors.HexColor("#8d6e63"))
+            canvas.ellipse(icon_x - 0.02 * cm, icon_y - 0.28 * cm, icon_x + 0.40 * cm, icon_y - 0.08 * cm, stroke=0, fill=1)
+            canvas.setFillColor(colors.HexColor("#1b5e20"))
+            canvas.setFont(font_name_local, font_size)
+            canvas.drawString(text_x, base_y, title)
+            canvas.restoreState()
 
     def clean(text):
         import re
+        import html
+
         if not text:
             return ""
-        # Remove markdown bold/italic
-        text = re.sub(r"[*][*](.+?)[*][*]", r"<b>\1</b>", text)
-        text = re.sub(r"[*](.+?)[*]", r"<i>\1</i>", text)
-        # Convert markdown bullets to HTML
+
+        try:
+            import arabic_reshaper
+            from bidi.algorithm import get_display
+        except Exception:
+            arabic_reshaper = None
+            get_display = None
+
+        # ReportLab cannot render colour emoji with the script fonts used here.
+        emoji_pattern = re.compile(
+            "["
+            "\U0001F300-\U0001FAFF"
+            "\U00002600-\U000027BF"
+            "\U0001F1E6-\U0001F1FF"
+            "\U00002190-\U000021FF"
+            "\U00002B00-\U00002BFF"
+            "\uFE0F"
+            "]+", flags=re.UNICODE
+        )
+        text = emoji_pattern.sub("", text)
+
+        def shape_pdf_text(value):
+            value = html.escape(value)
+            if is_rtl_pdf and arabic_reshaper and get_display:
+                return get_display(arabic_reshaper.reshape(value))
+            return value
+
+        def render_inline_markdown(line):
+            parts = []
+            pos = 0
+            for match in re.finditer(r"\*\*(.+?)\*\*|\*(.+?)\*", line):
+                parts.append(shape_pdf_text(line[pos:match.start()]))
+                if match.group(1) is not None:
+                    parts.append(f"<b>{shape_pdf_text(match.group(1))}</b>")
+                else:
+                    parts.append(f"<i>{shape_pdf_text(match.group(2))}</i>")
+                pos = match.end()
+            parts.append(shape_pdf_text(line[pos:]))
+            return "".join(parts)
+
         lines = text.splitlines()
         result = []
         for line in lines:
             line = line.strip()
-            if line.startswith("- ") or line.startswith("• "):
-                result.append("&bull; " + line[2:])
-            elif line:
-                result.append(line)
+            if not line:
+                continue
+
+            line = re.sub(r"^#{1,6}\s*", "", line)
+            is_bullet = line.startswith(("- ", "* ", "\u2022 ", "\u00e2\u20ac\u00a2 "))
+            if is_bullet:
+                line = line[2:].strip()
+
+            rendered = render_inline_markdown(line)
+            if is_bullet:
+                rendered = f"&bull; {rendered}" if not is_rtl_pdf else f"{rendered} &bull;"
+            result.append(rendered)
+
         return "<br/>".join(result)
 
     from datetime import date
     story = []
 
     # Header
-    story.append(Paragraph("🌱 AgriSense AI", title_style))
-    story.append(Paragraph("Farming Intelligence Advisory Report", subtitle_style))
+    story.append(BrandTitle())
+    story.append(Paragraph(clean(labels["subtitle"]), subtitle_style))
     story.append(Spacer(1, 0.2*cm))
     story.append(HRFlowable(width="100%", thickness=2, color=colors.HexColor("#2e7d32")))
     story.append(Spacer(1, 0.3*cm))
 
     # Farm info
-    story.append(Paragraph(f"<b>Farm Location:</b> {location}", body_style))
-    story.append(Paragraph(f"<b>Crop:</b> {crop_type}", body_style))
-    story.append(Paragraph(f"<b>Report Date:</b> {date.today().strftime('%B %d, %Y')}", meta_style))
+    story.append(Paragraph(clean(f"**{labels['location']}:** {location}"), body_style))
+    story.append(Paragraph(clean(f"**{labels['crop_type']}:** {crop_type}"), body_style))
+    story.append(Paragraph(date.today().isoformat(), meta_style))
     story.append(Spacer(1, 0.4*cm))
     story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#c8e6c9")))
 
     # Sections
     sections = [
-        ("☁️ Weather Advisory & Forecast", weather_report),
-        ("🌿 Crop Doctor Analysis", crop_doctor_report),
-        ("📈 Market Price Advisory", market_price_report),
-        ("📋 Final Advisory Report", final_report),
+        (labels["weather_header"], weather_report),
+        (labels["crop_header"], crop_doctor_report),
+        (labels["market_header"], market_price_report),
+        (labels["final_report"], final_report),
     ]
     for heading, text in sections:
         if text:
             story.append(Spacer(1, 0.3*cm))
-            story.append(Paragraph(heading, section_style))
+            story.append(Paragraph(clean(heading), section_style))
             story.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#e8f5e9")))
             story.append(Spacer(1, 0.15*cm))
             story.append(Paragraph(clean(text), body_style))
@@ -865,7 +977,7 @@ def generate_pdf_report(location, crop_type, weather_report, crop_doctor_report,
     story.append(Spacer(1, 0.5*cm))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#2e7d32")))
     story.append(Spacer(1, 0.2*cm))
-    story.append(Paragraph("Generated by AgriSense AI · Farming Intelligence", meta_style))
+    story.append(Paragraph(clean(labels["completed"]), meta_style))
 
     doc.build(story)
     buffer.seek(0)
@@ -925,69 +1037,6 @@ st.markdown("""
             border-color: rgba(255,255,255,0.1) !important;
             margin: 1rem 0 !important;
         }
-        /* Sidebar user strip */
-        .sidebar-user-strip {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.75rem 1rem;
-            background: rgba(255,255,255,0.06);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.10);
-            margin-bottom: 1rem;
-        }
-        .sidebar-avatar {
-            width: 36px; height: 36px;
-            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(76,175,80,0.35);
-        }
-        .sidebar-username {
-            font-weight: 600;
-            font-size: 0.92rem;
-            color: #e8f5e9 !important;
-            letter-spacing: 0.01em;
-        }
-        .sidebar-status {
-            font-size: 0.70rem;
-            color: #81c784 !important;
-            margin-top: 1px;
-            display: flex; align-items: center; gap: 4px;
-        }
-        .online-dot {
-            width: 7px; height: 7px;
-            background: #4caf50;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-online 2.2s ease infinite;
-        }
-        @keyframes pulse-online {
-            0%,100% { opacity:1; transform:scale(1); }
-            50%      { opacity:0.5; transform:scale(1.3); }
-        }
-        /* Logout button */
-        [data-testid="stSidebar"] [data-testid="stButton"][id*="logout"] > button,
-        .logout-btn-wrapper .stButton > button {
-            background: rgba(211, 47, 47, 0.18) !important;
-            color: #ef9a9a !important;
-            border: 1px solid rgba(211, 47, 47, 0.40) !important;
-            border-radius: 8px !important;
-            font-size: 0.78rem !important;
-            font-weight: 600 !important;
-            padding: 0.30rem 0.8rem !important;
-            width: auto !important;
-            transition: background 0.2s ease, border-color 0.2s ease !important;
-            letter-spacing: 0.03em;
-        }
-        .logout-btn-wrapper .stButton > button:hover {
-            background: rgba(211, 47, 47, 0.30) !important;
-            border-color: rgba(211, 47, 47, 0.65) !important;
-            color: #ffcdd2 !important;
-        }
-
-        /* ── Hero Header ──────────────────────────────────────── */
         .main-header {
             position: relative;
             min-height: 220px;
@@ -1224,7 +1273,7 @@ st.markdown("""
         }
 
         /* ── Global main content text color fix ──────────────── */
-        .stApp p, .stApp li, .stApp span:not(.sidebar-username):not(.sidebar-status):not(.online-dot),
+        .stApp p, .stApp li, .stApp span,
         [data-testid="stAppViewContainer"] p,
         [data-testid="stAppViewContainer"] li,
         [data-testid="stMarkdownContainer"] p,
@@ -1302,141 +1351,7 @@ div[data-testid="stStatus"] > div {
 
 
 
-# ============================================================
-# LOGIN PAGE — UI and frontend validation only
-# ============================================================
-if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
-if "username" not in st.session_state:
-    st.session_state.username = ""
-
-LOGIN_EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$")
-LOGIN_USERNAME_PATTERN = re.compile(r"^[A-Za-z0-9_]+$")
-
-def sanitize_login_identifier(value):
-    """Normalize the identifier without ever touching or logging the password."""
-    value = unicodedata.normalize("NFKC", value or "").strip()
-    return "".join(ch for ch in value if unicodedata.category(ch)[0] != "C")
-
-def validate_login_identifier(value):
-    value = sanitize_login_identifier(value)
-    if not value:
-        return None, "Please enter your email or username."
-    if "@" in value:
-        if len(value) > 254 or not LOGIN_EMAIL_PATTERN.fullmatch(value):
-            return None, "Invalid email format."
-        return value, None
-    if not 3 <= len(value) <= 30:
-        return None, "Username must be between 3 and 30 characters."
-    if not LOGIN_USERNAME_PATTERN.fullmatch(value):
-        return None, "Username can only contain letters, numbers, and underscores."
-    return value, None
-
-def validate_login_password(value):
-    if not value:
-        return ["Please enter your password."]
-    errors = []
-    if not 8 <= len(value) <= 64:
-        errors.append("Password must be between 8 and 64 characters.")
-    if not re.search(r"[A-Z]", value):
-        errors.append("Password must contain at least one uppercase letter.")
-    if not re.search(r"[a-z]", value):
-        errors.append("Password must contain at least one lowercase letter.")
-    if not re.search(r"\d", value):
-        errors.append("Password must contain at least one number.")
-    if not re.search(r"[^A-Za-z0-9\s]", value):
-        errors.append("Password must contain at least one special character.")
-    return errors
-
-def password_strength(value):
-    score = sum((len(value) >= 8, len(value) >= 12, bool(re.search(r"[A-Z]", value)),
-                 bool(re.search(r"[a-z]", value)), bool(re.search(r"\d", value)),
-                 bool(re.search(r"[^A-Za-z0-9\s]", value))))
-    return ("Strong", "strong") if score >= 6 else (("Medium", "medium") if score >= 4 else ("Weak", "weak"))
-
-if not st.session_state.logged_in:
-    st.markdown("""
-        <style>
-        [data-testid="stAppViewContainer"] {
-            background:
-                radial-gradient(circle at 15% 15%, rgba(76,175,80,.13), transparent 28rem),
-                radial-gradient(circle at 90% 90%, rgba(129,199,132,.16), transparent 30rem),
-                linear-gradient(145deg, #f8fbf8 0%, #eef6ef 100%);
-        }
-        [data-testid="stHeader"], [data-testid="stSidebar"] { display: none; }
-        .block-container { max-width: 520px; padding-top: clamp(2rem, 9vh, 6rem); padding-bottom: 3rem; }
-        .auth-brand { text-align:center; margin-bottom:1.6rem; }
-        .auth-logo { display:inline-grid; place-items:center; width:58px; height:58px; border-radius:17px;
-            background:linear-gradient(145deg,#1b5e20,#43a047); color:white; font-size:1.8rem;
-            box-shadow:0 12px 28px rgba(27,94,32,.24); margin-bottom:1rem; }
-        .auth-brand h1 { color:#153c1a; font-size:2rem; letter-spacing:-.04em; margin:0 0 .45rem; }
-        .auth-brand p { color:#627465; font-size:.96rem; margin:0; line-height:1.55; }
-        .auth-kicker { color:#2e7d32; font-size:.76rem; font-weight:750; letter-spacing:.12em;
-            text-transform:uppercase; margin-bottom:.5rem; }
-        div[data-testid="stTextInput"] input { border-radius:12px !important; min-height:48px;
-            transition:border-color .2s, box-shadow .2s, transform .2s;
-            color: #1a2e1a !important; background: #ffffff !important; }
-        div[data-testid="stTextInput"] input:focus { border-color:#43a047 !important;
-            box-shadow:0 0 0 4px rgba(67,160,71,.13) !important; color: #1a2e1a !important; }
-        div[data-testid="stTextInput"] label, div[data-testid="stTextInput"] p,
-        .stCheckbox label, .stCheckbox span, div[data-testid="stCheckbox"] span { color: #2e5d32 !important; font-weight: 600 !important; }
-        .auth-error { color:#b42318; font-size:.82rem; margin:-.45rem 0 .65rem; }
-        .auth-valid { color:#247a35; font-size:.82rem; margin:-.45rem 0 .65rem; }
-        .strength-track { height:5px; border-radius:999px; background:#e4e9e4; overflow:hidden; margin:.1rem 0 .35rem; }
-        .strength-fill { height:100%; border-radius:999px; transition:width .25s ease; }
-        .strength-fill.weak { width:33%; background:#d92d20; } .strength-fill.medium { width:66%; background:#f79009; }
-        .strength-fill.strong { width:100%; background:#2e9b45; }
-        .strength-label { font-size:.78rem; color:#69776b; margin-bottom:.7rem; }
-        .auth-links { display:flex; justify-content:space-between; align-items:center; margin:.25rem 0 1rem; }
-        .auth-links a, .signup-copy a { color:#237b35; text-decoration:none; font-weight:650; }
-        .auth-links a:hover, .signup-copy a:hover { text-decoration:underline; }
-        div[data-testid="stButton"] > button { width:100%; min-height:49px; border:0; border-radius:12px;
-            background:linear-gradient(135deg,#1f702d,#3e9b4c); color:white; font-weight:700;
-            box-shadow:0 8px 20px rgba(31,112,45,.22); transition:transform .18s,box-shadow .18s; }
-        div[data-testid="stButton"] > button:hover:not(:disabled) { transform:translateY(-1px);
-            box-shadow:0 12px 26px rgba(31,112,45,.3); color:white; }
-        div[data-testid="stButton"] > button:disabled { background:#c8d4ca; color:#f7faf7; box-shadow:none; }
-        .signup-copy { text-align:center; color:#6c786e; font-size:.9rem; margin-top:1.25rem; }
-        .trust-copy { text-align:center; color:#8a958c; font-size:.75rem; margin-top:1.8rem; }
-        @media (max-width:600px) { .block-container { padding:2rem 1.15rem; } .auth-brand h1 { font-size:1.75rem; } }
-        </style>
-        <div class="auth-brand">
-            <div class="auth-logo" aria-hidden="true">🌱</div>
-            <div class="auth-kicker">AgriSense AI</div>
-            <h1>Welcome back</h1>
-            <p>Sign in to access intelligent farm insights and advisory tools.</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-    raw_identifier = st.text_input("👤 Email or Username", placeholder="farmer_ali or farmer@example.com",
-                                   max_chars=254, key="login_identifier")
-
-    show_password = st.checkbox("Show password", key="login_show_password")
-    login_password = st.text_input("🔒 Password", placeholder="Enter your password",
-                                   type="default" if show_password else "password", max_chars=64,
-                                   key="login_password")
-
-    remember_me = st.checkbox("Remember me", key="login_remember_me")
-    st.markdown('<div class="auth-links"><span></span><a href="#" aria-label="Forgot password">Forgot password?</a></div>',
-                unsafe_allow_html=True)
-
-    if st.button("Sign in", use_container_width=True, key="login_submit"):
-        identifier, identifier_error = validate_login_identifier(raw_identifier)
-        password_errors = validate_login_password(login_password)
-        if identifier_error:
-            st.error(identifier_error)
-        elif password_errors:
-            for err in password_errors:
-                st.error(err)
-        else:
-            with st.spinner("Signing you in…"):
-                st.session_state.logged_in = True
-                st.session_state.username = identifier
-            st.rerun()
-    st.markdown('<div class="signup-copy">New to AgriSense? <a href="#">Create an account</a></div>'
-                '<div class="trust-copy">Protected session · Passwords are never displayed or logged</div>',
-                unsafe_allow_html=True)
-    st.stop()
+# Public Kaggle demo opens directly with no login requirement.
 
 # Helper function
 async def run_agent_async(agent, prompt: str) -> str:
@@ -1469,7 +1384,14 @@ def run_agent_sync(agent, prompt: str) -> str:
             asyncio.set_event_loop(loop)
         return loop.run_until_complete(run_agent_async(agent, prompt))
     except Exception as e:
-        return f"Error executing agent: {str(e)}"
+        error_text = str(e)
+        quota_markers = ["RESOURCE_EXHAUSTED", "429", "quota", "rate limit", "free_tier_requests"]
+        if any(marker.lower() in error_text.lower() for marker in quota_markers):
+            return (
+                "Error: Gemini API quota/rate limit reached. "
+                "Please wait and try again later, or use a Gemini API key with available quota/billing enabled."
+            )
+        return f"Error executing agent: {error_text[:500]}"
 
 # ============================================================
 # SIDEBAR
@@ -1486,35 +1408,9 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
 
-    # ── User profile card + logout ──
-    st.markdown(f"""
-        <div style="display:flex;align-items:center;gap:10px;padding:0.75rem 1rem;
-                    background:rgba(255,255,255,0.06);border-radius:12px;
-                    border:1px solid rgba(255,255,255,0.10);margin-bottom:0.5rem;">
-            <div style="width:36px;height:36px;background:linear-gradient(135deg,#4caf50,#2e7d32);
-                        border-radius:50%;display:flex;align-items:center;justify-content:center;
-                        font-size:1rem;flex-shrink:0;">👤</div>
-            <div style="flex:1;min-width:0;">
-                <div style="font-weight:700;font-size:0.92rem;color:#e8f5e9;">{st.session_state.get('username', 'Farmer')}</div>
-                <div style="font-size:0.70rem;color:#81c784;">
-                    <span style="width:7px;height:7px;background:#4caf50;border-radius:50%;display:inline-block;margin-right:4px;"></span>
-                    Active session
-                </div>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    if st.button("⎋ Logout", key="logout_btn"):
-        st.session_state.logged_in = False
-        st.session_state.username = ""
-        st.rerun()
-
     st.markdown("---")
-
-
 
     # Language selection FIRST so translations apply to everything
-    st.markdown("---")
     selected_display = st.selectbox(
         "🌐 Language / زبان / भाषा",
         list(LANGUAGE_OPTIONS.keys())
@@ -1522,6 +1418,53 @@ with st.sidebar:
     lang_key = LANGUAGE_OPTIONS[selected_display]
     T = TRANSLATIONS.get(lang_key, TRANSLATIONS["English"])
     lang_name = LANGUAGE_NAMES.get(lang_key, "English")
+    language_value_instruction = (
+        f"Translate crop names, location names, and the farmer question naturally into {lang_name}; "
+        f"do not keep English words such as Japan, Wheat, Maize, or English section labels when {lang_name} has native terms. "
+        f"Brand names like AgriSense AI may stay unchanged. "
+    )
+    RTL_LANGUAGES = {"Arabic", "Urdu"}
+    is_rtl = lang_key in RTL_LANGUAGES
+    if is_rtl:
+        st.markdown("""
+            <style>
+                .main-header, .section-heading { direction: rtl; text-align: right; }
+                .section-heading { flex-direction: row-reverse; justify-content: flex-end; }
+                .stTextInput input, .stTextArea textarea { direction: rtl; text-align: right; }
+                div[data-baseweb="select"] { direction: rtl; text-align: right; }
+                .stButton button { direction: rtl; }
+                .localized-report[dir="rtl"] {
+                    direction: rtl;
+                    text-align: right;
+                    unicode-bidi: isolate;
+                    border-left: 0;
+                    border-right: 4px solid #2e7d32;
+                }
+                .localized-report[dir="rtl"] .card-header {
+                    flex-direction: row-reverse;
+                    justify-content: flex-start;
+                }
+                .localized-report[dir="rtl"] p,
+                .localized-report[dir="rtl"] li,
+                .localized-report[dir="rtl"] div {
+                    direction: rtl;
+                    text-align: right;
+                    unicode-bidi: plaintext;
+                }
+                .localized-report[dir="rtl"] ul,
+                .localized-report[dir="rtl"] ol {
+                    direction: rtl;
+                    text-align: right;
+                    padding-right: 1.4rem;
+                    padding-left: 0;
+                }
+                .stAlert {
+                    direction: rtl;
+                    text-align: right;
+                }
+            </style>
+        """, unsafe_allow_html=True)
+    report_dir = "rtl" if is_rtl else "ltr"
     
     # Track language changes for translation
     if "current_lang" not in st.session_state:
@@ -1534,12 +1477,18 @@ with st.sidebar:
     st.markdown(f"### {T['settings']}")
     env_gemini = os.environ.get("GEMINI_API_KEY", "")
     env_weather = os.environ.get("OPENWEATHER_API_KEY", "")
-    gemini_key = st.text_input(T["gemini_key"], value=env_gemini, type="password")
-    weather_key = st.text_input(T["weather_key"], value=env_weather, type="password")
-    if gemini_key:
-        os.environ["GEMINI_API_KEY"] = gemini_key
-    if weather_key:
-        os.environ["OPENWEATHER_API_KEY"] = weather_key
+
+    if env_gemini:
+        os.environ["GEMINI_API_KEY"] = env_gemini
+        st.success("Gemini API key is configured for this deployment.")
+    else:
+        st.warning("Gemini API key is not configured. Add it to .env locally or Streamlit Cloud Secrets before running analysis.")
+
+    if env_weather:
+        os.environ["OPENWEATHER_API_KEY"] = env_weather
+        st.caption("Optional weather key is configured. Open-Meteo works without a key.")
+    else:
+        st.caption("Weather uses Open-Meteo by default; no OpenWeather key is required.")
 
     st.markdown("---")
     st.markdown(f"### {T['security_notice']}")
@@ -1565,9 +1514,6 @@ st.markdown(f"""
         <span>{T['advisory_inputs']}</span>
     </div>
 """, unsafe_allow_html=True)
-LOCATION_ERROR = "Please enter a valid farm location."
-CROP_ERROR = "Please select a crop type."
-PROBLEM_ERROR = "Please describe your farming problem in more detail."
 CROP_OPTIONS = [
     "Wheat", "Rice", "Corn", "Maize", "Tomato", "Potato", "Cotton", "Sugarcane",
     "Mango", "Onion", "Garlic", "Chili", "Pepper", "Soybean", "Barley", "Oats",
@@ -1576,6 +1522,886 @@ CROP_OPTIONS = [
     "Apple", "Grape", "Watermelon", "Pumpkin", "Eggplant", "Okra", "Cabbage",
     "Radish", "Pineapple", "Papaya", "Guava", "Ginger", "Turmeric", "Groundnut",
 ]
+
+FORM_TEXT = {
+    "English": {
+        "location_error": "Please enter a valid farm location.",
+        "crop_error": "Please select a crop type.",
+        "problem_error": "Please describe your farming problem in more detail.",
+        "location_ok": "✓ Location looks good",
+        "crop_ok": "✓ Crop selected",
+        "problem_ok": "✓ Description is detailed enough",
+        "crop_select": "Select a crop…",
+        "location_help": "Required · 2-100 characters",
+        "problem_help": "Required · 15-500 meaningful characters"
+    },
+    "Urdu": {
+        "location_error": "براہ کرم درست فارم کا مقام درج کریں۔",
+        "crop_error": "براہ کرم فصل کی قسم منتخب کریں۔",
+        "problem_error": "براہ کرم زرعی مسئلے کو مزید تفصیل سے بیان کریں۔",
+        "location_ok": "✓ مقام درست ہے",
+        "crop_ok": "✓ فصل منتخب ہو گئی",
+        "problem_ok": "✓ تفصیل کافی ہے",
+        "crop_select": "فصل منتخب کریں…",
+        "location_help": "ضروری · 2 سے 100 حروف",
+        "problem_help": "ضروری · 15 سے 500 بامعنی حروف"
+    },
+    "Hindi": {
+        "location_error": "कृपया मान्य खेत स्थान दर्ज करें।",
+        "crop_error": "कृपया फसल का प्रकार चुनें।",
+        "problem_error": "कृपया अपनी खेती की समस्या को अधिक विस्तार से लिखें।",
+        "location_ok": "✓ स्थान सही है",
+        "crop_ok": "✓ फसल चुनी गई",
+        "problem_ok": "✓ विवरण पर्याप्त है",
+        "crop_select": "फसल चुनें…",
+        "location_help": "आवश्यक · 2-100 अक्षर",
+        "problem_help": "आवश्यक · 15-500 सार्थक अक्षर"
+    },
+    "Punjabi": {
+        "location_error": "ਕਿਰਪਾ ਕਰਕੇ ਸਹੀ ਖੇਤ ਦੀ ਥਾਂ ਦਰਜ ਕਰੋ।",
+        "crop_error": "ਕਿਰਪਾ ਕਰਕੇ ਫਸਲ ਦੀ ਕਿਸਮ ਚੁਣੋ।",
+        "problem_error": "ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਖੇਤੀ ਸਮੱਸਿਆ ਹੋਰ ਵਿਸਥਾਰ ਨਾਲ ਲਿਖੋ।",
+        "location_ok": "✓ ਥਾਂ ਠੀਕ ਹੈ",
+        "crop_ok": "✓ ਫਸਲ ਚੁਣੀ ਗਈ",
+        "problem_ok": "✓ ਵੇਰਵਾ ਕਾਫ਼ੀ ਹੈ",
+        "crop_select": "ਫਸਲ ਚੁਣੋ…",
+        "location_help": "ਲੋੜੀਂਦਾ · 2-100 ਅੱਖਰ",
+        "problem_help": "ਲੋੜੀਂਦਾ · 15-500 ਮਾਇਨੇਦਾਰ ਅੱਖਰ"
+    },
+    "Spanish": {
+        "location_error": "Ingrese una ubicación válida de la granja.",
+        "crop_error": "Seleccione un tipo de cultivo.",
+        "problem_error": "Describa su problema agrícola con más detalle.",
+        "location_ok": "✓ La ubicación parece correcta",
+        "crop_ok": "✓ Cultivo seleccionado",
+        "problem_ok": "✓ La descripción es suficientemente detallada",
+        "crop_select": "Seleccione un cultivo…",
+        "location_help": "Requerido · 2-100 caracteres",
+        "problem_help": "Requerido · 15-500 caracteres útiles"
+    },
+    "French": {
+        "location_error": "Veuillez saisir un emplacement de ferme valide.",
+        "crop_error": "Veuillez sélectionner un type de culture.",
+        "problem_error": "Veuillez décrire votre problème agricole plus en détail.",
+        "location_ok": "✓ Emplacement correct",
+        "crop_ok": "✓ Culture sélectionnée",
+        "problem_ok": "✓ Description suffisamment détaillée",
+        "crop_select": "Sélectionnez une culture…",
+        "location_help": "Obligatoire · 2-100 caractères",
+        "problem_help": "Obligatoire · 15-500 caractères utiles"
+    },
+    "Swahili": {
+        "location_error": "Tafadhali weka eneo halali la shamba.",
+        "crop_error": "Tafadhali chagua aina ya zao.",
+        "problem_error": "Tafadhali eleza tatizo lako la kilimo kwa maelezo zaidi.",
+        "location_ok": "✓ Eneo linaonekana sawa",
+        "crop_ok": "✓ Zao limechaguliwa",
+        "problem_ok": "✓ Maelezo yanatosha",
+        "crop_select": "Chagua zao…",
+        "location_help": "Inahitajika · herufi 2-100",
+        "problem_help": "Inahitajika · herufi zenye maana 15-500"
+    },
+    "Arabic": {
+        "location_error": "يرجى إدخال موقع مزرعة صالح.",
+        "crop_error": "يرجى اختيار نوع المحصول.",
+        "problem_error": "يرجى وصف المشكلة الزراعية بمزيد من التفاصيل.",
+        "location_ok": "✓ الموقع صحيح",
+        "crop_ok": "✓ تم اختيار المحصول",
+        "problem_ok": "✓ الوصف مفصل بما يكفي",
+        "crop_select": "اختر محصولًا…",
+        "location_help": "مطلوب · من 2 إلى 100 حرف",
+        "problem_help": "مطلوب · من 15 إلى 500 حرف مفيد"
+    },
+    "Portuguese": {
+        "location_error": "Insira uma localização válida da fazenda.",
+        "crop_error": "Selecione um tipo de cultura.",
+        "problem_error": "Descreva seu problema agrícola com mais detalhes.",
+        "location_ok": "✓ Localização parece correta",
+        "crop_ok": "✓ Cultura selecionada",
+        "problem_ok": "✓ Descrição detalhada o suficiente",
+        "crop_select": "Selecione uma cultura…",
+        "location_help": "Obrigatório · 2-100 caracteres",
+        "problem_help": "Obrigatório · 15-500 caracteres úteis"
+    },
+    "Mandarin": {
+        "location_error": "请输入有效的农场位置。",
+        "crop_error": "请选择作物类型。",
+        "problem_error": "请更详细地描述您的农业问题。",
+        "location_ok": "✓ 位置看起来正确",
+        "crop_ok": "✓ 已选择作物",
+        "problem_ok": "✓ 描述足够详细",
+        "crop_select": "选择作物…",
+        "location_help": "必填 · 2-100 个字符",
+        "problem_help": "必填 · 15-500 个有效字符"
+    },
+    "Bengali": {
+        "location_error": "অনুগ্রহ করে বৈধ খামারের অবস্থান লিখুন।",
+        "crop_error": "অনুগ্রহ করে ফসলের ধরন নির্বাচন করুন।",
+        "problem_error": "অনুগ্রহ করে আপনার কৃষি সমস্যাটি আরও বিস্তারিত লিখুন।",
+        "location_ok": "✓ অবস্থান ঠিক আছে",
+        "crop_ok": "✓ ফসল নির্বাচন করা হয়েছে",
+        "problem_ok": "✓ বিবরণ যথেষ্ট বিস্তারিত",
+        "crop_select": "ফসল নির্বাচন করুন…",
+        "location_help": "প্রয়োজনীয় · 2-100 অক্ষর",
+        "problem_help": "প্রয়োজনীয় · 15-500 অর্থপূর্ণ অক্ষর"
+    },
+    "Vietnamese": {
+        "location_error": "Vui lòng nhập vị trí trang trại hợp lệ.",
+        "crop_error": "Vui lòng chọn loại cây trồng.",
+        "problem_error": "Vui lòng mô tả vấn đề nông nghiệp chi tiết hơn.",
+        "location_ok": "✓ Vị trí hợp lệ",
+        "crop_ok": "✓ Đã chọn cây trồng",
+        "problem_ok": "✓ Mô tả đủ chi tiết",
+        "crop_select": "Chọn cây trồng…",
+        "location_help": "Bắt buộc · 2-100 ký tự",
+        "problem_help": "Bắt buộc · 15-500 ký tự có ý nghĩa"
+    },
+    "Turkish": {
+        "location_error": "Lütfen geçerli bir çiftlik konumu girin.",
+        "crop_error": "Lütfen bir ürün türü seçin.",
+        "problem_error": "Lütfen tarım sorunuzu daha ayrıntılı açıklayın.",
+        "location_ok": "✓ Konum uygun görünüyor",
+        "crop_ok": "✓ Ürün seçildi",
+        "problem_ok": "✓ Açıklama yeterince ayrıntılı",
+        "crop_select": "Ürün seçin…",
+        "location_help": "Gerekli · 2-100 karakter",
+        "problem_help": "Gerekli · 15-500 anlamlı karakter"
+    },
+    "Russian": {
+        "location_error": "Введите допустимое местоположение фермы.",
+        "crop_error": "Выберите тип культуры.",
+        "problem_error": "Опишите сельскохозяйственную проблему подробнее.",
+        "location_ok": "✓ Местоположение выглядит корректно",
+        "crop_ok": "✓ Культура выбрана",
+        "problem_ok": "✓ Описание достаточно подробное",
+        "crop_select": "Выберите культуру…",
+        "location_help": "Обязательно · 2-100 символов",
+        "problem_help": "Обязательно · 15-500 содержательных символов"
+    },
+    "Indonesian": {
+        "location_error": "Masukkan lokasi pertanian yang valid.",
+        "crop_error": "Pilih jenis tanaman.",
+        "problem_error": "Jelaskan masalah pertanian Anda dengan lebih rinci.",
+        "location_ok": "✓ Lokasi terlihat benar",
+        "crop_ok": "✓ Tanaman dipilih",
+        "problem_ok": "✓ Deskripsi cukup rinci",
+        "crop_select": "Pilih tanaman…",
+        "location_help": "Wajib · 2-100 karakter",
+        "problem_help": "Wajib · 15-500 karakter bermakna"
+    },
+    "Japanese": {
+        "location_error": "有効な農場の場所を入力してください。",
+        "crop_error": "作物の種類を選択してください。",
+        "problem_error": "農業上の問題をもう少し詳しく説明してください。",
+        "location_ok": "✓ 場所は問題ありません",
+        "crop_ok": "✓ 作物が選択されました",
+        "problem_ok": "✓ 説明は十分に詳しいです",
+        "crop_select": "作物を選択…",
+        "location_help": "必須 · 2〜100文字",
+        "problem_help": "必須 · 15〜500文字の有意義な説明"
+    }
+}
+
+CROP_DISPLAY_NAMES = {
+    "English": {},
+    "Urdu": {
+        "Wheat": "گندم",
+        "Rice": "چاول",
+        "Corn": "مکئی",
+        "Maize": "مکئی",
+        "Tomato": "ٹماٹر",
+        "Potato": "آلو",
+        "Cotton": "کپاس",
+        "Sugarcane": "گنا",
+        "Mango": "آم",
+        "Onion": "پیاز",
+        "Garlic": "لہسن",
+        "Chili": "مرچ",
+        "Pepper": "شملہ مرچ",
+        "Soybean": "سویابین",
+        "Barley": "جو",
+        "Oats": "جئی",
+        "Sunflower": "سورج مکھی",
+        "Mustard": "سرسوں",
+        "Lentil": "مسور",
+        "Chickpea": "چنا",
+        "Pea": "مٹر",
+        "Spinach": "پالک",
+        "Carrot": "گاجر",
+        "Cauliflower": "گوبھی",
+        "Cucumber": "کھیرا",
+        "Millet": "باجرہ",
+        "Cassava": "کساوا",
+        "Yam": "شکر قندی",
+        "Banana": "کیلا",
+        "Orange": "مالٹا",
+        "Apple": "سیب",
+        "Grape": "انگور",
+        "Watermelon": "تربوز",
+        "Pumpkin": "کدو",
+        "Eggplant": "بینگن",
+        "Okra": "بھنڈی",
+        "Cabbage": "بند گوبھی",
+        "Radish": "مولی",
+        "Pineapple": "انناس",
+        "Papaya": "پپیتا",
+        "Guava": "امرود",
+        "Ginger": "ادرک",
+        "Turmeric": "ہلدی",
+        "Groundnut": "مونگ پھلی"
+    },
+    "Hindi": {
+        "Wheat": "गेहूँ",
+        "Rice": "चावल",
+        "Corn": "मकई",
+        "Maize": "मक्का",
+        "Tomato": "टमाटर",
+        "Potato": "आलू",
+        "Cotton": "कपास",
+        "Sugarcane": "गन्ना",
+        "Mango": "आम",
+        "Onion": "प्याज",
+        "Garlic": "लहसुन",
+        "Chili": "मिर्च",
+        "Pepper": "शिमला मिर्च",
+        "Soybean": "सोयाबीन",
+        "Barley": "जौ",
+        "Oats": "ओट्स",
+        "Sunflower": "सूरजमुखी",
+        "Mustard": "सरसों",
+        "Lentil": "मसूर",
+        "Chickpea": "चना",
+        "Pea": "मटर",
+        "Spinach": "पालक",
+        "Carrot": "गाजर",
+        "Cauliflower": "फूलगोभी",
+        "Cucumber": "खीरा",
+        "Millet": "बाजरा",
+        "Cassava": "कसावा",
+        "Yam": "रतालू",
+        "Banana": "केला",
+        "Orange": "संतरा",
+        "Apple": "सेब",
+        "Grape": "अंगूर",
+        "Watermelon": "तरबूज",
+        "Pumpkin": "कद्दू",
+        "Eggplant": "बैंगन",
+        "Okra": "भिंडी",
+        "Cabbage": "पत्ता गोभी",
+        "Radish": "मूली",
+        "Pineapple": "अनानास",
+        "Papaya": "पपीता",
+        "Guava": "अमरूद",
+        "Ginger": "अदरक",
+        "Turmeric": "हल्दी",
+        "Groundnut": "मूंगफली"
+    },
+    "Punjabi": {
+        "Wheat": "ਕਣਕ",
+        "Rice": "ਚੌਲ",
+        "Corn": "ਮੱਕੀ",
+        "Maize": "ਮੱਕੀ",
+        "Tomato": "ਟਮਾਟਰ",
+        "Potato": "ਆਲੂ",
+        "Cotton": "ਕਪਾਹ",
+        "Sugarcane": "ਗੰਨਾ",
+        "Mango": "ਅੰਬ",
+        "Onion": "ਪਿਆਜ਼",
+        "Garlic": "ਲਸਣ",
+        "Chili": "ਮਿਰਚ",
+        "Pepper": "ਸ਼ਿਮਲਾ ਮਿਰਚ",
+        "Soybean": "ਸੋਯਾਬੀਨ",
+        "Barley": "ਜੌ",
+        "Oats": "ਓਟਸ",
+        "Sunflower": "ਸੂਰਜਮੁਖੀ",
+        "Mustard": "ਸਰੋਂ",
+        "Lentil": "ਮਸਰ",
+        "Chickpea": "ਚਣਾ",
+        "Pea": "ਮਟਰ",
+        "Spinach": "ਪਾਲਕ",
+        "Carrot": "ਗਾਜਰ",
+        "Cauliflower": "ਫੁੱਲਗੋਭੀ",
+        "Cucumber": "ਖੀਰਾ",
+        "Millet": "ਬਾਜਰਾ",
+        "Cassava": "ਕਸਾਵਾ",
+        "Yam": "ਰਤਾਲੂ",
+        "Banana": "ਕੇਲਾ",
+        "Orange": "ਸੰਤਰਾ",
+        "Apple": "ਸੇਬ",
+        "Grape": "ਅੰਗੂਰ",
+        "Watermelon": "ਤਰਬੂਜ਼",
+        "Pumpkin": "ਕੱਦੂ",
+        "Eggplant": "ਬੈਂਗਣ",
+        "Okra": "ਭਿੰਡੀ",
+        "Cabbage": "ਬੰਦ ਗੋਭੀ",
+        "Radish": "ਮੂਲੀ",
+        "Pineapple": "ਅਨਾਨਾਸ",
+        "Papaya": "ਪਪੀਤਾ",
+        "Guava": "ਅਮਰੂਦ",
+        "Ginger": "ਅਦਰਕ",
+        "Turmeric": "ਹਲਦੀ",
+        "Groundnut": "ਮੂੰਗਫਲੀ"
+    },
+    "Spanish": {
+        "Wheat": "Trigo",
+        "Rice": "Arroz",
+        "Corn": "Maíz",
+        "Maize": "Maíz",
+        "Tomato": "Tomate",
+        "Potato": "Papa",
+        "Cotton": "Algodón",
+        "Sugarcane": "Caña de azúcar",
+        "Mango": "Mango",
+        "Onion": "Cebolla",
+        "Garlic": "Ajo",
+        "Chili": "Chile",
+        "Pepper": "Pimiento",
+        "Soybean": "Soja",
+        "Barley": "Cebada",
+        "Oats": "Avena",
+        "Sunflower": "Girasol",
+        "Mustard": "Mostaza",
+        "Lentil": "Lenteja",
+        "Chickpea": "Garbanzo",
+        "Pea": "Guisante",
+        "Spinach": "Espinaca",
+        "Carrot": "Zanahoria",
+        "Cauliflower": "Coliflor",
+        "Cucumber": "Pepino",
+        "Millet": "Mijo",
+        "Cassava": "Yuca",
+        "Yam": "Ñame",
+        "Banana": "Banana",
+        "Orange": "Naranja",
+        "Apple": "Manzana",
+        "Grape": "Uva",
+        "Watermelon": "Sandía",
+        "Pumpkin": "Calabaza",
+        "Eggplant": "Berenjena",
+        "Okra": "Okra",
+        "Cabbage": "Repollo",
+        "Radish": "Rábano",
+        "Pineapple": "Piña",
+        "Papaya": "Papaya",
+        "Guava": "Guayaba",
+        "Ginger": "Jengibre",
+        "Turmeric": "Cúrcuma",
+        "Groundnut": "Maní"
+    },
+    "French": {
+        "Wheat": "Blé",
+        "Rice": "Riz",
+        "Corn": "Maïs",
+        "Maize": "Maïs",
+        "Tomato": "Tomate",
+        "Potato": "Pomme de terre",
+        "Cotton": "Coton",
+        "Sugarcane": "Canne à sucre",
+        "Mango": "Mangue",
+        "Onion": "Oignon",
+        "Garlic": "Ail",
+        "Chili": "Piment",
+        "Pepper": "Poivron",
+        "Soybean": "Soja",
+        "Barley": "Orge",
+        "Oats": "Avoine",
+        "Sunflower": "Tournesol",
+        "Mustard": "Moutarde",
+        "Lentil": "Lentille",
+        "Chickpea": "Pois chiche",
+        "Pea": "Pois",
+        "Spinach": "Épinard",
+        "Carrot": "Carotte",
+        "Cauliflower": "Chou-fleur",
+        "Cucumber": "Concombre",
+        "Millet": "Mil",
+        "Cassava": "Manioc",
+        "Yam": "Igname",
+        "Banana": "Banane",
+        "Orange": "Orange",
+        "Apple": "Pomme",
+        "Grape": "Raisin",
+        "Watermelon": "Pastèque",
+        "Pumpkin": "Citrouille",
+        "Eggplant": "Aubergine",
+        "Okra": "Gombo",
+        "Cabbage": "Chou",
+        "Radish": "Radis",
+        "Pineapple": "Ananas",
+        "Papaya": "Papaye",
+        "Guava": "Goyave",
+        "Ginger": "Gingembre",
+        "Turmeric": "Curcuma",
+        "Groundnut": "Arachide"
+    },
+    "Swahili": {
+        "Wheat": "Ngano",
+        "Rice": "Mpunga",
+        "Corn": "Mahindi",
+        "Maize": "Mahindi",
+        "Tomato": "Nyanya",
+        "Potato": "Viazi",
+        "Cotton": "Pamba",
+        "Sugarcane": "Miwa",
+        "Mango": "Embe",
+        "Onion": "Kitunguu",
+        "Garlic": "Kitunguu saumu",
+        "Chili": "Pilipili",
+        "Pepper": "Pilipili hoho",
+        "Soybean": "Soya",
+        "Barley": "Shayiri",
+        "Oats": "Shayiri ya oats",
+        "Sunflower": "Alizeti",
+        "Mustard": "Haradali",
+        "Lentil": "Dengu",
+        "Chickpea": "Njegere",
+        "Pea": "Mbaazi",
+        "Spinach": "Mchicha",
+        "Carrot": "Karoti",
+        "Cauliflower": "Koliflower",
+        "Cucumber": "Tango",
+        "Millet": "Uwele",
+        "Cassava": "Muhogo",
+        "Yam": "Kiazi kikuu",
+        "Banana": "Ndizi",
+        "Orange": "Chungwa",
+        "Apple": "Tofaa",
+        "Grape": "Zabibu",
+        "Watermelon": "Tikiti maji",
+        "Pumpkin": "Boga",
+        "Eggplant": "Biringanya",
+        "Okra": "Bamia",
+        "Cabbage": "Kabichi",
+        "Radish": "Figili",
+        "Pineapple": "Nanasi",
+        "Papaya": "Papai",
+        "Guava": "Pera",
+        "Ginger": "Tangawizi",
+        "Turmeric": "Manjano",
+        "Groundnut": "Karanga"
+    },
+    "Arabic": {
+        "Wheat": "قمح",
+        "Rice": "أرز",
+        "Corn": "ذرة",
+        "Maize": "ذرة",
+        "Tomato": "طماطم",
+        "Potato": "بطاطس",
+        "Cotton": "قطن",
+        "Sugarcane": "قصب السكر",
+        "Mango": "مانجو",
+        "Onion": "بصل",
+        "Garlic": "ثوم",
+        "Chili": "فلفل حار",
+        "Pepper": "فلفل",
+        "Soybean": "فول الصويا",
+        "Barley": "شعير",
+        "Oats": "شوفان",
+        "Sunflower": "عباد الشمس",
+        "Mustard": "خردل",
+        "Lentil": "عدس",
+        "Chickpea": "حمص",
+        "Pea": "بازلاء",
+        "Spinach": "سبانخ",
+        "Carrot": "جزر",
+        "Cauliflower": "قرنبيط",
+        "Cucumber": "خيار",
+        "Millet": "دخن",
+        "Cassava": "كسافا",
+        "Yam": "يام",
+        "Banana": "موز",
+        "Orange": "برتقال",
+        "Apple": "تفاح",
+        "Grape": "عنب",
+        "Watermelon": "بطيخ",
+        "Pumpkin": "قرع",
+        "Eggplant": "باذنجان",
+        "Okra": "بامية",
+        "Cabbage": "ملفوف",
+        "Radish": "فجل",
+        "Pineapple": "أناناس",
+        "Papaya": "بابايا",
+        "Guava": "جوافة",
+        "Ginger": "زنجبيل",
+        "Turmeric": "كركم",
+        "Groundnut": "فول سوداني"
+    },
+    "Portuguese": {
+        "Wheat": "Trigo",
+        "Rice": "Arroz",
+        "Corn": "Milho",
+        "Maize": "Milho",
+        "Tomato": "Tomate",
+        "Potato": "Batata",
+        "Cotton": "Algodão",
+        "Sugarcane": "Cana-de-açúcar",
+        "Mango": "Manga",
+        "Onion": "Cebola",
+        "Garlic": "Alho",
+        "Chili": "Pimenta",
+        "Pepper": "Pimentão",
+        "Soybean": "Soja",
+        "Barley": "Cevada",
+        "Oats": "Aveia",
+        "Sunflower": "Girassol",
+        "Mustard": "Mostarda",
+        "Lentil": "Lentilha",
+        "Chickpea": "Grão-de-bico",
+        "Pea": "Ervilha",
+        "Spinach": "Espinafre",
+        "Carrot": "Cenoura",
+        "Cauliflower": "Couve-flor",
+        "Cucumber": "Pepino",
+        "Millet": "Milheto",
+        "Cassava": "Mandioca",
+        "Yam": "Inhame",
+        "Banana": "Banana",
+        "Orange": "Laranja",
+        "Apple": "Maçã",
+        "Grape": "Uva",
+        "Watermelon": "Melancia",
+        "Pumpkin": "Abóbora",
+        "Eggplant": "Berinjela",
+        "Okra": "Quiabo",
+        "Cabbage": "Repolho",
+        "Radish": "Rabanete",
+        "Pineapple": "Abacaxi",
+        "Papaya": "Mamão",
+        "Guava": "Goiaba",
+        "Ginger": "Gengibre",
+        "Turmeric": "Cúrcuma",
+        "Groundnut": "Amendoim"
+    },
+    "Mandarin": {
+        "Wheat": "小麦",
+        "Rice": "水稻",
+        "Corn": "玉米",
+        "Maize": "玉米",
+        "Tomato": "番茄",
+        "Potato": "土豆",
+        "Cotton": "棉花",
+        "Sugarcane": "甘蔗",
+        "Mango": "芒果",
+        "Onion": "洋葱",
+        "Garlic": "大蒜",
+        "Chili": "辣椒",
+        "Pepper": "甜椒",
+        "Soybean": "大豆",
+        "Barley": "大麦",
+        "Oats": "燕麦",
+        "Sunflower": "向日葵",
+        "Mustard": "芥菜",
+        "Lentil": "扁豆",
+        "Chickpea": "鹰嘴豆",
+        "Pea": "豌豆",
+        "Spinach": "菠菜",
+        "Carrot": "胡萝卜",
+        "Cauliflower": "花椰菜",
+        "Cucumber": "黄瓜",
+        "Millet": "小米",
+        "Cassava": "木薯",
+        "Yam": "山药",
+        "Banana": "香蕉",
+        "Orange": "橙子",
+        "Apple": "苹果",
+        "Grape": "葡萄",
+        "Watermelon": "西瓜",
+        "Pumpkin": "南瓜",
+        "Eggplant": "茄子",
+        "Okra": "秋葵",
+        "Cabbage": "卷心菜",
+        "Radish": "萝卜",
+        "Pineapple": "菠萝",
+        "Papaya": "木瓜",
+        "Guava": "番石榴",
+        "Ginger": "生姜",
+        "Turmeric": "姜黄",
+        "Groundnut": "花生"
+    },
+    "Bengali": {
+        "Wheat": "গম",
+        "Rice": "ধান",
+        "Corn": "ভুট্টা",
+        "Maize": "ভুট্টা",
+        "Tomato": "টমেটো",
+        "Potato": "আলু",
+        "Cotton": "তুলা",
+        "Sugarcane": "আখ",
+        "Mango": "আম",
+        "Onion": "পেঁয়াজ",
+        "Garlic": "রসুন",
+        "Chili": "মরিচ",
+        "Pepper": "ক্যাপসিকাম",
+        "Soybean": "সয়াবিন",
+        "Barley": "যব",
+        "Oats": "ওটস",
+        "Sunflower": "সূর্যমুখী",
+        "Mustard": "সরিষা",
+        "Lentil": "মসুর",
+        "Chickpea": "ছোলা",
+        "Pea": "মটর",
+        "Spinach": "পালং শাক",
+        "Carrot": "গাজর",
+        "Cauliflower": "ফুলকপি",
+        "Cucumber": "শসা",
+        "Millet": "বাজরা",
+        "Cassava": "কাসাভা",
+        "Yam": "রাঙা আলু",
+        "Banana": "কলা",
+        "Orange": "কমলা",
+        "Apple": "আপেল",
+        "Grape": "আঙ্গুর",
+        "Watermelon": "তরমুজ",
+        "Pumpkin": "কুমড়া",
+        "Eggplant": "বেগুন",
+        "Okra": "ঢেঁড়স",
+        "Cabbage": "বাঁধাকপি",
+        "Radish": "মুলা",
+        "Pineapple": "আনারস",
+        "Papaya": "পেঁপে",
+        "Guava": "পেয়ারা",
+        "Ginger": "আদা",
+        "Turmeric": "হলুদ",
+        "Groundnut": "চিনাবাদাম"
+    },
+    "Vietnamese": {
+        "Wheat": "Lúa mì",
+        "Rice": "Lúa gạo",
+        "Corn": "Ngô",
+        "Maize": "Ngô",
+        "Tomato": "Cà chua",
+        "Potato": "Khoai tây",
+        "Cotton": "Bông",
+        "Sugarcane": "Mía",
+        "Mango": "Xoài",
+        "Onion": "Hành tây",
+        "Garlic": "Tỏi",
+        "Chili": "Ớt",
+        "Pepper": "Ớt chuông",
+        "Soybean": "Đậu nành",
+        "Barley": "Lúa mạch",
+        "Oats": "Yến mạch",
+        "Sunflower": "Hướng dương",
+        "Mustard": "Cải mù tạt",
+        "Lentil": "Đậu lăng",
+        "Chickpea": "Đậu gà",
+        "Pea": "Đậu Hà Lan",
+        "Spinach": "Rau bina",
+        "Carrot": "Cà rốt",
+        "Cauliflower": "Súp lơ trắng",
+        "Cucumber": "Dưa chuột",
+        "Millet": "Kê",
+        "Cassava": "Sắn",
+        "Yam": "Khoai mỡ",
+        "Banana": "Chuối",
+        "Orange": "Cam",
+        "Apple": "Táo",
+        "Grape": "Nho",
+        "Watermelon": "Dưa hấu",
+        "Pumpkin": "Bí ngô",
+        "Eggplant": "Cà tím",
+        "Okra": "Đậu bắp",
+        "Cabbage": "Bắp cải",
+        "Radish": "Củ cải",
+        "Pineapple": "Dứa",
+        "Papaya": "Đu đủ",
+        "Guava": "Ổi",
+        "Ginger": "Gừng",
+        "Turmeric": "Nghệ",
+        "Groundnut": "Lạc"
+    },
+    "Turkish": {
+        "Wheat": "Buğday",
+        "Rice": "Pirinç",
+        "Corn": "Mısır",
+        "Maize": "Mısır",
+        "Tomato": "Domates",
+        "Potato": "Patates",
+        "Cotton": "Pamuk",
+        "Sugarcane": "Şeker kamışı",
+        "Mango": "Mango",
+        "Onion": "Soğan",
+        "Garlic": "Sarımsak",
+        "Chili": "Acı biber",
+        "Pepper": "Biber",
+        "Soybean": "Soya fasulyesi",
+        "Barley": "Arpa",
+        "Oats": "Yulaf",
+        "Sunflower": "Ayçiçeği",
+        "Mustard": "Hardal",
+        "Lentil": "Mercimek",
+        "Chickpea": "Nohut",
+        "Pea": "Bezelye",
+        "Spinach": "Ispanak",
+        "Carrot": "Havuç",
+        "Cauliflower": "Karnabahar",
+        "Cucumber": "Salatalık",
+        "Millet": "Darı",
+        "Cassava": "Manyok",
+        "Yam": "Yer elması",
+        "Banana": "Muz",
+        "Orange": "Portakal",
+        "Apple": "Elma",
+        "Grape": "Üzüm",
+        "Watermelon": "Karpuz",
+        "Pumpkin": "Kabak",
+        "Eggplant": "Patlıcan",
+        "Okra": "Bamya",
+        "Cabbage": "Lahana",
+        "Radish": "Turp",
+        "Pineapple": "Ananas",
+        "Papaya": "Papaya",
+        "Guava": "Guava",
+        "Ginger": "Zencefil",
+        "Turmeric": "Zerdeçal",
+        "Groundnut": "Yer fıstığı"
+    },
+    "Russian": {
+        "Wheat": "Пшеница",
+        "Rice": "Рис",
+        "Corn": "Кукуруза",
+        "Maize": "Кукуруза",
+        "Tomato": "Томат",
+        "Potato": "Картофель",
+        "Cotton": "Хлопок",
+        "Sugarcane": "Сахарный тростник",
+        "Mango": "Манго",
+        "Onion": "Лук",
+        "Garlic": "Чеснок",
+        "Chili": "Чили",
+        "Pepper": "Перец",
+        "Soybean": "Соя",
+        "Barley": "Ячмень",
+        "Oats": "Овес",
+        "Sunflower": "Подсолнечник",
+        "Mustard": "Горчица",
+        "Lentil": "Чечевица",
+        "Chickpea": "Нут",
+        "Pea": "Горох",
+        "Spinach": "Шпинат",
+        "Carrot": "Морковь",
+        "Cauliflower": "Цветная капуста",
+        "Cucumber": "Огурец",
+        "Millet": "Просо",
+        "Cassava": "Кассава",
+        "Yam": "Ямс",
+        "Banana": "Банан",
+        "Orange": "Апельсин",
+        "Apple": "Яблоко",
+        "Grape": "Виноград",
+        "Watermelon": "Арбуз",
+        "Pumpkin": "Тыква",
+        "Eggplant": "Баклажан",
+        "Okra": "Бамия",
+        "Cabbage": "Капуста",
+        "Radish": "Редис",
+        "Pineapple": "Ананас",
+        "Papaya": "Папайя",
+        "Guava": "Гуава",
+        "Ginger": "Имбирь",
+        "Turmeric": "Куркума",
+        "Groundnut": "Арахис"
+    },
+    "Indonesian": {
+        "Wheat": "Gandum",
+        "Rice": "Padi",
+        "Corn": "Jagung",
+        "Maize": "Jagung",
+        "Tomato": "Tomat",
+        "Potato": "Kentang",
+        "Cotton": "Kapas",
+        "Sugarcane": "Tebu",
+        "Mango": "Mangga",
+        "Onion": "Bawang bombai",
+        "Garlic": "Bawang putih",
+        "Chili": "Cabai",
+        "Pepper": "Paprika",
+        "Soybean": "Kedelai",
+        "Barley": "Barli",
+        "Oats": "Oat",
+        "Sunflower": "Bunga matahari",
+        "Mustard": "Sawi",
+        "Lentil": "Lentil",
+        "Chickpea": "Kacang arab",
+        "Pea": "Kacang polong",
+        "Spinach": "Bayam",
+        "Carrot": "Wortel",
+        "Cauliflower": "Kembang kol",
+        "Cucumber": "Mentimun",
+        "Millet": "Jawawut",
+        "Cassava": "Singkong",
+        "Yam": "Ubi",
+        "Banana": "Pisang",
+        "Orange": "Jeruk",
+        "Apple": "Apel",
+        "Grape": "Anggur",
+        "Watermelon": "Semangka",
+        "Pumpkin": "Labu",
+        "Eggplant": "Terong",
+        "Okra": "Okra",
+        "Cabbage": "Kubis",
+        "Radish": "Lobak",
+        "Pineapple": "Nanas",
+        "Papaya": "Pepaya",
+        "Guava": "Jambu biji",
+        "Ginger": "Jahe",
+        "Turmeric": "Kunyit",
+        "Groundnut": "Kacang tanah"
+    },
+    "Japanese": {
+        "Wheat": "小麦",
+        "Rice": "米",
+        "Corn": "トウモロコシ",
+        "Maize": "トウモロコシ",
+        "Tomato": "トマト",
+        "Potato": "ジャガイモ",
+        "Cotton": "綿花",
+        "Sugarcane": "サトウキビ",
+        "Mango": "マンゴー",
+        "Onion": "玉ねぎ",
+        "Garlic": "ニンニク",
+        "Chili": "唐辛子",
+        "Pepper": "ピーマン",
+        "Soybean": "大豆",
+        "Barley": "大麦",
+        "Oats": "オーツ麦",
+        "Sunflower": "ヒマワリ",
+        "Mustard": "からし菜",
+        "Lentil": "レンズ豆",
+        "Chickpea": "ひよこ豆",
+        "Pea": "エンドウ豆",
+        "Spinach": "ほうれん草",
+        "Carrot": "ニンジン",
+        "Cauliflower": "カリフラワー",
+        "Cucumber": "キュウリ",
+        "Millet": "キビ",
+        "Cassava": "キャッサバ",
+        "Yam": "ヤムイモ",
+        "Banana": "バナナ",
+        "Orange": "オレンジ",
+        "Apple": "リンゴ",
+        "Grape": "ブドウ",
+        "Watermelon": "スイカ",
+        "Pumpkin": "カボチャ",
+        "Eggplant": "ナス",
+        "Okra": "オクラ",
+        "Cabbage": "キャベツ",
+        "Radish": "大根",
+        "Pineapple": "パイナップル",
+        "Papaya": "パパイヤ",
+        "Guava": "グアバ",
+        "Ginger": "ショウガ",
+        "Turmeric": "ウコン",
+        "Groundnut": "落花生"
+    }
+}
+
+form_text = FORM_TEXT.get(lang_key, FORM_TEXT["English"])
+
+def crop_display_name(crop):
+    if crop not in CROP_OPTIONS:
+        return form_text["crop_select"]
+    return CROP_DISPLAY_NAMES.get(lang_key, {}).get(crop, crop)
 
 def sanitize_text(value, multiline=False):
     value = unicodedata.normalize("NFKC", value or "")
@@ -1619,29 +2445,29 @@ col1, col2 = st.columns(2)
 with col1:
     raw_location = st.text_input(T["location"], placeholder=T["location_placeholder"],
                                  max_chars=100, key="advisory_location",
-                                 help="Required · 2–100 characters")
+                                 help=form_text["location_help"])
     location = validate_location(raw_location)
     if raw_location and not location:
-        st.error(LOCATION_ERROR, icon="⚠️")
+        st.error(form_text["location_error"], icon="⚠️")
     elif location:
-        st.caption("✓ Location looks good")
-    raw_crop_type = st.selectbox(T["crop_type"], ["Select a crop…", *CROP_OPTIONS],
-                                 key="advisory_crop_type")
+        st.caption(form_text["location_ok"])
+    raw_crop_type = st.selectbox(T["crop_type"], [form_text["crop_select"], *CROP_OPTIONS],
+                                 key="advisory_crop_type", format_func=crop_display_name)
     crop_type = validate_crop(raw_crop_type)
     if not crop_type:
-        st.error(CROP_ERROR, icon="⚠️")
+        st.error(form_text["crop_error"], icon="⚠️")
     else:
-        st.caption("✓ Crop selected")
+        st.caption(form_text["crop_ok"])
 with col2:
     raw_problem = st.text_area(T["problem"], placeholder=T["problem_placeholder"],
                                height=140, max_chars=500, key="advisory_problem",
-                               help="Required · 15–500 meaningful characters")
+                               help=form_text["problem_help"])
     st.caption(f"{len(raw_problem)} / 500")
     problem = validate_problem(raw_problem)
     if raw_problem and not problem:
-        st.error(PROBLEM_ERROR, icon="⚠️")
+        st.error(form_text["problem_error"], icon="⚠️")
     elif problem:
-        st.caption("✓ Description is detailed enough")
+        st.caption(form_text["problem_ok"])
 
 # Session state
 for key in ["step", "weather_report", "crop_doctor_report", "market_price_report", "final_report"]:
@@ -1649,13 +2475,13 @@ for key in ["step", "weather_report", "crop_doctor_report", "market_price_report
         st.session_state[key] = 0 if key == "step" else None
 
 def validate_inputs():
-    if not gemini_key:
+    if not os.environ.get("GEMINI_API_KEY"):
         st.warning(T["warning_key"])
         return False
     # Final defensive gate immediately before any agent workflow can start.
     # Values are already normalized by the reusable field validators above.
     if not (location and crop_type and problem):
-        st.error(PROBLEM_ERROR, icon="⚠️")
+        st.error(form_text["problem_error"], icon="⚠️")
         return False
 
     return True
@@ -1705,18 +2531,13 @@ def reset_flow():
     st.session_state.crop_doctor_report = None
     st.session_state.market_price_report = None
     st.session_state.final_report = None
+    st.session_state.report_language = lang_key
+    st.session_state.report_translation_version = 5
 
 # Analyze button
 if st.session_state.step == 0:
     st.markdown("---")
-    advisory_form_valid = bool(location and crop_type and problem)
-    if not advisory_form_valid:
-        st.caption("Complete all advisory fields correctly to enable analysis.")
-    if st.button(
-        T["analyze_btn"], use_container_width=True,
-        disabled=not advisory_form_valid,
-        help=None if advisory_form_valid else "Enter a valid location, crop, and detailed problem description.",
-    ):
+    if st.button(T["analyze_btn"], use_container_width=True):
         if validate_inputs():
             reset_flow()
             st.session_state.step = 1
@@ -1725,32 +2546,212 @@ if st.session_state.step == 0:
 # ============================================================
 # TRANSLATE REPORTS IF LANGUAGE CHANGED
 # ============================================================
-if st.session_state.get("needs_translation") and st.session_state.get("step", 0) > 0:
+REPORT_TRANSLATION_VERSION = 5
+if "report_language" not in st.session_state:
+    st.session_state.report_language = lang_key
+
+def _looks_untranslated(original, result, target_lang_name):
+    """Reject translation refusals, echoes, and mixed-language output."""
+    if target_lang_name == "English":
+        return False
+    if not result:
+        return True
+
+    lowered = result.lower()
+    refusal_markers = [
+        "already in english", "already entirely in english",
+        "no translation is needed", "no translation needed",
+        "is already in", "doesn't need translation", "does not need translation",
+    ]
+    if any(m in lowered for m in refusal_markers):
+        return True
+
+    english_report_markers = [
+        "current price", "current price range", "market status", "3-month outlook",
+        "recommendation", "logistics", "action:", "weather summary", "alerts:",
+        "best planting", "best harvesting", "crop health", "main problem",
+        "why it happened", "how to fix", "how to prevent", "where to sell",
+        "should you sell", "this week", "farming advisory", "forecast",
+    ]
+    marker_hits = sum(1 for marker in english_report_markers if marker in lowered)
+    if marker_hits >= 2:
+        return True
+
+    non_latin_targets = {
+        "Japanese", "Chinese (Mandarin)", "Hindi", "Urdu", "Arabic",
+        "Punjabi", "Bengali", "Russian",
+    }
+    if target_lang_name in non_latin_targets:
+        # If a non-Latin-script report still contains lots of Latin letters,
+        # it is mixed. This check must not run for Spanish/French/etc.
+        latin_letters = sum(1 for c in result if ("a" <= c.lower() <= "z"))
+        total_letters = sum(1 for c in result if c.isalpha())
+        if total_letters and latin_letters / total_letters > 0.35:
+            return True
+
+        has_non_ascii_letter = any(ord(c) > 127 and c.isalpha() for c in result)
+        if not has_non_ascii_letter:
+            return True
+
+    return False
+
+
+def translate_report_text(text, agent_fn, target_lang_name):
+    if not text or text.startswith("Error"):
+        return text
+    base_prompt = (
+        f"You are a professional translator. Translate the following text "
+        f"COMPLETELY and ENTIRELY into {target_lang_name}. This is a strict "
+        f"translation task, not a conversation - you must output ONLY the "
+        f"translated text in {target_lang_name}, with no English remaining anywhere, "
+        f"no commentary, no notes about the translation, and no statements "
+        f"like 'this is already in English'. Even if the source text is in "
+        f"English, you MUST translate every single word into {target_lang_name}. "
+        f"Preserve all emojis, numbers, and markdown formatting exactly. "
+        f"Translate crop names, place names, and user-provided English phrases into the target language too. "
+        f"Only product/brand names like AgriSense AI may remain unchanged. "
+        f"Do not add any preamble or explanation - output ONLY the translated "
+        f"text itself.\n\nTEXT TO TRANSLATE:\n{text}"
+    )
+    result = run_agent_sync(agent_fn(), base_prompt)
+    if result and not result.startswith("Error") and not _looks_untranslated(text, result, target_lang_name):
+        return result
+
+    retry_prompt = (
+        f"TRANSLATION TASK ONLY. Output language: {target_lang_name}. "
+        f"Do not explain. Do not say the text is already in a language. "
+        f"Translate this text word-for-word into {target_lang_name} right now:\n\n{text}"
+    )
+    retry_result = run_agent_sync(agent_fn(), retry_prompt)
+    if retry_result and not retry_result.startswith("Error") and not _looks_untranslated(text, retry_result, target_lang_name):
+        return retry_result
+
+    cleanup_prompt = (
+        f"Your previous translation was invalid because it still contained English. "
+        f"Translate ALL content below into {target_lang_name}. Do not keep English headings like "
+        f"Current Price Range, Market Status, Recommendation, Logistics, or Action. "
+        f"Only brand names like AgriSense AI and platform names like Google ADK may stay unchanged. "
+        f"Return ONLY the corrected {target_lang_name} text:\n\n{text}"
+    )
+    cleanup_result = run_agent_sync(get_advisory_agent(), cleanup_prompt)
+    if cleanup_result and not cleanup_result.startswith("Error") and not _looks_untranslated(text, cleanup_result, target_lang_name):
+        return cleanup_result
+
+    return text if target_lang_name == "English" else "Error: Translation failed. Please regenerate this section."
+
+
+FIELD_TRANSLATION_OVERRIDES = {
+    "Japanese": {
+        "japan": "日本",
+        "wheat": "小麦",
+        "rice": "米",
+        "corn": "トウモロコシ",
+        "maize": "トウモロコシ",
+        "tomato": "トマト",
+        "potato": "ジャガイモ",
+        "cotton": "綿花",
+        "sugarcane": "サトウキビ",
+        "mango": "マンゴー",
+        "onion": "玉ねぎ",
+        "garlic": "ニンニク",
+        "chili": "唐辛子",
+        "pepper": "ピーマン",
+        "soybean": "大豆",
+        "barley": "大麦",
+        "oats": "オーツ麦",
+        "sunflower": "ヒマワリ",
+        "mustard": "からし菜",
+        "lentil": "レンズ豆",
+        "chickpea": "ひよこ豆",
+        "pea": "エンドウ豆",
+        "spinach": "ほうれん草",
+        "carrot": "ニンジン",
+        "cauliflower": "カリフラワー",
+        "cucumber": "キュウリ",
+        "how to grow maize crops": "トウモロコシの育て方",
+        "how to grow wheat crops": "小麦の育て方",
+        "how to grow wheat": "小麦の育て方",
+        "how to grow maize": "トウモロコシの育て方",
+    }
+}
+
+def ensure_report_language(text, agent_fn, target_lang_name):
+    if target_lang_name == "English" or not text or text.startswith("Error"):
+        return text
+    if _looks_untranslated("", text, target_lang_name):
+        return translate_report_text(text, agent_fn, target_lang_name)
+    return text
+
+
+def translate_short_field(value, target_lang_name):
+    if not value or target_lang_name == "English":
+        return value
+    normalized_value = " ".join(str(value).strip().lower().split())
+    override = FIELD_TRANSLATION_OVERRIDES.get(target_lang_name, {}).get(normalized_value)
+    if override:
+        return override
+    if "short_field_translations" not in st.session_state:
+        st.session_state.short_field_translations = {}
+    cache_key = (value, target_lang_name)
+    if cache_key in st.session_state.short_field_translations:
+        return st.session_state.short_field_translations[cache_key]
+
+    prompt = (
+        f"Translate this short farm report value into {target_lang_name}. "
+        f"Return ONLY the translated value, with no explanation. "
+        f"Translate country/place names and crop names naturally. "
+        f"Text: {value}"
+    )
+    translated = run_agent_sync(get_advisory_agent(), prompt)
+    if translated and not translated.startswith("Error") and not _looks_untranslated(value, translated, target_lang_name):
+        translated = translated.strip().strip('"')
+        st.session_state.short_field_translations[cache_key] = translated
+        return translated
+    return value
+
+if (
+    st.session_state.get("step", 0) > 0
+    and (
+        st.session_state.get("report_language") != lang_key
+        or st.session_state.get("needs_translation")
+        or st.session_state.get("report_translation_version") != REPORT_TRANSLATION_VERSION
+    )
+):
     st.session_state.needs_translation = False
     with st.spinner("Translating to " + lang_name + "..."):
-        def do_translate(text, agent_fn):
-            p = "Translate ENTIRELY into " + lang_name + ". Keep emojis. No English. Text: " + text
-            r = run_agent_sync(agent_fn(), p)
-            return r if r and not r.startswith("Error") else text
         if st.session_state.weather_report and not st.session_state.weather_report.startswith("Error"):
-            st.session_state.weather_report = do_translate(st.session_state.weather_report, get_weather_agent)
+            st.session_state.weather_report = translate_report_text(st.session_state.weather_report, get_weather_agent, lang_name)
         if st.session_state.crop_doctor_report and not st.session_state.crop_doctor_report.startswith("Error"):
-            st.session_state.crop_doctor_report = do_translate(st.session_state.crop_doctor_report, get_crop_doctor_agent)
+            st.session_state.crop_doctor_report = translate_report_text(st.session_state.crop_doctor_report, get_crop_doctor_agent, lang_name)
         if st.session_state.market_price_report and not st.session_state.market_price_report.startswith("Error"):
-            st.session_state.market_price_report = do_translate(st.session_state.market_price_report, get_market_price_agent)
+            st.session_state.market_price_report = translate_report_text(st.session_state.market_price_report, get_market_price_agent, lang_name)
+        if st.session_state.final_report and not st.session_state.final_report.startswith("Error"):
+            st.session_state.final_report = translate_report_text(st.session_state.final_report, get_advisory_agent, lang_name)
+        st.session_state.report_language = lang_key
+        st.session_state.report_translation_version = REPORT_TRANSLATION_VERSION
     st.rerun()
 
 # ============================================================
 # AGENT WORKFLOW
 # ============================================================
+def report_ready(text):
+    return bool(text) and not str(text).startswith("Error")
+
+def show_report_error(text):
+    if text and str(text).startswith("Error"):
+        st.error(text)
+
 if st.session_state.step >= 1:
+    localized_location = translate_short_field(location, lang_name)
+    localized_crop_type = translate_short_field(crop_type, lang_name)
+    localized_problem = translate_short_field(problem, lang_name)
     st.markdown("---")
     st.markdown(f"### {T['workflow']}")
 
     # ── Show ALL completed cards first (always on top) ──
     if st.session_state.weather_report and not st.session_state.weather_report.startswith("Error"):
         st.markdown(f"""
-            <div class="report-card">
+            <div class="report-card localized-report" dir="{report_dir}">
                 <div class="card-header">{T['weather_header']}</div>
                 <div>{st.session_state.weather_report}</div>
             </div>
@@ -1759,7 +2760,7 @@ if st.session_state.step >= 1:
 
     if st.session_state.step >= 2 and st.session_state.crop_doctor_report and not st.session_state.crop_doctor_report.startswith("Error"):
         st.markdown(f"""
-            <div class="report-card">
+            <div class="report-card localized-report" dir="{report_dir}">
                 <div class="card-header">{T['crop_header']}</div>
                 <div>{st.session_state.crop_doctor_report}</div>
             </div>
@@ -1768,7 +2769,7 @@ if st.session_state.step >= 1:
 
     if st.session_state.step >= 3 and st.session_state.market_price_report and not st.session_state.market_price_report.startswith("Error"):
         st.markdown(f"""
-            <div class="report-card">
+            <div class="report-card localized-report" dir="{report_dir}">
                 <div class="card-header">{T['market_header']}</div>
                 <div>{st.session_state.market_price_report}</div>
             </div>
@@ -1783,24 +2784,21 @@ if st.session_state.step >= 1:
             with st.spinner(T["weather_status"]):
                 agent = get_weather_agent()
                 prompt = (
-                    f"Analyze the weather forecast for '{location}' for crop '{crop_type}'. "
+                    f"Analyze the weather forecast for '{localized_location}' for crop '{localized_crop_type}'. "
                     f"CRITICAL INSTRUCTION: You MUST respond ENTIRELY in {lang_name} language only. "
                     f"Do NOT write even a single word in English. Every word must be in {lang_name}. "
+                    f"{language_value_instruction}"
                     f"Keep response under 150 words. Use bullet points and emojis. Be concise and farmer-friendly."
                 )
-                st.session_state.weather_report = run_agent_sync(agent, prompt)
+                st.session_state.weather_report = ensure_report_language(run_agent_sync(agent, prompt), get_weather_agent, lang_name)
             st.rerun()
+        elif st.session_state.weather_report.startswith("Error"):
+            st.error(st.session_state.weather_report)
         else:
             st.info(T["hitl_weather"])
-            col1, col2 = st.columns([1, 4])
-            with col1:
-                if st.button(T["confirm_btn"], type="primary", key="confirm1"):
-                    st.session_state.step = 2
-                    st.rerun()
-            with col2:
-                if st.button(T["restart_btn"], key="restart1"):
-                    reset_flow()
-                    st.rerun()
+            if st.button(T["confirm_btn"], type="primary", key="confirm1"):
+                st.session_state.step = 2
+                st.rerun()
 
     # STEP 2: Crop Doctor Agent
     elif st.session_state.step == 2:
@@ -1808,25 +2806,22 @@ if st.session_state.step >= 1:
             with st.spinner(T["crop_status"]):
                 agent = get_crop_doctor_agent()
                 prompt = (
-                    f"You are a helpful crop advisor. The farmer from '{location}' is asking about '{crop_type}': {problem}. "
+                    f"You are a helpful crop advisor. The farmer from '{localized_location}' is asking about '{localized_crop_type}': {localized_problem}. "
                     f"CRITICAL INSTRUCTION: You MUST respond ENTIRELY in {lang_name} language only. "
                     f"Do NOT write even a single word in English. Every word must be in {lang_name}. "
+                    f"{language_value_instruction}"
                     f"Whether this is a disease/pest symptom OR a general farming question, answer it helpfully. "
                     f"Keep response under 150 words. Use bullet points and emojis. Be practical and farmer-friendly."
                 )
-                st.session_state.crop_doctor_report = run_agent_sync(agent, prompt)
+                st.session_state.crop_doctor_report = ensure_report_language(run_agent_sync(agent, prompt), get_crop_doctor_agent, lang_name)
                 st.rerun()
+        elif st.session_state.crop_doctor_report.startswith("Error"):
+            st.error(st.session_state.crop_doctor_report)
         else:
             st.info(T["hitl_crop"])
-            col1, col2 = st.columns([1, 4])
-            with col1:
-                if st.button(T["confirm_btn"], type="primary", key="confirm2"):
-                    st.session_state.step = 3
-                    st.rerun()
-            with col2:
-                if st.button(T["restart_btn"], key="restart2"):
-                    reset_flow()
-                    st.rerun()
+            if st.button(T["confirm_btn"], type="primary", key="confirm2"):
+                st.session_state.step = 3
+                st.rerun()
 
     # STEP 3: Market Price Agent
     elif st.session_state.step == 3:
@@ -1834,25 +2829,22 @@ if st.session_state.step >= 1:
             with st.spinner(T["market_status"]):
                 agent = get_market_price_agent()
                 prompt = (
-                    f"You are a market price advisor. The crop is '{crop_type}' near '{location}'. "
-                    f"Provide current market prices for '{crop_type}', best time to sell, and top 3 selling tips. "
+                    f"You are a market price advisor. The crop is '{localized_crop_type}' near '{localized_location}'. "
+                    f"Provide current market prices for '{localized_crop_type}', best time to sell, and top 3 selling tips. "
                     f"CRITICAL INSTRUCTION: You MUST respond ENTIRELY in {lang_name} language only. "
                     f"Do NOT write even a single word in English. Every word must be in {lang_name}. "
+                    f"{language_value_instruction}"
                     f"Keep response under 150 words. Use bullet points."
                 )
-                st.session_state.market_price_report = run_agent_sync(agent, prompt)
+                st.session_state.market_price_report = ensure_report_language(run_agent_sync(agent, prompt), get_market_price_agent, lang_name)
                 st.rerun()
+        elif st.session_state.market_price_report.startswith("Error"):
+            st.error(st.session_state.market_price_report)
         else:
             st.info(T["hitl_market"])
-            col1, col2 = st.columns([1, 4])
-            with col1:
-                if st.button(T["compile_btn"], type="primary", key="confirm3"):
-                    st.session_state.step = 4
-                    st.rerun()
-            with col2:
-                if st.button(T["restart_btn"], key="restart3"):
-                    reset_flow()
-                    st.rerun()
+            if st.button(T["compile_btn"], type="primary", key="confirm3"):
+                st.session_state.step = 4
+                st.rerun()
 
     # STEP 4: Advisory Agent - Final Report
     elif st.session_state.step == 4:
@@ -1860,45 +2852,52 @@ if st.session_state.step >= 1:
             with st.spinner(T["advisory_status"]):
                 agent = get_advisory_agent()
                 combined = (
-                    f"Location: {location}\nCrop: {crop_type}\nProblem: {problem}\n\n"
-                    f"WEATHER:\n{st.session_state.weather_report}\n\n"
-                    f"CROP HEALTH:\n{st.session_state.crop_doctor_report}\n\n"
-                    f"MARKET:\n{st.session_state.market_price_report}"
+                    f"{T['location']}: {localized_location}\n{T['crop_type']}: {localized_crop_type}\n{T['problem']}: {localized_problem}\n\n"
+                    f"{T['weather_header']}:\n{st.session_state.weather_report}\n\n"
+                    f"{T['crop_header']}:\n{st.session_state.crop_doctor_report}\n\n"
+                    f"{T['market_header']}:\n{st.session_state.market_price_report}"
                 )
                 prompt = (
-                    f"CRITICAL INSTRUCTION: Respond ENTIRELY in {lang_name} only. No English words. "
+                    f"CRITICAL INSTRUCTION: Respond ENTIRELY in {lang_name} only. No English words except the brand name AgriSense AI. "
+                    f"{language_value_instruction}"
                     f"Compile a final farming advisory. Use simple words a local farmer can understand. "
                     f"Format with emojis, bullet points, and a summary checklist. "
                     f"Keep it concise - maximum 300 words.\n\nData:\n{combined}"
                 )
-                st.session_state.final_report = run_agent_sync(agent, prompt)
+                st.session_state.final_report = ensure_report_language(run_agent_sync(agent, prompt), get_advisory_agent, lang_name)
                 st.rerun()
+        elif st.session_state.final_report.startswith("Error"):
+            st.error(st.session_state.final_report)
         else:
             st.success(T["advisory_done"])
             st.markdown("---")
             st.success(f"🎉 {T['completed']}")
             st.markdown(f"""
-                <div class="report-card" style="border-left: 5px solid #ffb300; background-color: #fffdf7; color: #1a2e1a !important;">
+                <div class="report-card localized-report" dir="{report_dir}" style="border-left: 5px solid #ffb300; background-color: #fffdf7; color: #1a2e1a !important;">
                     <div class="card-header" style="color: #e65100 !important;">📋 {T['final_report']}</div>
                     <div style="font-size: 1.05rem; line-height: 1.8; color: #1a2e1a !important;">
                         {st.session_state.final_report}
                     </div>
                 </div>
             """, unsafe_allow_html=True)
-            pdf_bytes = generate_pdf_report(
-                location, crop_type,
-                st.session_state.weather_report,
-                st.session_state.crop_doctor_report,
-                st.session_state.market_price_report,
-                st.session_state.final_report
-            )
-            st.download_button(
-                label=T["download_btn"],
-                data=pdf_bytes,
-                file_name=f"agrisense_{location.replace(' ', '_').lower()}.pdf",
-                mime="application/pdf",
-                use_container_width=True
-            )
+            if all(report_ready(section) for section in [st.session_state.weather_report, st.session_state.crop_doctor_report, st.session_state.market_price_report, st.session_state.final_report]):
+                pdf_bytes = generate_pdf_report(
+                    localized_location, localized_crop_type,
+                    st.session_state.weather_report,
+                    st.session_state.crop_doctor_report,
+                    st.session_state.market_price_report,
+                    st.session_state.final_report,
+                    lang_key=lang_key
+                )
+                st.download_button(
+                    label=T["download_btn"],
+                    data=pdf_bytes,
+                    file_name=f"agrisense_{location.replace(' ', '_').lower()}.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+            else:
+                st.error("One or more report sections failed translation. Regenerate the report before downloading.")
             if st.button(T["analyze_another"], use_container_width=True):
                 reset_flow()
                 st.rerun()

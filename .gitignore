@@ -45,3 +45,5 @@ logs/
 
 # Streamlit
 .streamlit/secrets.toml
+
+!.env.example
