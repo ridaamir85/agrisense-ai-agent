@@ -4,3 +4,5 @@ fastmcp
 python-dotenv
 httpx
 google-genai
+reportlab
+fonttools
