@@ -6,3 +6,5 @@ httpx
 google-genai
 reportlab
 fonttools
+arabic-reshaper
+python-bidi
