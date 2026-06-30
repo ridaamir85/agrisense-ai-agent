@@ -1,4 +1,4 @@
-# AgriSense AI
+# 🌱 AgriSense AI
 
 A multilingual, multi-agent farming advisory app built with Google ADK, Gemini, MCP, and Streamlit for the Kaggle AI Agents Intensive Capstone Project.
 
