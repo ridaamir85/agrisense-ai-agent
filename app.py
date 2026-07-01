@@ -16,7 +16,7 @@ from utils.input_validation import is_valid_agriculture_query
 
 # Load environment variables from the project .env file when running locally.
 env_file = find_dotenv(usecwd=True)
-load_dotenv(env_file, override=True)
+load_dotenv(env_file, override=True, encoding="utf-8-sig")
 
 # Add current workspace directory to python path for importing agents
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
