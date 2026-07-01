@@ -997,6 +997,20 @@ st.markdown("""
             min-height: 100vh;
         }
 
+        /* Hide Streamlit hosting chrome so the public demo feels like the app. */
+        #MainMenu,
+        footer,
+        [data-testid="stToolbar"],
+        [data-testid="stDecoration"],
+        [data-testid="stStatusWidget"] {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        header[data-testid="stHeader"] {
+            background: transparent !important;
+            height: 0 !important;
+        }
+
         /* ── Sidebar ──────────────────────────────────────────── */
         [data-testid="stSidebar"] {
             background: linear-gradient(180deg, #0d2b10 0%, #163a1a 60%, #1e4a22 100%) !important;
@@ -1265,20 +1279,48 @@ st.markdown("""
         .stStatus {
             border-radius: 12px !important;
         }
-        [data-testid="collapsedControl"] span,
-        [data-testid="stSidebarCollapseButton"] span,
+        [data-testid="collapsedControl"] {
+            position: fixed !important;
+            top: 0.75rem !important;
+            left: 0.75rem !important;
+            z-index: 999999 !important;
+            width: 2.5rem !important;
+            height: 2.5rem !important;
+            overflow: hidden !important;
+            border-radius: 999px !important;
+            background: rgba(255,255,255,0.94) !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.14) !important;
+            font-size: 0 !important;
+            color: transparent !important;
+        }
+        [data-testid="collapsedControl"] *,
+        [data-testid="stSidebarCollapseButton"] *,
         button[title*="keyboard"],
         [data-testid="stSidebarResizer"] {
+            font-size: 0 !important;
+            color: transparent !important;
+        }
+        [data-testid="collapsedControl"] svg,
+        [data-testid="stSidebarCollapseButton"] svg {
             display: none !important;
+        }
+        [data-testid="collapsedControl"] button,
+        [data-testid="stSidebarCollapseButton"] {
+            width: 2.5rem !important;
+            height: 2.5rem !important;
+            min-width: 2.5rem !important;
+            padding: 0 !important;
+            font-size: 0 !important;
+            color: transparent !important;
         }
         [data-testid="collapsedControl"] button::before,
         [data-testid="stSidebarCollapseButton"]::before {
-            content: "☰";
+            content: "\\2630";
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #17351b;
-            font-size: 1.4rem;
+            color: #17351b !important;
+            font-size: 1.4rem !important;
             font-weight: 800;
             line-height: 1;
         }
@@ -2424,6 +2466,21 @@ def validate_location(value):
         return None
     if not any(ch.isalpha() for ch in cleaned):
         return None
+    normalized_location = cleaned.lower().strip()
+    location_words = re.findall(r"[a-zA-Z]+", normalized_location)
+    short_valid_locations = {
+        "bali", "lima", "rome", "mali", "oman", "iran", "iraq", "peru",
+        "chad", "togo", "fiji", "laos", "doha", "pune", "goa",
+    }
+    if len(location_words) == 1 and len(location_words[0]) < 5 and location_words[0] not in short_valid_locations:
+        return None
+    non_location_patterns = [
+        r"\b(i|im|i'm|am|my|me|you|we|they|he|she)\b",
+        r"\b(tired|sad|happy|hungry|sleepy|sick|bored|angry|fine)\b",
+        r"\b(problem|question|issue|help|please|tell|suggest|advice)\b",
+    ]
+    if any(re.search(pattern, normalized_location) for pattern in non_location_patterns):
+        return None
     # Reject common non-location words including crop names and random words
     bad_words = [
         "hello","hi","hey","how are","what up","good morning","test","asdf",
@@ -2437,8 +2494,9 @@ def validate_location(value):
         "crop","farm","plant","seed","flower","tree","grass","leaf","leaves",
         "animal","water","soil","food","weather","rain","sun","wind","cloud",
         "random","words","text","blah","abc","xyz","qwerty","testing","yes","no",
+        "lasi","lassi","tired","im tired","i am tired",
     ]
-    if any(b == cleaned.lower().strip() or cleaned.lower().strip().startswith(b + " ") for b in bad_words):
+    if any(b == normalized_location or normalized_location.startswith(b + " ") for b in bad_words):
         return None
     return cleaned
 
