@@ -2468,6 +2468,14 @@ def validate_location(value):
         return None
     normalized_location = cleaned.lower().strip()
     location_words = re.findall(r"[a-zA-Z]+", normalized_location)
+    compact_letters = "".join(location_words)
+    if compact_letters:
+        unique_letters = set(compact_letters)
+        has_vowel = any(ch in "aeiou" for ch in compact_letters)
+        if len(unique_letters) <= 2 or not has_vowel:
+            return None
+        if re.search(r"(.)\1{3,}", compact_letters):
+            return None
     short_valid_locations = {
         "bali", "lima", "rome", "mali", "oman", "iran", "iraq", "peru",
         "chad", "togo", "fiji", "laos", "doha", "pune", "goa",
