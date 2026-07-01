@@ -43,7 +43,6 @@ st.set_page_config(
 # ============================================================
 TRANSLATIONS = {
     "English": {
-        "settings": "Settings & Credentials",
         "gemini_key": "Gemini API Key",
         "weather_key": "OpenWeather API Key (Optional)",
         "language_selection": "Language Selection",
@@ -1474,19 +1473,16 @@ with st.sidebar:
         st.session_state.needs_translation = True
 
     st.markdown("---")
-    st.markdown(f"### {T['settings']}")
     env_gemini = os.environ.get("GEMINI_API_KEY", "")
     env_weather = os.environ.get("OPENWEATHER_API_KEY", "")
 
     if env_gemini:
         os.environ["GEMINI_API_KEY"] = env_gemini
-        st.success("Gemini API key is configured for this deployment.")
     else:
         st.warning("Gemini API key is not configured. Add it to .env locally or Streamlit Cloud Secrets before running analysis.")
 
     if env_weather:
         os.environ["OPENWEATHER_API_KEY"] = env_weather
-        st.caption("Optional weather key is configured. Open-Meteo works without a key.")
     else:
         st.caption("Weather uses Open-Meteo by default; no OpenWeather key is required.")
 
