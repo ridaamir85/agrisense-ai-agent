@@ -2486,6 +2486,9 @@ def validate_location(value):
         r"\b(i|im|i'm|am|my|me|you|we|they|he|she)\b",
         r"\b(tired|sad|happy|hungry|sleepy|sick|bored|angry|fine)\b",
         r"\b(problem|question|issue|help|please|tell|suggest|advice)\b",
+        r"\b(what'?s|whats)\s+up\b",
+        r"\bhow\s+are\s+you\b",
+        r"\bgood\s+(morning|afternoon|evening|night)\b",
     ]
     if any(re.search(pattern, normalized_location) for pattern in non_location_patterns):
         return None
