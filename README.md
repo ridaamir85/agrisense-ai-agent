@@ -200,8 +200,6 @@ Add these assets before final Kaggle submission:
 | Multilingual report | `assets/screenshots/multilingual-report.png` |
 | Downloaded PDF report | `assets/screenshots/final-pdf.png` |
 
-Kaggle also requires a public YouTube video of 5 minutes or less. Recommended video flow: problem, why agents, architecture, live demo, deployment/security notes.
-
 ## Security and Privacy
 
 - **No public-login barrier**: the demo is intentionally accessible without login to satisfy Kaggle's public project link requirement.
