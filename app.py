@@ -35,7 +35,7 @@ st.set_page_config(
     page_title="AgriSense AI - Global Farming Advisory",
     page_icon="🌱",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="auto"
 )
 
 # ============================================================
@@ -1265,10 +1265,22 @@ st.markdown("""
         .stStatus {
             border-radius: 12px !important;
         }
+        [data-testid="collapsedControl"] span,
         [data-testid="stSidebarCollapseButton"] span,
         button[title*="keyboard"],
         [data-testid="stSidebarResizer"] {
             display: none !important;
+        }
+        [data-testid="collapsedControl"] button::before,
+        [data-testid="stSidebarCollapseButton"]::before {
+            content: "☰";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #17351b;
+            font-size: 1.4rem;
+            font-weight: 800;
+            line-height: 1;
         }
 
         /* ── Global main content text color fix ──────────────── */
